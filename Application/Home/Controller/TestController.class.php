@@ -12,6 +12,11 @@ use Common\CommonController;
 use Common\Cookie;
 
 class TestController extends CommonController{
+		function _initialize(){
+			parent::_initialize();
+			$this->m = M('doc', '', 'api');
+		}
+		
 		function _before_index(){
 			if(empty(I('environment'))){
 				$_REQUEST['environment'] = 'test';

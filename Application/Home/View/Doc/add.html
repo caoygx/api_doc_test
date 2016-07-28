@@ -14,77 +14,55 @@
 <div class="container" >
     <h1  class="text-center text-primary" style="margin-bottom:50px;">添加接口</h1>
     <form method="post" action="__URL__/save" target="_self">
-        <div class="row">
-            <div class ="col-md-2">
-                <div class="form-group">
-                    <label for="exampleInputTYPE">业务类型</label>
-                    <input type="text" class="form-control" id="module" name="module" placeholder="业务类型" value="{$vo.module}">
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class ="col-md-4">
-                <div class="form-group">
-                    <label for="exampleInputTYPE" >接口名称</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入接口名称" value="{$vo.title}">
-                </div>
-            </div>
-        </div>
-         
-        <div class="row">
-            <div class ="col-md-4">
-                <div class="form-group">
-                    <label for="exampleInputTYPE">接口URL</label>
-                    <input type="text" class="form-control" id="title" name="url" placeholder="请输入接口URL" value="{$vo.url}">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class ="col-md-4">
-                <div class="form-group">
-                    <label for="exampleInputTYPE">请求方式</label>
-                    <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method}">
-                </div>
-           </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="exampleInputTYPE">参数</label>
-                    <textarea class="form-control" rows="20" name="param" id="param" cols="">{$vo.param}</textarea>
-                   
-                </div>
-            </div>
-        </div>
-        
-     
-      
-       <div class="row" style="left:500px; top:-733px; position:relative;">
-          <div class ="col-md-4">
-              <div class="form-group ">
-                  <label for="exampleInputTYPE">返回值</label>
-                  <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json}</textarea>
-                  <input class="btn btn-primary" type="button" value="格式化" id="return_json_formater" >
-              </div>
-          </div>
-      </div>
-      
-       <div class="row" style="left:500px; top:-733px; position:relative;">
-          <div class ="col-md-4">
-              <div class="form-group ">
-                  <label for="exampleInputTYPE">返回值说明</label>
-                  <textarea class="form-control" rows="15" name="return" id="return" cols="100">{$vo.return}</textarea>
-                 
-              </div>
-          </div>
-      </div>
-      
-      <input type="hidden" id="id" name="id" value="{$vo.id}" />
-      <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}" />
-      <input class="btn btn-primary" type="submit" value="提交" style="left:500px; top:-733px; position:relative;">
-    </form> 
+  <table>
+    <tr>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE" >接口名称</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="请输入接口名称" value="{$vo.title}">
+        </div></td>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE">接口URL</label>
+          <input type="text" class="form-control" id="title" name="url" placeholder="请输入接口URL" value="{$vo.url}">
+        </div></td>
+    </tr>
+    <tr>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE">业务类型</label>
+          <input type="text" class="form-control" id="module" name="module" placeholder="业务类型" value="{$vo.module}">
+        </div></td>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE">请求方式</label>
+          <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method}">
+        </div></td>
+    </tr>
+    <tr>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE">参数</label><a class="btn btn-primary btn-xs"  id="param_json_formater" >格式化</a>
+          <textarea class="form-control" rows="8" name="param_json" id="param_json" cols="">{$vo.param_json}</textarea>
+        </div></td>
+      <td><div class="form-group">
+          <label for="exampleInputTYPE">参数说明</label>
+          <textarea class="form-control" rows="8" name="param" id="param" cols="">{$vo.param}</textarea>
+        </div></td>
+    </tr>
+    <tr>
+      <td><div class="form-group ">
+          <label for="exampleInputTYPE">返回值</label> <a class="btn btn-primary btn-xs"  id="return_json_formater" >格式化</a>
+          <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json}</textarea>
+          
+        </div></td>
+      <td><div class="form-group ">
+          <label for="exampleInputTYPE">返回值说明</label>
+          <textarea class="form-control" rows="15" name="return" id="return" cols="100">{$vo.return}</textarea>
+        </div></td>
+     <tr>
+      <td colspan="2" align="center"> <input class="btn btn-primary  btn-lg" type="submit" value="提 交"></td>
+    </tr>
+  </table>
+  <input type="hidden" id="id" name="id" value="{$vo.id}" />
+  <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}" />
+</form>
+ 
 </div>
 <script>    
 var rowId=0;
@@ -176,6 +154,9 @@ $('#return_json_formater').click(function(){
     $('#return_json').val(format($('#return_json').val(),0));
 })
 
+$('#param_json_formater').click(function(){
+    $('#param_json').val(format($('#param_json').val(),0));
+})
 
 
 </script>

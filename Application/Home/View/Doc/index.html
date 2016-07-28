@@ -5,7 +5,7 @@
   <title>{$detail.title|default=API接口列表}</title>
   <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script  src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
    <link rel="stylesheet" href="__PUBLIC__/jquery.jsonview.css" />
   
@@ -119,6 +119,7 @@ Params
 			<button id="d_clip_button" class="my_clip_button btn btn-warning" data-clipboard-target="fe_text"><b>复制到剪贴板</b></button>
 			<a  class="btn btn-success" href="__CONTROLLER__/add" target="_blank">添加</a>
 			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}" target="_blank">编辑</a>
+            <a  class="btn btn-info" href="__MODULE__/Test/test?id={$detail.id}" target="_blank">测试</a>
 			<div id="json"></div>
 
 			<div id="json-collapsed"></div>

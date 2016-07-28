@@ -23,13 +23,11 @@ function request_by_curl($api, $host = "",$show_form = true){
 	}else{
 		$url = $api['url'];
 	}
-	if(! isset($api['get'])) {
-		$api['get'] = 1;
-	}
+	
 	if(!is_array($api['data'])){
-		$api['data'] = json_decode($api['data']);
+		$api['data'] = json_decode($api['param_json']);
 	}
-	$method = $api['get'] ? "get" : "post";
+	$method = $api['method'];
 	if($show_form){
 	echo '<form id="form1" name="form1" method="' . $method . '" enctype="multipart/form-data" action="' . $url . '" target="_blank">';
 	echo "<table>";
@@ -44,7 +42,7 @@ function request_by_curl($api, $host = "",$show_form = true){
 	echo "</table>";
 	echo '<input type="submit" name="button"   value="提交" id="send" /><br /></form>';
 	$errors = array();
-	$ret = curl_get_content($url, $api['data'], $api['get']);
+	$ret = curl_get_content($url, $api['data'], $method);
 	echo <<<HTML
 	
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -63,25 +61,25 @@ HTML;
 	}
 	$ret = json_decode($ret, true);
 	// var_dump($ret);exit('xx');
-	if(! empty($api['ret_format'])) {
-		$ret_format = $api['ret_format'];
-		// var_dump($ret_format);
+	if(! empty($api['return_json'])) {
+		$return_json = $api['return_json'];
+		// var_dump($return_json);
 		if(empty($ret)) {
 			echo '<span style="color:#f00">无数据</span>', LF;
 		}
-		if(! is_array($ret_format)) {
-			$ret_format = json_decode($ret_format, true);
+		if(! is_array($return_json)) {
+			$return_json = json_decode($return_json, true);
 		}
 
-		if(empty($ret_format)) {
+		if(empty($return_json)) {
 			echo "返回格式解析结果为空" . LF;
 			return;
 		}
-		// var_dump($ret_format);
-		check_ecursive($ret_format, $ret);
-		// array_walk_recursive($ret_format,"check");
+		// var_dump($return_json);
+		check_ecursive($return_json, $ret);
+		// array_walk_recursive($return_json,"check");
 		/*
-		 * foreach ($ret_format as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
+		 * foreach ($return_json as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
 		 */
 	} else {
 		echo "返回格式不能为空 <hr />" . LF;
@@ -153,25 +151,25 @@ function request_by_curl_parameter_combination($api, $host = "",$show_form = tru
 	}
 	$ret = json_decode($ret, true);
 	// var_dump($ret);exit('xx');
-	if(! empty($api['ret_format'])) {
-		$ret_format = $api['ret_format'];
-		// var_dump($ret_format);
+	if(! empty($api['return_json'])) {
+		$return_json = $api['return_json'];
+		// var_dump($return_json);
 		if(empty($ret)) {
 			echo '<span style="color:#f00">无数据</span>', LF;
 		}
-		if(! is_array($ret_format)) {
-			$ret_format = json_decode($ret_format, true);
+		if(! is_array($return_json)) {
+			$return_json = json_decode($return_json, true);
 		}
 
-		if(empty($ret_format)) {
+		if(empty($return_json)) {
 			echo "返回格式解析结果为空" . LF;
 			return;
 		}
-		// var_dump($ret_format);
-		check_ecursive($ret_format, $ret);
-		// array_walk_recursive($ret_format,"check");
+		// var_dump($return_json);
+		check_ecursive($return_json, $ret);
+		// array_walk_recursive($return_json,"check");
 		/*
-		 * foreach ($ret_format as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
+		 * foreach ($return_json as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
 		*/
 	} else {
 		echo "返回格式不能为空 <hr />" . LF;
@@ -226,35 +224,35 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 		echo LF;
 	}
 	
-	$ret_format = $api['ret_format'];
-	$ret_format = json_decode($ret_format,1);
+	$return_json = $api['return_json'];
+	$return_json = json_decode($return_json,1);
 	switch (json_last_error()) {
 		case JSON_ERROR_NONE:
 			//echo '没有错误发生';
 			break;
 		case JSON_ERROR_DEPTH:
-			echo '    ret_format 到达了最大堆栈深度'.LF;
+			echo '    return_json 到达了最大堆栈深度'.LF;
 			break;
 		case JSON_ERROR_STATE_MISMATCH:
-			echo '    ret_format 无效或异常的 JSON'.LF;
+			echo '    return_json 无效或异常的 JSON'.LF;
 			break;
 		case JSON_ERROR_CTRL_CHAR:
-			echo '    ret_format 控制字符错误，可能是编码不对'.LF;
+			echo '    return_json 控制字符错误，可能是编码不对'.LF;
 			break;
 		case JSON_ERROR_SYNTAX:
-			echo '    ret_format 语法错误'.LF;
+			echo '    return_json 语法错误'.LF;
 			break;
 		case JSON_ERROR_UTF8:
-			echo '    ret_format 异常的 UTF-8 字符，也许是因为不正确的编码。'.LF;
+			echo '    return_json 异常的 UTF-8 字符，也许是因为不正确的编码。'.LF;
 			break;
 		default:
-			echo '    ret_format 未知错误'.LF;
+			echo '    return_json 未知错误'.LF;
 			break;
 	}
 	$ret_data = $ret;
-	if(!empty($ret_format) && is_array($ret_format) && !empty($ret_data) && is_array($ret_data)){
+	if(!empty($return_json) && is_array($return_json) && !empty($ret_data) && is_array($ret_data)){
 		
-		check_ecursive_cli($ret_format, $ret_data);
+		check_ecursive_cli($return_json, $ret_data);
 	}
 	
 	return $ret;
@@ -265,41 +263,19 @@ function analysis_result($ret){
 	
 	$ret = json_decode($ret, true);
 	 
-	$ret_format = '{
+	$return_json = '{
 								  "count": 333,
 								  "items": [
 								    {
 								      "id": "2143",
-								      "hotel_id": "2417",
-								      "name": "维多利亚庄园",
-								      "city_name": "上海",
-								      "district_name": "闵行区",
-								      "address": "沪青平公路1209号",
-								      "cover_image": "2012-12/20121228105415.jpg",
-								      "url": "weiduoliyashanghai",
-								      "status": "2",
-								      "is_event": "1",
-								      "is_arrival": "1",
-								      "menu_price_min": "3688",
-								      "menu_price_max": "9888",
-								      "desk_recommend_min": "13",
-								      "desk_recommend_max": "150",
-								      "class_name": "婚礼会所",
-								      "circle_name": "",
-								      "score": 5,
-								      "is_gift": 1,
-								      "total_rate": 3.8,
-								      "coupon_text": "优惠文字",
-								      "gift_text": "这是上海的礼包介绍",
-								      "arrival_text": "到店礼文字",
-								      "images_num": 10,
-								      "card_flag": "0",
-								      "card_text": "返现券文案"
+
+								      "name": "维多利亚"
+								      
 								    }
 								  ]
 								}';
-	$ret_format = json_decode($ret_format,true);
-	 check_ecursive_cli($ret_format, $ret);
+	$return_json = json_decode($return_json,true);
+	 check_ecursive_cli($return_json, $ret);
 	
 }
 
@@ -309,10 +285,10 @@ function check($item, $key){
 }
 global $errors;
 $errors = array();
-function check_ecursive($ret_format, $ret, $prve_key = ''){
+function check_ecursive($return_json, $ret, $prve_key = ''){
 	global $errors;
 	
-	foreach($ret_format as $k => $v) {
+	foreach($return_json as $k => $v) {
 		if(is_array($v)) {
 			// var_dump($v);
 			/*
@@ -349,9 +325,9 @@ function check_ecursive($ret_format, $ret, $prve_key = ''){
 	 */
 }
 
-function check_ecursive_cli($ret_format, $ret, $prve_key = ''){
+function check_ecursive_cli($return_json, $ret, $prve_key = ''){
 	global $errors;
-	foreach($ret_format as $k => $v) {
+	foreach($return_json as $k => $v) {
 		if(is_array($v)) {
 			check_ecursive_cli($v, $ret[$k], $prve_key . "." . $k);
 		} else {
@@ -391,7 +367,7 @@ function encrypt($uid){
  *        	bool HTTPS时是否进行严格认证
  * @return string
  */
-function curl_get_content($url, $data = "", $isget = 1, $timeout = 30, $CA = false){
+function curl_get_content($url, $data = "", $method = "get", $timeout = 30, $CA = false){
 	
 	// $url = "http://www.baidu.com";
 	$cacert = getcwd() . '/cacert.pem'; // CA根证书
@@ -402,8 +378,8 @@ function curl_get_content($url, $data = "", $isget = 1, $timeout = 30, $CA = fal
 	}
 
 	
-
-	if($isget) {
+	$method = strtolower($method);
+	if($method == 'get') {
 		if(is_array($data)) {
 			$data = http_build_query($data);
 		}
@@ -432,11 +408,7 @@ function curl_get_content($url, $data = "", $isget = 1, $timeout = 30, $CA = fal
 	)); // 避免data数据过长问题
 	    // var_dump($data);
 	
-	//$headerArr[] = 'DXL-RPC-CLIENT-HASH:dxlapp-android1.4.1#de1a9200-03c2-473e-9eab-f9c9c8dc30f3#355873053463106#/uQpsvTrGQ4JWbvSadBjA9s/Uo9zWKJHJ0+m2GYUYKhpqdY9aFhJBAkZ6g/lZjVCH/syS5RArF9y1crzOIU5keMhdmyEqHdTdRjcV6q/2Yo=';
-	 $headerArr[] = 'DXL-RPC-CLIENT-HASH:dxlapp-android2.7.0#c4237621-d7a6-4d7e-9cd2-a9ce4a832115#866375027636033#Ti095ynw7/qcqiut23wDjAh9y3GqDSBacqBA7TAmbREs0GGl4RKxHfbgASiVh7rNAdpoo1k9jUpawQHtVGB9LcWWfjPXO6O8UnRGv/rFqyc=';
-	// $headerArr[] = 'DXL_RPC_CLIENT_HASH:dxlapp-iphone1.4.2#EC90302D-47E4-4512-9F31-8B6AF31059BA#5EED73D4-935D-42B1-92F8-D8B3EC146771#QF1WcaozcjEWtQ4yrCPv4DSv4vjfL0J1RqLkdYIEzXVHgPzJVYhI7Wrd3kLnLNbLX0cYwakBvIu4OqcyZOjaT/gRyMfWu+m0Fktbpjn4/3yYHijQe7tfa+WjIHhOLHFL';
-	$headerArr[] = 'ACCEPT:application/json';
-	$headerArr[] = 'DXL_PARAMS:dxlapp-android#1.4.2#wandoujias';
+	$headerArr[] = 'PARAMS:android#1.4.2#wandoujias';
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArr);
 	
 	$ret = curl_exec($ch);
@@ -879,24 +851,24 @@ HTML;
 	
 	$ret = json_decode($ret, true);
 	// var_dump($ret);exit('xx');
-	if(! empty($api['ret_format'])) {
-		$ret_format = $api['ret_format'];
-		// var_dump($ret_format);
+	if(! empty($api['return_json'])) {
+		$return_json = $api['return_json'];
+		// var_dump($return_json);
 		if(empty($ret)) {
 			echo '<span style="color:#f00">无数据</span>', LF;
 		}
-		if(! is_array($ret_format)) {
-			$ret_format = json_decode($ret_format, 1);
+		if(! is_array($return_json)) {
+			$return_json = json_decode($return_json, 1);
 		}
-		if(empty($ret_format)) {
+		if(empty($return_json)) {
 			echo "返回格式解析结果为空" . LF;
 			return;
 		}
-		// var_dump($ret_format);
-		check_ecursive($ret_format, $ret);
-		// array_walk_recursive($ret_format,"check");
+		// var_dump($return_json);
+		check_ecursive($return_json, $ret);
+		// array_walk_recursive($return_json,"check");
 		/*
-		 * foreach ($ret_format as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
+		 * foreach ($return_json as $k => $v){ if(empty($ret[$k])){ $errors[$k] = "is null"; } }
 		 */
 	} else {
 		echo "返回格式不能为空 <hr />" . LF;

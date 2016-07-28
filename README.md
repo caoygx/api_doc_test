@@ -13,5 +13,8 @@ api文档管理工具和api接口自动测试工具
 
 
 
+
+
+
 脚本批量测试命令
 php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api

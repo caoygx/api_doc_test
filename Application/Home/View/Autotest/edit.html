@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div style="height:30px;"></div>     
+    <form id="form2" name="form2" method="post" action="" target="_blank">
+    	<p>type: <input type="text" name="type"></p>
+    	<p>标题: <input type="text" name="title" /></p>
+        <p>url: <input type="text" name="url" id="url" /></p>
+        <p>get: <input type="text" name="get" /></p>
+        <input type="button" id="add_input" name="add_input" value="添加字段" />
+            <table class="table table-striped" id="tableContainer">
+    			<tr>
+    				<td>字段name</td>
+    				<td>字段value</td>
+    				<td>&nbsp;</td>
+  				</tr>
+             </table> 
+        <p>返回数组: </p>
+            <textarea name="ret_format" rows="8" cols="30"></textarea>
+        <p><input type="button" name="button"   value="提交" id="send" /></p>
+    </form>
+<script>    
+var rowId=0;
+$("#add_input").click(function(){
+	rowId++;
+	$('<tr>   <td>       <input id="k'+rowId+'" type="text"  /></td>    <td><input type="text"  id="v'+rowId+'" /></td>    <td></td>  </tr>').appendTo($("#tableContainer"));
+	
+});
+$('#send').click(function(){
+	
+	for(var i = 1; i <= rowId; i++){
+		key = $('#k'+i).val();
+		value = $('#v'+i).val();
+		$('<input type="text" name="data['+key+']" value="'+value+'">').appendTo($("#form2"));
+	}
+	$('#form2').attr("action","__URL__/add_save");
+	$('#form2').submit();
+
+	$('#form2').html('');
+	 
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{$detail.title|default=API接口列表}</title>
+  <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="__PUBLIC__/jquery.jsonview.css" />
+  
+  <script type="text/javascript" src="__PUBLIC__/jquery.jsonview.js"></script>
+  <script type="text/javascript">
+    var json = {$detail.return_json};
+    $(function() {
+      $("#json").JSONView(json);
+
+      //$("#json-collapsed").JSONView(json, { collapsed: true, nl2br: true, recursive_collapser: true });
+
+      $('#collapse-btn').on('click', function() {
+        $('#json').JSONView('collapse');
+      });
+
+      $('#expand-btn').on('click', function() {
+        $('#json').JSONView('expand');
+      });
+
+      $('#toggle-btn').on('click', function() {
+        $('#json').JSONView('toggle');
+      });
+
+      $('#toggle-level1-btn').on('click', function() {
+        $('#json').JSONView('toggle', 1);
+      });
+
+      $('#toggle-level2-btn').on('click', function() {
+        $('#json').JSONView('toggle', 2);
+      });
+    });
+  </script>
+</head>
+<body>
+
+
+
+<div class="row" style="margin-top:10px;"></div>
+
+
+	<div class="row">
+		<div class="col-md-2">
+		    
+ 
+		    
+		    <form class="form-inline" role="form"  method="GET" action="__URL__/index" target="_self">
+			 <div class="row">
+			     <div class="col-xs-8">
+			         <input type="text" class="form-control" id="k" name="k" placeholder="接口名，url" value="{$Think.get.k}">
+			     </div>
+			     <div class="col-xs-1">
+			         <button type="submit" class="btn btn btn-info">搜 &nbsp;&nbsp;索</button>
+			     </div>
+			  </div>
+			</form>
+			<br />
+		
+		<notempty name="Think.get.k">
+			<ul class="list-group">
+			  <volist id="vo" name="list">
+			  <li class="list-group-item"><a href="__CONTROLLER__/index/id/{$vo.id}/num/{$vo.module}" target="_blank">{$vo.title}
+			     <br /> {$vo.url}</a>
+			  </li>
+			  </volist>
+			  
+			</ul>
+	     <else /> 
+		
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				<volist id="vo" name="list" key="k">
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="heading{$k}">
+				      <h4 class="panel-title" style="height: 20px;">
+				        <a style="display:inline-block; width:100%; height:100% font-site:16px; font-weight:bold;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{$k}" aria-expanded="true" aria-controls="collapse{$k}">
+				          {$key}
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapse{$k}" class="panel-collapse collapse  <eq name="Think.get.num" value="$key">in</eq>" role="tabpanel" aria-labelledby="heading{$k}">
+				      <div class="panel-body" style="padding: 0px;">
+				        <ul class="list-group">
+				                 <volist name="vo" id="sub">
+				                 <a class="list-group-item <eq name="Think.get.id" value="$sub.id"> active</eq>"
+				                    href="__CONTROLLER__/index/id/{$sub.id}/num/{$sub.module}">{$sub.title}</a> 
+				                </volist>
+				            </ul>
+				       
+				      </div>
+				    </div>
+				  </div>
+				</volist>
+
+            </div>
+           
+    </notempty>
+    
+		</div>
+		<div class="col-md-10">
+			<h3>{$detail.title}</h3>
+<pre>
+{$detail.method}  {$Think.const.URL_API}{$detail.url}
+
+
+Params
+{$detail.param}
+</pre>
+
+			<button id="collapse-btn" class="btn btn-primary">收缩</button>
+			<button id="expand-btn" class="btn btn-primary">展开</button>
+			<button id="toggle-level2-btn" class="btn btn-primary">开关2层</button>
+			<button id="d_clip_button" class="my_clip_button btn btn-warning" data-clipboard-target="fe_text"><b>复制到剪贴板</b></button>
+			<a  class="btn btn-success" href="__CONTROLLER__/add" target="_blank">添加</a>
+			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}" target="_blank">编辑</a>
+			<div id="json"></div>
+
+			<div id="json-collapsed"></div>
+<br /><br />
+<h4>旧版接口说明</h4>		
+<pre>
+{$detail.return}
+</pre>
+		</div>
+	</div>
+
+<textarea id="fe_text" cols="50" rows="3" style="display:none;">{$vo.return_json}</textarea>
+
+
+ <script type="text/javascript" src="__PUBLIC__/ZeroClipboard.js"></script>
+<script type="text/javascript">
+var clip = new ZeroClipboard( document.getElementById("d_clip_button"), {
+  moviePath: "__PUBLIC__/ZeroClipboard.swf"
+} );
+
+clip.on( 'complete', function(client, args) {
+	alert('复制成功');
+   //alert("复制成功，复制内容为："+ args.text);
+   //复制内容为： args.text
+} );
+
+</script>
+
+
+</body>
+</html>

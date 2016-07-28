@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加接口</title>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://libs.useso.com/js/ckeditor/4.4.2/ckeditor.min.js"></script>
+
+</head>
+<body>
+
+
+<div class="container" >
+    <h1  class="text-center text-primary" style="margin-bottom:50px;">添加接口</h1>
+    <form method="post" action="__URL__/save" target="_self">
+        <div class="row">
+            <div class ="col-md-2">
+                <div class="form-group">
+                    <label for="exampleInputTYPE">业务类型</label>
+                    <input type="text" class="form-control" id="module" name="module" placeholder="业务类型" value="{$vo.module}">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class ="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputTYPE" >接口名称</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入接口名称" value="{$vo.title}">
+                </div>
+            </div>
+        </div>
+         
+        <div class="row">
+            <div class ="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputTYPE">接口URL</label>
+                    <input type="text" class="form-control" id="title" name="url" placeholder="请输入接口URL" value="{$vo.url}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class ="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputTYPE">请求方式</label>
+                    <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method}">
+                </div>
+           </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputTYPE">参数</label>
+                    <textarea class="form-control" rows="20" name="param" id="param" cols="">{$vo.param}</textarea>
+                   
+                </div>
+            </div>
+        </div>
+        
+     
+      
+       <div class="row" style="left:500px; top:-733px; position:relative;">
+          <div class ="col-md-4">
+              <div class="form-group ">
+                  <label for="exampleInputTYPE">返回值</label>
+                  <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json}</textarea>
+                  <input class="btn btn-primary" type="button" value="格式化" id="return_json_formater" >
+              </div>
+          </div>
+      </div>
+      
+       <div class="row" style="left:500px; top:-733px; position:relative;">
+          <div class ="col-md-4">
+              <div class="form-group ">
+                  <label for="exampleInputTYPE">返回值说明</label>
+                  <textarea class="form-control" rows="15" name="return" id="return" cols="100">{$vo.return}</textarea>
+                 
+              </div>
+          </div>
+      </div>
+      
+      <input type="hidden" id="id" name="id" value="{$vo.id}" />
+      <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}" />
+      <input class="btn btn-primary" type="submit" value="提交" style="left:500px; top:-733px; position:relative;">
+    </form> 
+</div>
+<script>    
+var rowId=0;
+$("#add_input").click(function(){
+    rowId++;
+    $('<tr>   <td>       <input id="k'+rowId+'" type="text"  /></td>    <td><input type="text"  id="v'+rowId+'" /></td>    <td></td>  </tr>').appendTo($("#tableContainer"));
+    
+});
+$('#send').click(function(){
+    
+    for(var i = 1; i <= rowId; i++){
+        key = $('#k'+i).val();
+        value = $('#v'+i).val();
+        $('<input type="text" name="data['+key+']" value="'+value+'">').appendTo($("#form2"));
+    }
+    $('#form2').attr("action","__URL__/save");
+    $('#form2').submit();
+
+    $('#form2').html('');
+     
+});
+$(".dropdown-menu li a").click(function(){
+    var text = $(this).text();
+    $("#dropdownMenu1").val(text).text(text);
+    if (text != '无'){
+        $("#type").val(text);   
+    }
+  });
+  
+
+function format(txt, compress) {
+            /* 格式化JSON源码(对象转换为JSON文本) */
+            var indentChar = '    ';
+            if (/^\s*$/.test(txt)) {
+                alert('数据为空,无法格式化! ');
+                return;
+            }
+            try {
+                var data = eval('(' + txt + ')');
+            } catch(e) {
+                alert('数据源语法错误,格式化失败! 错误信息: ' + e.description, 'err');
+                return;
+            };
+            var draw = [],
+            last = false,
+            This = this,
+            line = compress ? '': '\n',
+            nodeCount = 0,
+            maxDepth = 0;
+
+            var notify = function(name, value, isLast, indent, formObj) {
+                nodeCount++;
+                /*节点计数*/
+                for (var i = 0, tab = ''; i < indent; i++) tab += indentChar;
+                /* 缩进HTML */
+                tab = compress ? '': tab;
+                /*压缩模式忽略缩进*/
+                maxDepth = ++indent;
+                /*缩进递增并记录*/
+                if (value && value.constructor == Array) {
+                    /*处理数组*/
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + '[' + line);
+                    /*缩进'[' 然后换行*/
+                    for (var i = 0; i < value.length; i++) notify(i, value[i], i == value.length - 1, indent, false);
+                    draw.push(tab + ']' + (isLast ? line: (',' + line)));
+                    /*缩进']'换行,若非尾元素则添加逗号*/
+                } else if (value && typeof value == 'object') {
+                    /*处理对象*/
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + '{' + line);
+                    /*缩进'{' 然后换行*/
+                    var len = 0,
+                    i = 0;
+                    for (var key in value) len++;
+                    for (var key in value) notify(key, value[key], ++i == len, indent, true);
+                    draw.push(tab + '}' + (isLast ? line: (',' + line)));
+                    /*缩进'}'换行,若非尾元素则添加逗号*/
+                } else {
+                    if (typeof value == 'string') value = '"' + value + '"';
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + value + (isLast ? '': ',') + line);
+                };
+            };
+            var isLast = true,
+            indent = 0;
+            notify('', data, isLast, indent, false);
+            return draw.join('');
+        } 
+
+$('#return_json_formater').click(function(){
+    $('#return_json').val(format($('#return_json').val(),0));
+})
+
+
+
+</script>
+</body>
+</html>

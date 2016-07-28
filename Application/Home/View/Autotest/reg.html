@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加接口</title>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container" >
+    <h1  class="text-center text-primary" style="margin-bottom:50px;">添加接口</h1>
+    <form method="post" action="__SELF__" target="_self">
+      
+        
+        <div class="row">
+            <div class ="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputTYPE" >请输入手机号</label>
+                    <input type="text" class="form-control" id="title" name="mobile" placeholder="请输入手机号" value="{$vo.title}">
+                </div>
+            </div>
+        </div>
+         
+      
+      <input class="btn btn-primary" type="submit" value="提交" >  
+      <input type="hidden" id="id" name="id" value="{$vo.id}" />
+      
+    </form> 
+</div>
+<script>    
+var rowId=0;
+$("#add_input").click(function(){
+    rowId++;
+    $('<tr>   <td>       <input id="k'+rowId+'" type="text"  /></td>    <td><input type="text"  id="v'+rowId+'" /></td>    <td></td>  </tr>').appendTo($("#tableContainer"));
+    
+});
+$('#send').click(function(){
+    
+    for(var i = 1; i <= rowId; i++){
+        key = $('#k'+i).val();
+        value = $('#v'+i).val();
+        $('<input type="text" name="data['+key+']" value="'+value+'">').appendTo($("#form2"));
+    }
+    $('#form2').attr("action","__URL__/save");
+    $('#form2').submit();
+
+    $('#form2').html('');
+     
+});
+$(".dropdown-menu li a").click(function(){
+    var text = $(this).text();
+    $("#dropdownMenu1").val(text).text(text);
+    if (text != '无'){
+        $("#type").val(text);   
+    }
+  });
+  
+
+function format(txt, compress) {
+            /* 格式化JSON源码(对象转换为JSON文本) */
+            var indentChar = '    ';
+            if (/^\s*$/.test(txt)) {
+                alert('数据为空,无法格式化! ');
+                return;
+            }
+            try {
+                var data = eval('(' + txt + ')');
+            } catch(e) {
+                alert('数据源语法错误,格式化失败! 错误信息: ' + e.description, 'err');
+                return;
+            };
+            var draw = [],
+            last = false,
+            This = this,
+            line = compress ? '': '\n',
+            nodeCount = 0,
+            maxDepth = 0;
+
+            var notify = function(name, value, isLast, indent, formObj) {
+                nodeCount++;
+                /*节点计数*/
+                for (var i = 0, tab = ''; i < indent; i++) tab += indentChar;
+                /* 缩进HTML */
+                tab = compress ? '': tab;
+                /*压缩模式忽略缩进*/
+                maxDepth = ++indent;
+                /*缩进递增并记录*/
+                if (value && value.constructor == Array) {
+                    /*处理数组*/
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + '[' + line);
+                    /*缩进'[' 然后换行*/
+                    for (var i = 0; i < value.length; i++) notify(i, value[i], i == value.length - 1, indent, false);
+                    draw.push(tab + ']' + (isLast ? line: (',' + line)));
+                    /*缩进']'换行,若非尾元素则添加逗号*/
+                } else if (value && typeof value == 'object') {
+                    /*处理对象*/
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + '{' + line);
+                    /*缩进'{' 然后换行*/
+                    var len = 0,
+                    i = 0;
+                    for (var key in value) len++;
+                    for (var key in value) notify(key, value[key], ++i == len, indent, true);
+                    draw.push(tab + '}' + (isLast ? line: (',' + line)));
+                    /*缩进'}'换行,若非尾元素则添加逗号*/
+                } else {
+                    if (typeof value == 'string') value = '"' + value + '"';
+                    draw.push(tab + (formObj ? ('"' + name + '":') : '') + value + (isLast ? '': ',') + line);
+                };
+            };
+            var isLast = true,
+            indent = 0;
+            notify('', data, isLast, indent, false);
+            return draw.join('');
+        } 
+
+$('#data_formater').click(function(){
+    $('#data').val(format($('#data').val(),0));
+})
+
+$('#ret_formater').click(function(){
+    $('#ret_format').val(format($('#ret_format').val(),0));
+})
+
+</script>
+</body>
+</html>

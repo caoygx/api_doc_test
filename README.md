@@ -12,6 +12,7 @@ api文档管理工具和api接口自动测试工具
 
 3.浏览器里打开 http://localhost/api_doc_test/index.php/Home/Doc/index
 
+![](https://github.com/caoygx/api_doc_test/blob/master/screenshot1.jpg)
 
 
 

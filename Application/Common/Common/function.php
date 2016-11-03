@@ -410,7 +410,7 @@ function curl_get_content($url, $data = "", $method = "get", $timeout = 30, $CA 
 	
 	$headerArr[] = 'PARAMS:android#1.4.2#wandoujias';
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArr);
-	
+	//curl_setopt($ch, CURLOPT_PROXY, "192.168.22.211:8888");
 	$ret = curl_exec($ch);
 	if(empty($ret)) {
 		var_dump(curl_error($ch)); // 查看报错信息

@@ -9,19 +9,22 @@ class CommonController extends Controller {
 	protected $u = null;
 	protected $connection = "api";
 	protected $pre = "";
+	protected $autoInstantiateModel = true;
 	public function __construct($pre = ''){
 		parent::__construct();
-		if($pre){ //有表前缀
-			new CommonModel(CONTROLLER_NAME,$this->pre,$this->connection);
-		}else{
-			try{
-				//$this->m = D(CONTROLLER_NAME,'',"yian"); //实例化model
-				if(empty($this->m)){
-					$this->m = M(CONTROLLER_NAME,$this->pre,$this->connection);
+		if($this->autoInstantiateModel){
+			if($pre){ //有表前缀
+				new CommonModel(CONTROLLER_NAME,$this->pre,$this->connection);
+			}else{
+				try{
+					//$this->m = D(CONTROLLER_NAME,'',"yian"); //实例化model
+					if(empty($this->m)){
+						$this->m = M(CONTROLLER_NAME,$this->pre,$this->connection);
+					}
+				}catch(Exception $e){
+					//echo $e->getMessage();
+					//
 				}
-			}catch(Exception $e){
-				//echo $e->getMessage();
-				//
 			}
 		}
 		//简单的权限验证操作

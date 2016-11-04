@@ -7,27 +7,60 @@ class FormController extends CommonController {
 	protected $autoInstantiateModel = false;
 	//protected $pre = "rrbrr_";
  
+	
 	 public function index(){
+	 	$tableNameList = getTableNameList();
+	 	//$this->tabText = $tableNameList;
+	 	//$this->tabText = $tableNameList;
+	 	$this->tabText = array_combine($tableNameList, $tableNameList);
+	 	$this->display();
 		
-		 
-		$tableNameList = getTableNameList();
+    }
+    
+    function generate(){
+    	$tableName = I('tableName');
+    	$allFields = getTableInfoArray($tableName);
+    	$columnNameKey = strtoupper(getColumnNameKey());
+    	$str = '';
+    	
+    	$selectedFields = I('tableFields');
+    	if(empty($selectedFields)){
+    		$this->generateAll();
+    		return;
+    	}
+    	//var_dump($selectedFields);
+    	$str .='<form class="form-horizontal" role="form">';
+    	foreach($allFields as $columnInfo){
+    		if(!in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
+    		//var_dump($columnInfo);exit;
+    		$str .= $this->createFormRow($columnInfo);
+    		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
+    	}
+    	$str .='</form>';
+    	echo $str;
+    }
+    
+    //生成所有表的form
+    function generateAll(){
+    	$tableNameList = getTableNameList();
 		foreach($tableNameList as $k => $tableName){
 			$tableInfoArray = getTableInfoArray($tableName);
 			$columnNameKey = strtoupper(getColumnNameKey());
 			$str = '';
 			
+			$str .='<form class="form-horizontal" role="form">';
 			foreach($tableInfoArray as $columnInfo){
 				//var_dump($columnInfo);exit;
-				 $this->createFormRow($columnInfo);
+				 $str .= $this->createFormRow($columnInfo);
 				//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
 			}
-			//echo $str;
+			$str .='</form>';
+			echo $str;
 			//echo "<hr />";
 		}
 		
-		/**/
-		
-		 
+
+ 
     }
 	
 	//获取字段类型及长度
@@ -120,7 +153,7 @@ class FormController extends CommonController {
 		
 		$cnName = empty($commentInfo['name']) ? $columnInfo['COLUMN_NAME'] : $commentInfo['name'];
 		$name = $columnInfo['COLUMN_NAME'];
-		$inputStr = $cnName.":";
+		$inputStr = "";
 		
 		
 		if(!empty($commentInfo['type'])){
@@ -157,8 +190,13 @@ class FormController extends CommonController {
 			}	
 		}
 		 
-		
-		echo $inputStr ,"<br />";
+		 return '<div class="form-group">
+    <label for="'.$name.'" class="col-sm-2 control-label">'.$cnName.'</label>
+    <div class="col-sm-10">
+       '.$inputStr.'
+    </div>
+  </div>';
+		 
 		
 		 
 	}

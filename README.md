@@ -28,4 +28,4 @@ php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api
 根据表字段自动生成form表单的，在开发中是不是会遇到几十个表字段要做个form 提交，一个个写表单，并给字段命名，有没有种抓狂的感觉？现在可以用这个工具来帮你生成表单了。
 地址: index.php/home/form/index
 
-![](https://github.com/caoygx/api_doc_test/blob/master/generate.png)
+![](https://github.com/caoygx/api_doc_test/blob/master/generate.jpg)

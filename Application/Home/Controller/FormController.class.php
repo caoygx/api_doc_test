@@ -25,7 +25,7 @@ class FormController extends CommonController {
     	
     	$selectedFields = I('tableFields');
     	if(empty($selectedFields)){
-    		$this->generateAll();
+    		$this->generateAll($tableName);
     		return;
     	}
     	//var_dump($selectedFields);
@@ -41,9 +41,8 @@ class FormController extends CommonController {
     }
     
     //生成所有表的form
-    function generateAll(){
+    function generateAll($tableName){
     	$tableNameList = getTableNameList();
-		foreach($tableNameList as $k => $tableName){
 			$tableInfoArray = getTableInfoArray($tableName);
 			$columnNameKey = strtoupper(getColumnNameKey());
 			$str = '';
@@ -57,10 +56,13 @@ class FormController extends CommonController {
 			$str .='</form>';
 			echo $str;
 			//echo "<hr />";
-		}
 		
 
  
+    }
+    
+    function generateAllTable(){
+    	$tableNameList = getTableNameList();
     }
 	
 	//获取字段类型及长度

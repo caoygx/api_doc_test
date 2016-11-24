@@ -29,3 +29,57 @@ php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api
 地址: index.php/home/form/index
 
 ![](https://github.com/caoygx/api_doc_test/blob/master/generate.jpg)
+
+
+
+详细说明：
+使用自动生成表单时，定义数据的格式如下
+`status` int(11) NOT NULL   COMMENT '状态-select|0:禁用,1:正常,2:待审核',
+
+select 也可以换成checkbox,radio等。
+
+
+
+在某个字段有多个值时，在web一般用select展示，可以用下面的规则命名注释来达到自动生成select控件。
+ 
+
+ COMMENT '字段中文名，选项1的key:选项1的文本|选项2的key:选项2的text' 
+
+ 
+`status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态，0:禁用|1:正常|2:待审核'
+ 
+
+这样可以通过代码生成工具通过","和"|",":"来分隔，然后获取到这个字段的中文名，作为表单的label,选项文本作为select的text,选项key作为select的key
+ 
+<?php
+$id=$name='status';
+$commnet = '状态,0:禁用|1:正常|2:待审核';
+$arr = explode(",",$commnet);
+$label = "<label>{$arr[0]}</label>";
+$items = explode("|",$arr[1]);
+$options = "";
+foreach($items as $item){
+list($value, $text) = explode(':',$item);
+$options .= "$text";
+}
+$select = "<select id="$id" name="$name">$options
+
+
+
+
+
+</select>";
+$form_row = $label.$select;
+echo $form_row; 
+
+
+
+运行后会生成如下表单内容
+<label>状态</label><select id="status" name="status">
+<option value="0">禁用</option>
+<option value="1">正常</option>
+<option value="2">待审核</option>
+</select>
+ 
+ 
+ 

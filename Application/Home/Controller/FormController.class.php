@@ -29,12 +29,17 @@ class FormController extends CommonController {
     	}else{
     		$allFields = getTableInfoArray($tableName);
     	}
-    	$str .='<form class="form-horizontal" role="form">';
+    	$str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
     	foreach($allFields as $columnInfo){
     		if(!empty($selectedFields) && !in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
     	}
+    	$str .= '<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">保存</button>
+    </div>
+  </div>';
     	$str .='</form>';
     	echo $str;
     	

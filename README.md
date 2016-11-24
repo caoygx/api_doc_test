@@ -53,24 +53,33 @@ select 也可以换成checkbox,radio等。
  
 <?php
 $id=$name='status';
+
 $commnet = '状态,0:禁用|1:正常|2:待审核';
+
 $arr = explode(",",$commnet);
+
 $label = "<label>{$arr[0]}</label>";
+
 $items = explode("|",$arr[1]);
+
 $options = "";
+
 foreach($items as $item){
+
 list($value, $text) = explode(':',$item);
+
 $options .= "$text";
+
 }
+
 $select = "<select id="$id" name="$name">$options
 
-
-
-
-
 </select>";
+
 $form_row = $label.$select;
+
 echo $form_row; 
+
 
 
 

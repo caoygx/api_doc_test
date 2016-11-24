@@ -8,6 +8,7 @@ $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
 define('URL_API',"http://api.rrbrr.com");
 $pubConfig = array(
+	'TAGLIB_PRE_LOAD'    =>    'html',
 	//'LOG_RECORD'=>true, 
 	'DEFAULT_LANG' => 'en-us',
 	'DB_HOST' => "127.0.0.1",
@@ -30,8 +31,9 @@ $pubConfig = array(
 		'DB_TYPE' => "mysql",
 		'DB_CHARSET'=>'utf8',
 	),
-	
-
+	'options' => array(
+		"bug_status"=>array ( 1 => '已收单', 2 => '已分级', 3 => '已分配', 4 => '已定位', 5 => '解决中', 6 => '已解决', 7 => '已上线', 8 => '已完结', 9 => '不是bug', )
+	),
 	
  
 	

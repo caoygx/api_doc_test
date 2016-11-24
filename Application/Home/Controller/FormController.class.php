@@ -40,7 +40,7 @@ class FormController extends CommonController {
     	
     	echo "\n\n\n\n";
     	foreach ($this->options as $k => $v){
-    		echo '"'.$tableName.'_'.$k.'"',"=>",$v;
+    		echo '"'.$tableName.'_'.$k.'"',"=>",$v,"\n\n";
     	}
     	
     }

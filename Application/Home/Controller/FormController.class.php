@@ -5,6 +5,7 @@ use Common\CommonController;
 class FormController extends CommonController {
 	protected $nodeId = [];	
 	protected $autoInstantiateModel = false;
+	protected $options = [];
 	//protected $pre = "rrbrr_";
  
 	
@@ -19,30 +20,35 @@ class FormController extends CommonController {
     
     function generate(){
     	$tableName = I('tableName');
-    	$allFields = getTableInfoArray($tableName);
     	$columnNameKey = strtoupper(getColumnNameKey());
     	$str = '';
-    	
     	$selectedFields = I('tableFields');
-    	if(empty($selectedFields)){
-    		$this->generateAll($tableName);
+    	if(empty($tableName)){
+    		$this->generateAll();
     		return;
+    	}else{
+    		$allFields = getTableInfoArray($tableName);
     	}
-    	//var_dump($selectedFields);
     	$str .='<form class="form-horizontal" role="form">';
     	foreach($allFields as $columnInfo){
-    		if(!in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
-    		//var_dump($columnInfo);exit;
+    		if(!empty($selectedFields) && !in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
     	}
     	$str .='</form>';
     	echo $str;
+    	
+    	echo "\n\n\n\n";
+    	foreach ($this->options as $k => $v){
+    		echo '"'.$tableName.'_'.$k.'"',"=>",$v;
+    	}
+    	
     }
     
     //生成所有表的form
-    function generateAll($tableName){
+    function generateAll(){
     	$tableNameList = getTableNameList();
+		foreach($tableNameList as $k => $tableName){
 			$tableInfoArray = getTableInfoArray($tableName);
 			$columnNameKey = strtoupper(getColumnNameKey());
 			$str = '';
@@ -53,16 +59,13 @@ class FormController extends CommonController {
 				 $str .= $this->createFormRow($columnInfo);
 				//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
 			}
-			$str .='</form>';
+			$str .="</form>\n\n\n\n";
 			echo $str;
 			//echo "<hr />";
+		}
 		
 
  
-    }
-    
-    function generateAllTable(){
-    	$tableNameList = getTableNameList();
     }
 	
 	//获取字段类型及长度
@@ -156,11 +159,13 @@ class FormController extends CommonController {
 		$cnName = empty($commentInfo['name']) ? $columnInfo['COLUMN_NAME'] : $commentInfo['name'];
 		$name = $columnInfo['COLUMN_NAME'];
 		$inputStr = "";
-		
+		$confStr = "";
 		
 		if(!empty($commentInfo['type'])){
 			if($commentInfo['options']){
+				$this->options[$columnInfo['COLUMN_NAME']] = var_export($commentInfo['options'],1);
 				if($commentInfo['type'] == "select"){
+					$inputStr .= "<html:select options='opt_status' selected='status_selected' name=\"{$columnInfo['COLUMN_NAME']}\" />";
 					$inputStr .= " <select name=\"select\" id=\"select\">";
 					foreach($commentInfo['options'] as $value => $text){
 						$inputStr.="<option value=\"{$value}\">$text</option>";
@@ -186,12 +191,11 @@ class FormController extends CommonController {
 		}else{
 			if($inputAttribute['type'] == "text"){
 				//<textarea name="textarea" cols="30" rows="10" id="textarea"></textarea>
-				$inputStr .= "<input name=\"$name\" type=\"text\" id=\"$name\" size=\"{$inputAttribute['size']}\" />";
+				$inputStr .= "<input name=\"$name\" type=\"text\" id=\"$name\" size=\"{$inputAttribute['size']}\" value=".'"{$vo.'.$name.'}"'." />";
 			}elseif($inputAttribute['type'] == "textare"){
 				$inputStr .= "<textarea name=\"$name\" cols=\"30\" rows=\"10\" id=\"$name\"></textarea>";
 			}	
 		}
-		 
 		 return '<div class="form-group">
     <label for="'.$name.'" class="col-sm-2 control-label">'.$cnName.'</label>
     <div class="col-sm-10">

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加接口</title>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+<div class="container" id="container" >
+
+<form class="form-horizontal" role="form"  method="post" action="/web/api_doc_test/index.php/Home/Form/save/">
+	<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">  <div class="form-group">
+    <label for="id" class="col-sm-2 control-label">编号</label>
+    <div class="col-sm-10">
+       <input name="id" type="text" id="id" size="30" value="{$vo.id}" />    </div>
+  </div>  <div class="form-group">
+    <label for="title" class="col-sm-2 control-label">谱名</label>
+    <div class="col-sm-10">
+       <input name="title" type="text" id="title" size="30" value="{$vo.title}" />    </div>
+  </div>  <div class="form-group">
+    <label for="uid" class="col-sm-2 control-label">用户id</label>
+    <div class="col-sm-10">
+       <input name="uid" type="text" id="uid" size="30" value="{$vo.uid}" />    </div>
+  </div>  <div class="form-group">
+    <label for="description" class="col-sm-2 control-label">谱描述名</label>
+    <div class="col-sm-10">
+       <input name="description" type="text" id="description" size="30" value="{$vo.description}" />    </div>
+  </div>  <div class="form-group">
+    <label for="ancestor" class="col-sm-2 control-label">始祖，可用int,添加的第一个成员的id</label>
+    <div class="col-sm-10">
+       <input name="ancestor" type="text" id="ancestor" size="30" value="{$vo.ancestor}" />    </div>
+  </div>  <div class="form-group">
+    <label for="level" class="col-sm-2 control-label">level</label>
+    <div class="col-sm-10">
+       <input name="level" type="text" id="level" size="30" value="{$vo.level}" />    </div>
+  </div>  <div class="form-group">
+    <label for="province" class="col-sm-2 control-label">province</label>
+    <div class="col-sm-10">
+       <input name="province" type="text" id="province" size="30" value="{$vo.province}" />    </div>
+  </div>  <div class="form-group">
+    <label for="city" class="col-sm-2 control-label">city</label>
+    <div class="col-sm-10">
+       <input name="city" type="text" id="city" size="30" value="{$vo.city}" />    </div>
+  </div>  <div class="form-group">
+    <label for="county" class="col-sm-2 control-label">county</label>
+    <div class="col-sm-10">
+       <input name="county" type="text" id="county" size="30" value="{$vo.county}" />    </div>
+  </div>  <div class="form-group">
+    <label for="addr" class="col-sm-2 control-label">具体地址，可省去省市，如：白塔填石桥村</label>
+    <div class="col-sm-10">
+       <input name="addr" type="text" id="addr" size="30" value="{$vo.addr}" />    </div>
+  </div>  <div class="form-group">
+    <label for="status" class="col-sm-2 control-label">态状,0:不公开,1:公开，2:只对家族公开</label>
+    <div class="col-sm-10">
+       <input name="status" type="text" id="status" size="30" value="{$vo.status}" />    </div>
+  </div>  <div class="form-group">
+    <label for="create_time" class="col-sm-2 control-label">创建时间</label>
+    <div class="col-sm-10">
+       <input name="create_time" type="text" id="create_time" size="30" value="{$vo.create_time}" />    </div>
+  </div>  <div class="form-group">
+    <label for="update_time" class="col-sm-2 control-label">更新时间默认按此排序，当有子孙添加则起时间也更新</label>
+    <div class="col-sm-10">
+       <input name="update_time" type="text" id="update_time" size="30" value="{$vo.update_time}" />    </div>
+  </div>  <div class="form-group">
+    <label for="place" class="col-sm-2 control-label">居住地</label>
+    <div class="col-sm-10">
+       <input name="place" type="text" id="place" size="30" value="{$vo.place}" />    </div>
+  </div>  <div class="form-group">
+    <label for="hall" class="col-sm-2 control-label">堂号</label>
+    <div class="col-sm-10">
+       <input name="hall" type="text" id="hall" size="30" value="{$vo.hall}" />    </div>
+  </div>  <div class="form-group">
+    <label for="migrate" class="col-sm-2 control-label">迁入地
+及时间</label>
+    <div class="col-sm-10">
+       <input name="migrate" type="text" id="migrate" size="30" value="{$vo.migrate}" />    </div>
+  </div>  <div class="form-group">
+    <label for="linkman" class="col-sm-2 control-label">联系人</label>
+    <div class="col-sm-10">
+       <input name="linkman" type="text" id="linkman" size="30" value="{$vo.linkman}" />    </div>
+  </div>  <div class="form-group">
+    <label for="contact" class="col-sm-2 control-label">联系方式</label>
+    <div class="col-sm-10">
+       <input name="contact" type="text" id="contact" size="30" value="{$vo.contact}" />    </div>
+  </div>  <div class="form-group">
+    <label for="surname" class="col-sm-2 control-label">姓氏</label>
+    <div class="col-sm-10">
+       <input name="surname" type="text" id="surname" size="30" value="{$vo.surname}" />    </div>
+  </div>  <div class="form-group">
+    <label for="flag" class="col-sm-2 control-label">标致位，c:推荐,h:头条,p:图片</label>
+    <div class="col-sm-10">
+       <input name="flag" type="text" id="flag" size="30" value="{$vo.flag}" />    </div>
+  </div>  <div class="form-group">
+    <label for="view" class="col-sm-2 control-label">点击数</label>
+    <div class="col-sm-10">
+       <input name="view" type="text" id="view" size="30" value="{$vo.view}" />    </div>
+  </div>  <div class="form-group">
+    <label for="num" class="col-sm-2 control-label">成员数</label>
+    <div class="col-sm-10">
+       <input name="num" type="text" id="num" size="30" value="{$vo.num}" />    </div>
+  </div>  <div class="form-group">
+    <label for="ancestor_id" class="col-sm-2 control-label">始祖id</label>
+    <div class="col-sm-10">
+       <input name="ancestor_id" type="text" id="ancestor_id" size="30" value="{$vo.ancestor_id}" />    </div>
+  </div>  <div class="form-group">
+    <label for="preface" class="col-sm-2 control-label">谱序</label>
+    <div class="col-sm-10">
+       <input name="preface" type="text" id="preface" size="30" value="{$vo.preface}" />    </div>
+  </div>  <div class="form-group">
+    <label for="pid" class="col-sm-2 control-label">父谱id</label>
+    <div class="col-sm-10">
+       <input name="pid" type="text" id="pid" size="30" value="{$vo.pid}" />    </div>
+  </div>  <div class="form-group">
+    <label for="rang_col" class="col-sm-2 control-label">势力范围，即树的总宽度</label>
+    <div class="col-sm-10">
+       <input name="rang_col" type="text" id="rang_col" size="30" value="{$vo.rang_col}" />    </div>
+  </div>  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">保存</button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+</body>
+</html>

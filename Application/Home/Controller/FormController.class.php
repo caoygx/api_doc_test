@@ -18,6 +18,10 @@ class FormController extends CommonController {
 		
     }
     
+    function preview(){
+        $this->display("tpl_preview");
+    }
+    
     function generate(){
     	$tableName = I('tableName');
     	$columnNameKey = strtoupper(getColumnNameKey());
@@ -35,13 +39,17 @@ class FormController extends CommonController {
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
     	}
-    	$str .= '<div class="form-group">
+    	
+    	$this->allRows = $str;
+    	$r = $this->fetch("tpl_form");
+    	echo $r;
+    	/* $str .= '<div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">保存</button>
     </div>
-  </div>';
-    	$str .='</form>';
-    	echo $str;
+  </div>'; */
+    	//$str .='</form>';
+    	//echo $str;
     	
     	echo "\n\n\n\n";
     	foreach ($this->options as $k => $v){
@@ -108,6 +116,10 @@ class FormController extends CommonController {
 		$ret['name'] = $name[0];
 		if(!empty($name[1])){ //有name后指定类型如 status-checkbox则用后面的类型，否则用select
 			$ret["type"] = $name[1];
+		}
+		
+		if(!empty($name[2])){
+		    $ret['tips'] = $name[2]; 
 		}
  		
 		if(!empty($arr[1])){
@@ -201,12 +213,21 @@ class FormController extends CommonController {
 				$inputStr .= "<textarea name=\"$name\" cols=\"30\" rows=\"10\" id=\"$name\"></textarea>";
 			}	
 		}
+		
+		$tips = $commentInfo['tips'];
+		$this->name = $name;
+		$this->cnName = $cnName;
+		$this->inputStr = $inputStr;
+		$this->tips = $tips;
+		
+		return $this->fetch("tpl_row");
+		/* var_dump($r);exit;
 		 return '<div class="form-group">
     <label for="'.$name.'" class="col-sm-2 control-label">'.$cnName.'</label>
     <div class="col-sm-10">
        '.$inputStr.'
     </div>
-  </div>';
+  </div>'; */
 		 
 		
 		 

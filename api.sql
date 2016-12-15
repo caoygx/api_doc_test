@@ -13,6 +13,9 @@ File Encoding         : 65001
 Date: 2016-07-28 16:23:24
 */
 
+CREATE DATABASE IF NOT EXISTS api DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+use api;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -30,8 +33,11 @@ CREATE TABLE `rrbrr_doc` (
   `return_json` text,
   `module` varchar(50) DEFAULT NULL,
   `update_time` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '状态-select-提示|0:禁用,1:正常,2:待审核',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
 
 -- ----------------------------
 -- Records of rrbrr_doc

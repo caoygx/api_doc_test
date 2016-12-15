@@ -34,7 +34,7 @@ php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api
 
 详细说明：
 使用自动生成表单时，定义数据的格式如下
-`status` int(11) NOT NULL   COMMENT '状态-select|0:禁用,1:正常,2:待审核',
+`status` int(11) DEFAULT NULL COMMENT '状态-select-提示内容|0:禁用,1:正常,2:待审核',
 
 select 也可以换成checkbox,radio等。
 

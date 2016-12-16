@@ -4,14 +4,14 @@ use Common\CommonController;
 
 class DocController extends CommonController {
 	protected $nodeId = [];	
-	protected $pre = "rrbrr_";
+	//protected $pre = "lez_";
 	public  function _initialize(){
-		C('DB_PREFIX',"");
+		C('DB_PREFIX',"lez_");
 	}
     function index($id=""){
     	$k = I('k');
     	$map = $where = [];
-    	$mApi = M('rrbrr_doc','','api');
+    	$mApi = M('doc','','api');
     	if($k){
     		$where['title']  = array('like', "%{$k}%");
     		$where['url'] =  array('like', "%{$k}%");
@@ -39,10 +39,9 @@ class DocController extends CommonController {
     		$newList = array_merge($a, $newList);
     		
     	}
-    	
     	//$newList[0]
     	$this->list = $newList;
-    	$mApi = M('rrbrr_doc','','api');
+    	$mApi = M('doc','','api');
     	$this->detail = $mApi->find($id);
     	
     	
@@ -56,7 +55,7 @@ class DocController extends CommonController {
 	}
 	
 	function show($id){
-		$mApi = M('rrbrr_doc','','api');
+		$mApi = M('doc','','api');
 		$this->vo = $mApi->find($id);
 		$this->display();
 	}

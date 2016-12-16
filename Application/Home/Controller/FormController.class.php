@@ -6,7 +6,7 @@ class FormController extends CommonController {
 	protected $nodeId = [];	
 	protected $autoInstantiateModel = false;
 	protected $options = [];
-	//protected $pre = "rrbrr_";
+	//protected $pre = "lez_";
  
 	
 	 public function index(){
@@ -36,12 +36,14 @@ class FormController extends CommonController {
     	$str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
     	foreach($allFields as $columnInfo){
     		if(!empty($selectedFields) && !in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
+    		if(!I('hasId') && $columnInfo['COLUMN_KEY'] == "PRI") continue;
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
     	}
     	
     	$this->allRows = $str;
     	$r = $this->fetch("tpl_form");
+    	
     	echo $r;
     	/* $str .= '<div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -183,11 +185,11 @@ class FormController extends CommonController {
 				$this->options[$columnInfo['COLUMN_NAME']] = var_export($commentInfo['options'],1);
 				if($commentInfo['type'] == "select"){
 					$inputStr .= "<html:select options='opt_status' selected='status_selected' name=\"{$columnInfo['COLUMN_NAME']}\" />";
-					$inputStr .= " <select name=\"select\" id=\"select\">";
+					/*$inputStr .= " <select name=\"select\" id=\"select\">";
 					foreach($commentInfo['options'] as $value => $text){
 						$inputStr.="<option value=\"{$value}\">$text</option>";
 					}
-					$inputStr .= "</select>";
+					$inputStr .= "</select>";*/
 					
 				}elseif($commentInfo['type'] == "radio"){
 					
@@ -262,7 +264,7 @@ class FormController extends CommonController {
     function index2($id=""){
     	$k = I('k');
     	$map = $where = [];
-    	$mApi = M('rrbrr_doc','','api');
+    	$mApi = M('lez_doc','','api');
     	if($k){
     		$where['title']  = array('like', "%{$k}%");
     		$where['url'] =  array('like', "%{$k}%");
@@ -293,7 +295,7 @@ class FormController extends CommonController {
     	
     	//$newList[0]
     	$this->list = $newList;
-    	$mApi = M('rrbrr_doc','','api');
+    	$mApi = M('lez_doc','','api');
     	$this->detail = $mApi->find($id);
     	
     	
@@ -307,7 +309,7 @@ class FormController extends CommonController {
 	}
 	
 	function show($id){
-		$mApi = M('rrbrr_doc','','api');
+		$mApi = M('lez_doc','','api');
 		$this->vo = $mApi->find($id);
 		$this->display();
 	}

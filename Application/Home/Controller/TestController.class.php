@@ -14,6 +14,7 @@ use Common\Cookie;
 class TestController extends CommonController{
 		function _initialize(){
 			parent::_initialize();
+			C('DB_PREFIX',"lez_");
 			$this->m = M('doc', '', 'api');
 		}
 		
@@ -52,6 +53,8 @@ class TestController extends CommonController{
         	header("Content-type:text/html;charset=utf-8");
         	$id = I('id');
         	$api = $this->m->find($id);
+        	//echo $this->m->getLastSql();exit;
+        	//var_dump($this->m);exit;
         	if(!empty($api) && is_array($api)){
         		$data = request_by_curl($api);
         		
@@ -59,7 +62,7 @@ class TestController extends CommonController{
         		
         		//request_by_curl($api_config);
         	}
-        	exit(); 
+        	exit('没有此记录'); 
         }
         
         function copy(){

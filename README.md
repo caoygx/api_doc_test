@@ -91,4 +91,8 @@ echo $form_row;
 </select>
  
  
+
+增加代码生成功能
+![](https://github.com/caoygx/api_doc_test/blob/master/code_generate.jpg)
+
  

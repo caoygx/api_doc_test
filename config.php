@@ -6,7 +6,8 @@ if(IS_CLI){
 }
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
-define('URL_API',"http://vpn.lezreader.com/");//
+//define('URL_API',"http://vpn.lezreader.com/");
+define('URL_API',"http://api.rrbrr.com");
 $pubConfig = array(
 	'TAGLIB_PRE_LOAD'    =>    'html',
 	//'LOG_RECORD'=>true, 

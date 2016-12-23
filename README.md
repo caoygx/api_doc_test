@@ -1,5 +1,5 @@
 # api_doc_test
-api文档管理工具和api接口自动测试工具
+api文档管理工具，api接口自动测试工具，代码生成工具
 
 支持搜索，json格式折叠，高亮显示
 
@@ -18,13 +18,13 @@ api文档管理工具和api接口自动测试工具
 
 
 
-
+功能1.
 脚本批量测试命令
 php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api
 
 
 
-
+功能1.
 根据表字段自动生成form表单的，在开发中是不是会遇到几十个表字段要做个form 提交，一个个写表单，并给字段命名，有没有种抓狂的感觉？现在可以用这个工具来帮你生成表单了。
 地址: index.php/home/form/index
 
@@ -92,7 +92,9 @@ echo $form_row;
  
  
 
-增加代码生成功能
+
+功能3.
+代码生成功能
 ![](https://github.com/caoygx/api_doc_test/blob/master/code_generate.jpg)
 
  

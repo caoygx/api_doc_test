@@ -211,6 +211,7 @@ class Mssql extends Db{
         AND t.table_schema  = c.table_schema
         AND t.table_name    = c.table_name
         WHERE   t.table_name = '$tableName'");
+        echo $this->getLastInsID();exit;
         $info   =   array();
         if($result) {
             foreach ($result as $key => $val) {

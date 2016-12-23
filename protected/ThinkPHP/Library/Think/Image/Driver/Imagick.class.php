@@ -60,9 +60,10 @@ class Imagick{
      * 保存图像
      * @param  string  $imgname   图像保存名称
      * @param  string  $type      图像类型
+     * @param  integer $quality   JPEG图像质量      
      * @param  boolean $interlace 是否对JPEG类型图像设置隔行扫描
      */
-    public function save($imgname, $type = null, $interlace = true){
+    public function save($imgname, $type = null, $quality=80,$interlace = true){
         if(empty($this->img)) E('没有可以被保存的图像资源');
 
         //设置图片类型
@@ -77,6 +78,9 @@ class Imagick{
         if('jpeg' == $type || 'jpg' == $type){
             $this->img->setImageInterlaceScheme(1);
         }
+
+        // 设置图像质量
+        $this->img->setImageCompressionQuality($quality); 
 
         //去除图像配置信息
         $this->img->stripImage();
@@ -141,10 +145,11 @@ class Imagick{
      * @param  integer $h      裁剪区域高度
      * @param  integer $x      裁剪区域x坐标
      * @param  integer $y      裁剪区域y坐标
+     * @param  integer $angle  旋转角度
      * @param  integer $width  图像保存宽度
      * @param  integer $height 图像保存高度
      */
-    public function crop($w, $h, $x = 0, $y = 0, $width = null, $height = null){
+    public function crop($w, $h, $x = 0, $y = 0,$angle = 0, $width = null, $height = null){
         if(empty($this->img)) E('没有可以被裁剪的图像资源');
 
         //设置保存尺寸
@@ -158,34 +163,32 @@ class Imagick{
 
             //循环裁剪每一帧
             do {
-                $this->_crop($w, $h, $x, $y, $width, $height, $img);
+                $this->_crop($w, $h, $x, $y,$angle, $width, $height, $img);
             } while ($img->nextImage());
             
             //压缩图片
             $this->img = $img->deconstructImages();
             $img->destroy(); //销毁零时图片
         } else {
-            $this->_crop($w, $h, $x, $y, $width, $height);
+            $this->_crop($w, $h, $x, $y,$angle, $width, $height);
         }
     }
 
     /* 裁剪图片，内部调用 */
-    private function _crop($w, $h, $x, $y, $width, $height, $img = null){
+    private function _crop($w, $h, $x, $y,$angle, $width, $height, $img = null){
         is_null($img) && $img = $this->img;
 
         //裁剪
         $info = $this->info;
         if($x != 0 || $y != 0 || $w != $info['width'] || $h != $info['height']){
+        	$img->rotateImage(new \ImagickPixel('#00000000'),$angle);
             $img->cropImage($w, $h, $x, $y);
             $img->setImagePage($w, $h, 0, 0); //调整画布和图片一致
         }
         
         //调整大小
         if($w != $width || $h != $height){
-            //$img->sampleImage($width, $height);
-        	$img->thumbnailImage($width, $height);
-        	//$img->resizeImage($width,$height,\Imagick::FILTER_LANCZOS,1,true);
-        	
+            $img->sampleImage($width, $height);
         }
 
         //设置缓存尺寸
@@ -273,13 +276,13 @@ class Imagick{
                 $posy = ($height - $h * $scale)/2;
 
                 //创建一张新图像
-                $newimg = new Imagick();
+                $newimg = new \Imagick();
                 $newimg->newImage($width, $height, 'white', $this->info['type']);
 
 
                 if('gif' == $this->info['type']){
                     $imgs = $this->img->coalesceImages();
-                    $img  = new Imagick();
+                    $img  = new \Imagick();
                     $this->img->destroy(); //销毁原图
 
                     //循环填充每一帧
@@ -332,7 +335,7 @@ class Imagick{
         is_null($img) && $img = $this->img;
 
         /* 将指定图片绘入空白图片 */
-        $draw  = new ImagickDraw();
+        $draw  = new \ImagickDraw();
         $draw->composite($img->getImageCompose(), $posx, $posy, $neww, $newh, $img);
         $image = $newimg->clone();
         $image->drawImage($draw);
@@ -353,7 +356,7 @@ class Imagick{
         if(!is_file($source)) E('水印图像不存在');
 
         //创建水印图像资源
-        $water = new Imagick(realpath($source));
+        $water = new \Imagick(realpath($source));
         $info  = array($water->getImageWidth(), $water->getImageHeight());
 
         /* 设定水印位置 */
@@ -421,7 +424,7 @@ class Imagick{
         }
 
         //创建绘图资源
-        $draw = new ImagickDraw();
+        $draw = new \ImagickDraw();
         $draw->composite($water->getImageCompose(), $x, $y, $info[0], $info[1], $water);
         
         if('gif' == $this->info['type']){
@@ -478,7 +481,7 @@ class Imagick{
         
 
         //获取文字信息
-        $draw = new ImagickDraw();
+        $draw = new \ImagickDraw();
         $draw->setFont(realpath($font));
         $draw->setFontSize($size);
         $draw->setFillColor($col);

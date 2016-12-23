@@ -75,9 +75,10 @@ class Gd{
      * 保存图像
      * @param  string  $imgname   图像保存名称
      * @param  string  $type      图像类型
+     * @param  integer $quality   图像质量     
      * @param  boolean $interlace 是否对JPEG类型图像设置隔行扫描
      */
-    public function save($imgname, $type = null, $interlace = true){
+    public function save($imgname, $type = null, $quality=80,$interlace = true){
         if(empty($this->img)) E('没有可以被保存的图像资源');
 
         //自动获取图像类型
@@ -86,18 +87,15 @@ class Gd{
         } else {
             $type = strtolower($type);
         }
-
-        //JPEG图像设置隔行扫描
-        if('jpeg' == $type || 'jpg' == $type){
-            $type = 'jpeg';
-            imageinterlace($this->img, $interlace);
-        }
-
         //保存图像
-        if('gif' == $type && !empty($this->gif)){
+        if('jpeg' == $type || 'jpg' == $type){
+            //JPEG图像设置隔行扫描
+            imageinterlace($this->img, $interlace);
+            imagejpeg($this->img, $imgname,$quality);
+        }elseif('gif' == $type && !empty($this->gif)){
             $this->gif->save($imgname);
-        } else {
-            $fun = "image{$type}";
+        }else{
+            $fun  =   'image'.$type;
             $fun($this->img, $imgname);
         }
     }
@@ -153,10 +151,11 @@ class Gd{
      * @param  integer $h      裁剪区域高度
      * @param  integer $x      裁剪区域x坐标
      * @param  integer $y      裁剪区域y坐标
+     * @param  integer $angle  旋转角度
      * @param  integer $width  图像保存宽度
      * @param  integer $height 图像保存高度
      */
-    public function crop($w, $h, $x = 0, $y = 0, $width = null, $height = null){
+    public function crop($w, $h, $x = 0, $y = 0, $angle = 0,$width = null, $height = null){
         if(empty($this->img)) E('没有可以被裁剪的图像资源');
 
         //设置保存尺寸
@@ -169,9 +168,13 @@ class Gd{
             // 调整默认颜色
             $color = imagecolorallocate($img, 255, 255, 255);
             imagefill($img, 0, 0, $color);
+            
+            $angle = -$angle;
+            $this->img = imagerotate($this->img, $angle, 0);
 
             //裁剪
             imagecopyresampled($img, $this->img, 0, 0, $x, $y, $width, $height, $w, $h);
+           
             imagedestroy($this->img); //销毁原图
 
             //设置新图像

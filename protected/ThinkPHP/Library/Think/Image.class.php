@@ -84,11 +84,12 @@ class Image{
      * 保存图片
      * @param  string  $imgname   图片保存名称
      * @param  string  $type      图片类型
+     * @param  integer $quality   图像质量      
      * @param  boolean $interlace 是否对JPEG类型图片设置隔行扫描
      * @return Object             当前图片处理库对象
      */
-    public function save($imgname, $type = null, $interlace = true){
-        $this->img->save($imgname, $type, $interlace);
+    public function save($imgname, $type = null, $quality=80,$interlace = true){
+        $this->img->save($imgname, $type, $quality,$interlace);
         return $this;
     }
 
@@ -138,12 +139,13 @@ class Image{
      * @param  integer $h      裁剪区域高度
      * @param  integer $x      裁剪区域x坐标
      * @param  integer $y      裁剪区域y坐标
+     * @param  integer $angle  旋转角度
      * @param  integer $width  图片保存宽度
      * @param  integer $height 图片保存高度
      * @return Object          当前图片处理库对象
      */
-    public function crop($w, $h, $x = 0, $y = 0, $width = null, $height = null){
-        $this->img->crop($w, $h, $x, $y, $width, $height);
+    public function crop($w, $h, $x = 0, $y = 0, $angle = 0, $width = null, $height = null){
+        $this->img->crop($w, $h, $x, $y,$angle, $width, $height);
         return $this;
     }
 

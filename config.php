@@ -6,7 +6,7 @@ if(IS_CLI){
 }
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
-define('URL_API',"http://api.rrbrr.com");
+define('URL_API',"http://vpn.lezreader.com/");//
 $pubConfig = array(
 	'TAGLIB_PRE_LOAD'    =>    'html',
 	//'LOG_RECORD'=>true, 
@@ -16,7 +16,7 @@ $pubConfig = array(
     'DB_USER' => "root",
     'DB_PWD'  => "",
     'DB_TYPE' => 'mysql',
-    'DB_PREFIX' => 'rrbrr_',
+    'DB_PREFIX' => 'vpn_',
     'DB_CHARSET'=>'utf8',
 		
 	'service_type' =>  array( '全局' , '通用' , '助手' ),
@@ -30,6 +30,7 @@ $pubConfig = array(
 		'DB_NAME' => 'api',
 		'DB_TYPE' => "mysql",
 		'DB_CHARSET'=>'utf8',
+	    'DB_PREFIX' => 'vpn_',
 	),
 	'options' => array(
 		"bug_status"=>array ( 1 => '已收单', 2 => '已分级', 3 => '已分配', 4 => '已定位', 5 => '解决中', 6 => '已解决', 7 => '已上线', 8 => '已完结', 9 => '不是bug', )

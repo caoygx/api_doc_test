@@ -192,11 +192,11 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 	if(! isset($api['get'])) {
 		$api['get'] = 1;
 	}
-	if(!is_array($api['data'])){
-		$api['data'] = json_decode($api['data'],true);
+	if(!is_array($api['param_json'])){
+		$api['param_json'] = json_decode($api['param_json'],true);
 	}
 	$method = $api['get'] ? "GET" : "POST";
-	$parms = $api['data'];
+	$parms = $api['param_json'];
 	$id = $api['id'];
 	$ret = curl_get_content($url, $parms, $api['get']);
 	$ret = json_decode($ret,true);
@@ -408,9 +408,11 @@ function curl_get_content($url, $data = "", $method = "get", $timeout = 30, $CA 
 	)); // 避免data数据过长问题
 	    // var_dump($data);
 	
+	curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; c8650 Build/GWK74) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/4.5 Mobile Safari/533.1s');
+	
 	$headerArr[] = 'PARAMS:android#1.4.2#wandoujias';
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArr);
-	//curl_setopt($ch, CURLOPT_PROXY, "192.168.22.211:8888");
+	//curl_setopt($ch, CURLOPT_PROXY, "192.168.3.211:8888");
 	$ret = curl_exec($ch);
 	if(empty($ret)) {
 		var_dump(curl_error($ch)); // 查看报错信息
@@ -1117,3 +1119,83 @@ function colorize($text, $status) {
 	return chr(27) . "$out" . "$text" . chr(27) . "[0m";
 }
 
+
+
+function getExceptionTraceAsString($exception) {
+	$rtn = "";
+	$count = 0;
+	foreach ($exception->getTrace() as $frame) {
+		empty($frame['file']) && $frame['file'] = "[internal function]"; //空则赋值
+		empty($frame['class']) || $frame['class'] = $frame['class']."->"; //空则不赋值，也就是非空才赋值，高手的写法，菜鸟的内心是无法理解的
+		$args = "";
+		if (isset($frame['args'])) {
+			$args = array();
+			foreach ($frame['args'] as $arg) {
+				if (is_string($arg)) {
+					$args[] = "'" . $arg . "'";
+				} elseif (is_array($arg)) {
+					$args[] = "Array";
+				} elseif (is_null($arg)) {
+					$args[] = 'NULL';
+				} elseif (is_bool($arg)) {
+					$args[] = ($arg) ? "true" : "false";
+				} elseif (is_object($arg)) {
+					$args[] = get_class($arg);
+				} elseif (is_resource($arg)) {
+					$args[] = get_resource_type($arg);
+				} else {
+					$args[] = $arg;
+				}
+			}
+			$args = join(", ", $args);
+		}
+		$rtn .= sprintf( "#%s %s(%s): %s%s(%s)\n",
+				$count,
+				$frame['file'],
+				$frame['line'],
+				$frame['class'],
+				$frame['function'],
+				$args );
+		$count++;
+	}
+	return $rtn;
+}
+
+
+function userAgent($ua){
+	## This credit must stay intact (Unless you have a deal with @lukasmig or frimerlukas@gmail.com
+	## Made by Lukas Frimer Tholander from Made In Osted Webdesign.
+	## Price will be $2
+
+	$iphone = strstr(strtolower($ua), 'mobile'); //Search for 'mobile' in user-agent (iPhone have that)
+	$android = strstr(strtolower($ua), 'android'); //Search for 'android' in user-agent
+	$windowsPhone = strstr(strtolower($ua), 'phone'); //Search for 'phone' in user-agent (Windows Phone uses that)
+	 
+	 
+	
+	$androidTablet = androidTablet($ua); //Do androidTablet function
+	$ipad = strstr(strtolower($ua), 'ipad'); //Search for iPad in user-agent
+	 
+	if($androidTablet || $ipad){ //If it's a tablet (iPad / Android)
+		return 'tablet';
+	}
+	elseif($iphone && !$ipad || $android && !$androidTablet || $windowsPhone){ //If it's a phone and NOT a tablet
+		return 'mobile';
+	}
+	else{ //If it's not a mobile device
+		return 'desktop';
+	}
+}
+
+function androidTablet($ua){ //Find out if it is a tablet
+	if(strstr(strtolower($ua), 'android') ){//Search for android in user-agent
+		if(!strstr(strtolower($ua), 'mobile')){ //If there is no ''mobile' in user-agent (Android have that on their phones, but not tablets)
+			return true;
+		}
+	}
+}
+
+function isMobile(){
+	$r = userAgent($_SERVER['HTTP_USER_AGENT']);
+	return ($r == "mobile");
+}

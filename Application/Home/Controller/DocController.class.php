@@ -60,6 +60,31 @@ class DocController extends CommonController {
 		$this->display();
 	}
 	
+	public $tplPhpMethod = '/**';
+	
+	function generatePhp($id){
+	    $r = $this->m->find($id);
+	    list($module,$control,$action) = explode('/', $r['url']);
+	    $param = json_decode($r['param_json'],1);
+	    $paramDescription = [];
+	    foreach ($param as $k => &$v){
+	        $temp = [];
+	        $temp['type'] = gettype($v);
+	        $temp['variableName'] = $k;
+	        $paramDescription[] = $temp;
+	    }
+	    /* if(IS_AJAX){//ajax请求用于文档页面展示，需用html格式
+	        $this->lf = "<br />";
+	    }else{
+	       $this->lf = "\n";
+	    } */
+	    $this->lf = "\n";
+	    $this->action = $action;
+	    $this->param = $paramDescription;
+	    $this->description = $r['title'];
+	    $r = $this->fetch("tpl_php");
+	    echo $r;exit;
+	}
 	 
 	 
 

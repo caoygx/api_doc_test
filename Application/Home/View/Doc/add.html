@@ -32,7 +32,7 @@
         </div></td>
       <td><div class="form-group">
           <label for="exampleInputTYPE">请求方式</label>
-          <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method}">
+          <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method|default='GET'}">
         </div></td>
     </tr>
     <tr>
@@ -48,7 +48,7 @@
     <tr>
       <td><div class="form-group ">
           <label for="exampleInputTYPE">返回值</label> <a class="btn btn-primary btn-xs"  id="return_json_formater" >格式化</a>
-          <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json||default='<literal>{"code":"1","msg":"sucess","data":{}}</literal>'}</textarea>
+          <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json|default='<literal>{"code":"1","msg":"sucess","data":{}}</literal>'}</textarea>
           
         </div></td>
       <td><div class="form-group ">

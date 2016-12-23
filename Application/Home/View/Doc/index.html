@@ -5,6 +5,26 @@
   <title>{$detail.title|default=API接口列表}</title>
   <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   
+  <style type="text/css">
+.popover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1010;
+	display: none;
+	max-width: 600px;
+	padding: 1px;
+	text-align: left;
+	white-space: normal;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 6px;
+	-webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+	background-clip: padding-box
+}
+</style>
   <script  src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
    <link rel="stylesheet" href="__PUBLIC__/jquery.jsonview.css" />
@@ -40,6 +60,8 @@
   </script>
 </head>
 <body>
+
+
 
 
 
@@ -120,6 +142,7 @@ Params
 			<a  class="btn btn-success" href="__CONTROLLER__/add" target="_blank">添加</a>
 			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}" target="_blank">编辑</a>
             <a  class="btn btn-info" href="__MODULE__/Test/test?id={$detail.id}" target="_blank">测试</a>
+            <button  class="btn btn-success" href="__CONTROLLER__/generatePhp?id={$detail.id}" target="_blank"  data-toggle="popover" >生成php接口</button>
 			<div id="json"></div>
 
 			<div id="json-collapsed"></div>
@@ -148,6 +171,54 @@ clip.on( 'complete', function(client, args) {
 
 </script>
 
+<script>
+$(function(){
+	$(".node").on("click",function(){
+		$('#selected_id').val($(this).attr("data-id"));
+		$('#myModal').modal('show');	
+	});
+	
+	/* $("#add").on("click",function(){
+		$('#myModal').modal('hide');  
+		$('#addchild').modal('show');
+    }); */
+	
+	$("#add").on("click",function(){
+		window.location.href="__CONTROLLER__/add/fid/"+$('#selected_id').val();
+	});
+	$("#edit").on("click",function(){
+        window.location.href="__CONTROLLER__/edit/id/"+$('#selected_id').val();
+    });
+});
+
+$(function () { 
+	
+	var url = "__CONTROLLER__/generatePhp?id={$Think.get.id}";
+	$.get(url,function(data){
+		
+		$("[data-toggle='popover']").popover({
+            trigger:'click',  
+            title:"代码，请手工复制", 
+            html: true,  
+            content:'<textarea name="textfield" cols="50" rows="10" id="textfield">'+data+'</textarea>'
+            //content:data+'</textarea>'
+        });
+
+		var currentPopover;
+		$("[data-toggle='popover']").on('shown.bs.popover', function () {
+		if(currentPopover != 'undefined'){
+		$(currentPopover).popover('hide');
+		}
+		currentPopover = this;
+		});
+
+		
+	});
+	
+     	
+});
+
+</script>
 
 </body>
 </html>

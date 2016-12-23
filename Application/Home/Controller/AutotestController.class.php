@@ -10,10 +10,11 @@ use Common\CommonController;
 class AutotestController extends CommonController{
 	protected $redis;
 	protected $param;
+	protected $autoInstantiateModel = false;
 	
 	function _initialize(){
 		header("Content-type: text/html; charset=utf-8");
-		$this->redis = Cache::getInstance('redis');
+		//$this->redis = Cache::getInstance('redis');
 		$this->param = array(); //请求参数
 		$this->param['device_id'] = "355873053463106";
 		$this->param['mobile'] = "13812341234";
@@ -79,6 +80,47 @@ class AutotestController extends CommonController{
 		
 	}
 	
+	//切换登录
+	function switchLogin(){
+	    
+	    //设备A登录，并绑定微信号
+	    $m = M("doc",'lez_',"api");
+	    $r = $m->getByUrl('/user/deviceLogin');
+	    $param = json_decode($r['param_json'],1);
+	    $device_id1 = mt_rand(10000,99999);
+	    $param['device_id'] = $device_id1;
+	    $r['param_json'] = json_encode($param);
+	    request_by_curl_bat($r);
+	    
+	    $r = $m->getByUrl('/user/bind');
+	    $param = json_decode($r['param_json'],1);
+	    $param['device_id'] = $device_id1;
+	    $open_id1 = mt_rand(1000000,9999999);
+	    $param['open_id'] = $open_id1;
+	    $param['type'] = "wx";
+	    $r['param_json'] = json_encode($param);
+	    request_by_curl_bat($r);
+	    
+	    
+	    //设备b登录，并用上一个微信号登录
+	    $m = M("doc",'lez_',"api");
+	    $r = $m->getByUrl('/user/deviceLogin');
+	    $param = json_decode($r['param_json'],1);
+	    $device_id2 = mt_rand(10000,99999);
+	    $param['device_id'] = $device_id2;
+	    $r['param_json'] = json_encode($param);
+	    request_by_curl_bat($r);
+	     
+	    $r = $m->getByUrl('/user/bind');
+	    $param = json_decode($r['param_json'],1);
+	    $param['device_id'] = $device_id2;
+	    $param['open_id'] = $open_id1;
+	    $param['type'] = "wx";
+	    $r['param_json'] = json_encode($param);
+	    request_by_curl_bat($r);
+	    
+	    
+	}
 	
 	function socket_test(){
 		$r = socket_test("userloginv2");
@@ -138,7 +180,7 @@ class AutotestController extends CommonController{
 		$st = gettimeofday(1);
         $id = I('id');
         $type = I('type');
-		$m = M("test",'',"api");
+		$m = M("doc",'lez_',"api");
         $where = array();
         $where["project"] = "api";
         $where["status"] = 1;
@@ -147,7 +189,6 @@ class AutotestController extends CommonController{
         $where['environment'] = I('env') == 'test' ? "test" : 'online';
         
 		$r = $m->where($where)->select();
-		//echo $m->getLastSql();
 		$db_et = gettimeofday(1);
 		//echo "============================test start ============================== \n";
 		

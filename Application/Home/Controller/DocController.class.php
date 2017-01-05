@@ -86,6 +86,65 @@ class DocController extends CommonController {
 	    echo $r;exit;
 	}
 	 
+	function generateJava($id){
+	    $r = $this->m->find($id);
+	    list($module,$control,$action) = explode('/', $r['url']);
+	    $param = json_decode($r['return_json'],1);
+	    if(!empty($param['data']['list'])){
+	        $param = $param['list'][0];
+	    }else{
+	        $param = $param['data'];
+	    }
+	    
+	    $paramDescription = [];
+	    foreach ($param as $k => &$v){
+	        $temp = [];
+	        $temp['type'] = empty(gettype($v)) ?: "string";
+	        $temp['variableName'] = $k;
+	        $paramDescription[] = $temp;
+	    }
+	    /* if(IS_AJAX){//ajax请求用于文档页面展示，需用html格式
+	     $this->lf = "<br />";
+	     }else{
+	     $this->lf = "\n";
+	     } */
+	    $this->lf = "<br />";
+	    $this->model = $control;
+	    $this->param = $paramDescription;
+	    $this->description = $r['title'];
+	    $r = $this->fetch("tpl_java");
+	    echo $r;exit;
+	}
+	
+	function generateIos($id){
+	    $r = $this->m->find($id);
+	    list($module,$control,$action) = explode('/', $r['url']);
+	    $param = json_decode($r['return_json'],1);
+	    if(!empty($param['data']['list'])){
+	        $param = $param['list'][0];
+	    }else{
+	        $param = $param['data'];
+	    }
+	    
+	    $paramDescription = [];
+	    foreach ($param as $k => &$v){
+	        $temp = [];
+	        $temp['type'] = empty(gettype($v)) ?: "string";
+	        $temp['variableName'] = $k;
+	        $paramDescription[] = $temp;
+	    }
+	    /* if(IS_AJAX){//ajax请求用于文档页面展示，需用html格式
+	     $this->lf = "<br />";
+	     }else{
+	     $this->lf = "\n";
+	     } */
+	    $this->lf = "<br />";
+	    $this->model = $control;
+	    $this->param = $paramDescription;
+	    $this->description = $r['title'];
+	    $r = $this->fetch("tpl_ios");
+	    echo $r;exit;
+	}
 	 
 
 }

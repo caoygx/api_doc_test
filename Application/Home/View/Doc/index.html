@@ -138,11 +138,14 @@ Params
 			<button id="collapse-btn" class="btn btn-primary">收缩</button>
 			<button id="expand-btn" class="btn btn-primary">展开</button>
 			<button id="toggle-level2-btn" class="btn btn-primary">开关2层</button>
-			<button id="d_clip_button" class="my_clip_button btn btn-warning" data-clipboard-target="fe_text"><b>复制到剪贴板</b></button>
+			<button id="d_clip_button" class="my_clip_button btn btn-warning" data-clipboard-target="fe_text"><b>复制</b></button>
+			<button  class="btn btn-success" href="__CONTROLLER__/generatePhp?id={$detail.id}" target="_blank"  data-toggle="popover" >生成php</button>
+			<a  class="btn btn-info" href="__CONTROLLER__/generateJava?id={$detail.id}" target="_blank" >生成java</a>
+			<a  class="btn btn-danger" href="__CONTROLLER__/generateIos?id={$detail.id}" target="_blank"  >生成ios</a>
 			<a  class="btn btn-success" href="__CONTROLLER__/add" target="_blank">添加</a>
 			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}" target="_blank">编辑</a>
             <a  class="btn btn-info" href="__MODULE__/Test/test?id={$detail.id}" target="_blank">测试</a>
-            <button  class="btn btn-success" href="__CONTROLLER__/generatePhp?id={$detail.id}" target="_blank"  data-toggle="popover" >生成php接口</button>
+            
 			<div id="json"></div>
 
 			<div id="json-collapsed"></div>

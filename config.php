@@ -6,9 +6,11 @@ if(IS_CLI){
 }
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
-define('URL_API',"http://api.rrbrr.com");
+define('URL_API',"http://vpn.lezreader.com");
+//define('URL_API',"http://api.rrbrr.com");
 $pubConfig = array(
 	'TAGLIB_PRE_LOAD'    =>    'html',
+    'URL_MODEL'=>3, //默认1;URL模式：0 普通模式 1 PATHINFO 2 REWRITE 3 兼容模式
 	//'LOG_RECORD'=>true, 
 	'DEFAULT_LANG' => 'en-us',
 	'DB_HOST' => "127.0.0.1",

@@ -43,8 +43,7 @@ class DocController extends CommonController {
     	$this->list = $newList;
     	$mApi = M('doc','','api');
     	$this->detail = $mApi->find($id);
-    	
-    	
+        cookie( '_currentUrl_', __SELF__ );
 		$this->display();
 	}
 	

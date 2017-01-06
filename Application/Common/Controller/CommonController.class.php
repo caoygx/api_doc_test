@@ -294,7 +294,7 @@ class CommonController extends Controller {
 			$this->assign ( 'sortType', $sortAlt );
 			$this->assign ( "page", $page );
 		}
-		Cookie::set ( '_currentUrl_', __SELF__ );
+		cookie( '_currentUrl_', __SELF__ );
 		return;
 	}
 	
@@ -376,7 +376,7 @@ class CommonController extends Controller {
 			$this->assign ( 'sortType', $sortAlt );
 			$this->assign ( "page", $page );*/
 		}
-		Cookie::set ( '_currentUrl_', __SELF__ );
+		cookie( '_currentUrl_', __SELF__ );
 		return;
 	}
 
@@ -484,7 +484,7 @@ class CommonController extends Controller {
 			$this->assign ( 'sortType', $sortAlt );
 			$this->assign ( "page", $page );
 		}
-		Cookie::set ( '_currentUrl_', __SELF__ );
+		cookie( '_currentUrl_', __SELF__ );
 		return;
 	}
 	
@@ -589,7 +589,7 @@ class CommonController extends Controller {
 			$this->assign ( 'sortType', $sortAlt );
 			$this->assign ( "page", $page );
 		}
-		Cookie::set ( '_currentUrl_', __SELF__ );
+		cookie( '_currentUrl_', __SELF__ );
 		return;
 	}
 	
@@ -604,7 +604,7 @@ class CommonController extends Controller {
 		$list=$this->m->add ();
 		//echo $this->m->getLastSql();exit;
 		if ($list!==false) { //保存成功
-			$this->assign ( 'jumpUrl', Cookie::get ( '_currentUrl_' ) );
+			$this->assign ( 'jumpUrl', cookie( '_currentUrl_' ) );
 			$this->success ('新增成功!');
 		} else {
 			//失败提示
@@ -648,7 +648,7 @@ class CommonController extends Controller {
 		$list=$this->m->save ();
 		if (false !== $list) {
 			//成功提示
-			$this->assign ( 'jumpUrl', Cookie::get ( '_currentUrl_' ) );
+			$this->assign ( 'jumpUrl', cookie( '_currentUrl_' ) );
 			$this->success ('编辑成功!');
 		} else {
 			//错误提示
@@ -891,7 +891,7 @@ function saveSort() {
 		
 		//echo $this->m->getLastSql();//exit;
 		if ($r!==false) { //保存成功
-			$this->assign ( 'jumpUrl', Cookie::get ( '_currentUrl_' ) );
+			$this->assign ( 'jumpUrl', cookie( '_currentUrl_' ) );
 			$this->success ('保存成功!','',array("id" => $r,"keyxx" => "valuexx"));
 		} else {
 			//失败提示

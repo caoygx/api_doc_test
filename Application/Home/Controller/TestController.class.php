@@ -138,8 +138,8 @@ class TestController extends CommonController{
         			}
         			$r = $this->m->add ( $data );
         			if ($r!==false) { //保存成功
-        				//$this->assign ( 'jumpUrl', Cookie::get ( '_currentUrl_' ) );
-        				$this->success ('保存成功!',Cookie::get ( '_currentUrl_' ),array("id" => $r,"keyxx" => "valuexx"));
+        				//$this->assign ( 'jumpUrl', cookie( '_currentUrl_' ) );
+        				$this->success ('保存成功!',cookie( '_currentUrl_' ),array("id" => $r,"keyxx" => "valuexx"));
         			} else {
         				//失败提示
         				$this->error ('保存失败!');

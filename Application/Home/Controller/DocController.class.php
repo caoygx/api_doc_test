@@ -46,6 +46,14 @@ class DocController extends CommonController {
         cookie( '_currentUrl_', __SELF__ );
 		$this->display();
 	}
+
+
+    function _replacePublic($vo){
+        //保密性
+        $opt_status = C('options.doc_status');
+        $this->status_selected = $vo['status'];
+        $this->opt_status = $opt_status;
+    }
 	
 	function _before_save(){
 		C('DEFAULT_FILTER',"");

@@ -186,12 +186,11 @@ class AutotestController extends CommonController{
         $where["status"] = 1;
         !empty($id) && $where["id"] = $id;
         !empty($type) && $where["type"] = $type;
-        $where['environment'] = I('env') == 'test' ? "test" : 'online';
+        $where['environment'] = I('env') == 'online' ? "online" : 'test';
         
 		$r = $m->where($where)->select();
 		$db_et = gettimeofday(1);
 		//echo "============================test start ============================== \n";
-		
 		
 		 foreach ($r as $k => $v){
 			if(!empty($v) && is_array($v)){

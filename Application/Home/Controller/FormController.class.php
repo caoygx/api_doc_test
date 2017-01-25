@@ -73,6 +73,8 @@ class FormController extends CommonController {
             $this->generateController($className);
             $this->generateModel($className);
 		}
+
+		echo "文件已经生成到: {$this->savePath}";
 		
 
  

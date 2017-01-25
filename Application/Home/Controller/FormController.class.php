@@ -60,28 +60,86 @@ class FormController extends CommonController {
     	
     }
     
-    //生成所有表的form
+    //生成所有表的form,control,model
     function generateAll(){
+        $prefix = C("DB_PREFIX");
     	$tableNameList = getTableNameList();
 		foreach($tableNameList as $k => $tableName){
-			$tableInfoArray = getTableInfoArray($tableName);
-			$columnNameKey = strtoupper(getColumnNameKey());
-			$str = '';
-			
-			$str .='<form class="form-horizontal" role="form">';
-			foreach($tableInfoArray as $columnInfo){
-				//var_dump($columnInfo);exit;
-				 $str .= $this->createFormRow($columnInfo);
-				//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
-			}
-			$str .="</form>\n\n\n\n";
-			echo $str;
-			//echo "<hr />";
+
+
+            $this->generateView($tableName);
+
+            $className = ucfirst(str_replace($prefix,'',$tableName));
+            $this->generateController($className);
+            $this->generateModel($className);
 		}
 		
 
  
     }
+
+
+    protected $savePath = "./data";
+
+    /**
+     * 生成controller
+     * @param $className
+     */
+    function generateController($className){
+        $tplPath = T('tpl_controller');
+        $tpl = file_get_contents($tplPath);
+        $tpl = str_replace('{$className}',$className,$tpl);
+        $path = $this->savePath."/Controller";
+        if (! file_exists ( $path ))  mkdir ( $path, 0777, true );
+        file_put_contents("{$path}/{$className}Controller.class.php",$tpl);
+    }
+
+    /**
+     * 生成model
+     * @param $className
+     */
+    function generateModel($className){
+        $tplPath = T('tpl_model');
+        $tpl = file_get_contents($tplPath);
+        $tpl = str_replace('{$className}',$className,$tpl);
+        $path = $this->savePath."/Model";
+        if (! file_exists ( $path ))  mkdir ( "$path", 0777, true );
+        file_put_contents("{$path}/{$className}Model.class.php",$tpl);
+    }
+
+    /**
+     * 生成view,添加表单，和列表
+     * @param $tableName
+     */
+    function generateView($tableName){
+
+        $tableInfoArray = getTableInfoArray($tableName);
+        $columnNameKey = strtoupper(getColumnNameKey());
+        $str = '';
+
+        //生成添加表单
+        $str .='<form class="form-horizontal" role="form">';
+        foreach($tableInfoArray as $columnInfo){
+            //var_dump($columnInfo);exit;
+            $str .= $this->createFormRow($columnInfo);
+            //$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
+        }
+        $str .="</form>\n\n\n\n";
+
+        $prefix = C("DB_PREFIX");
+        $className = ucfirst(str_replace($prefix,'',$tableName));
+        $path = $this->savePath."/View/$className/";
+        if (! file_exists ( $path ))  mkdir ( "$path", 0777, true );
+        file_put_contents("$path/add.html",$str);
+
+
+        $tplPath = T('tpl_list');
+        $tpl = file_get_contents($tplPath);
+        file_put_contents("$path/index.html",$tpl);
+
+
+    }
+
 	
 	//获取字段类型及长度
 	function getColumnType($type){

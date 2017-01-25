@@ -1,0 +1,22 @@
+<?php
+namespace Home\Controller;
+
+class {$className}Controller extends BaseController {
+	 
+    function _replacePublic($vo){
+        //保密性
+        $opt_status = C('options.doc_status');
+        $this->status_selected = $vo['status'];
+        $this->opt_status = $opt_status;
+    }
+	
+	function _before_save(){
+		C('DEFAULT_FILTER',"");
+		$_POST['method'] = strtoupper($_POST['method']);
+		$_POST['update_time'] = time();
+	}
+}
+
+
+
+

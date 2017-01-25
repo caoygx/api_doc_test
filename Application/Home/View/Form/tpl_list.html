@@ -1,0 +1,18 @@
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="__URL__/add" class="">添加</a> </div>
+        <div class="box-content">
+            <form method='post' action="__URL__"  class="form-search">
+		      <input name="id" type="text" class="input-medium search-query"  placeholder="id">
+		      <input name="title" type="text" class="input-medium search-query"  placeholder="名称">
+		      <button type="submit" class="btn btn-primary">搜索</button>
+		    </form>
+
+            <htmlme:list id="checkList" name="user" style="table table-striped table-bordered bootstrap-datatable datatable" checkbox="true" action="true" datasource="list" show="id:编号|8%,title:名称:edit,create_time|toDate='y-m-d':创建时间,status|getStatus2:状态" actionlist="status|showStatus=$user['id'],edit:编辑:id,foreverdel:永久删除:id" />
+            {$page} 
+ 
+        </div>
+    </div>
+
+</div>

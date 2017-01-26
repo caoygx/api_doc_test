@@ -198,8 +198,11 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 	$method = $api['get'] ? "GET" : "POST";
 	$parms = $api['param_json'];
     echo LF;
-    echo_color("params: ".json_encode($parms,JSON_UNESCAPED_UNICODE), "LIGHT_BLUE", 0);
-    echo LF;
+
+    $text = $api['title'].":".$api['url'];
+    echo_color("url: ".$text, "MAGENTA", 0);echo LF;
+    echo_color("params: ".json_encode($parms,JSON_UNESCAPED_UNICODE), "LIGHT_BLUE", 0); echo LF;
+
 
 	$id = $api['id'];
 	$ret = curl_get_content($url, $parms, $api['get']);
@@ -218,7 +221,8 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 			echo LF,LF;
 		}
 	}else{
-		$text = $api['title'].":".$api['url']; //$api['title'].":".
+
+        $text = "";
 		if(!empty($ret['http_code'])){
 			echo_color("[http_status:{$ret['http_code']} $method] ".$text."    ".$ret['data'], "RED");
 		}else{

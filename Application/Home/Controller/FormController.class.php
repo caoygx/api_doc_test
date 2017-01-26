@@ -120,13 +120,15 @@ class FormController extends CommonController {
         $str = '';
 
         //生成添加表单
-        $str .='<form class="form-horizontal" role="form">';
+        $str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
         foreach($tableInfoArray as $columnInfo){
             //var_dump($columnInfo);exit;
             $str .= $this->createFormRow($columnInfo);
             //$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
         }
-        $str .="</form>\n\n\n\n";
+
+        $this->allRows = $str;
+        $str = $this->fetch("tpl_form");
 
         $prefix = C("DB_PREFIX");
         $className = ucfirst(str_replace($prefix,'',$tableName));

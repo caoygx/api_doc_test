@@ -80,7 +80,9 @@ class AutotestController extends CommonController{
 		
 	}
 	
-	//切换登录
+    /**
+     * 切换设备登录
+     */
 	function switchLogin(){
 	    
 	    //设备A登录，并绑定微信号
@@ -118,9 +120,51 @@ class AutotestController extends CommonController{
 	    $param['type'] = "wx";
 	    $r['param_json'] = json_encode($param);
 	    request_by_curl_bat($r);
-	    
-	    
+
 	}
+
+
+    /**
+     * 下单支付
+     */
+    function orderPay(){
+
+        //设备A登录，并绑定微信号
+        $m = M("doc",'lez_',"api");
+        $r = $m->getByUrl('/order/payh5/');
+
+        $result = request_by_curl_bat($r);
+        var_dump($result);exit;
+        exit;
+
+        $r = $m->getByUrl('/user/bind');
+        $param = json_decode($r['param_json'],1);
+        $param['device_id'] = $device_id1;
+        $open_id1 = mt_rand(1000000,9999999);
+        $param['open_id'] = $open_id1;
+        $param['type'] = "wx";
+        $r['param_json'] = json_encode($param);
+        request_by_curl_bat($r);
+
+
+        //设备b登录，并用上一个微信号登录
+        $m = M("doc",'lez_',"api");
+        $r = $m->getByUrl('/user/deviceLogin');
+        $param = json_decode($r['param_json'],1);
+        $device_id2 = mt_rand(10000,99999);
+        $param['device_id'] = $device_id2;
+        $r['param_json'] = json_encode($param);
+        request_by_curl_bat($r);
+
+        $r = $m->getByUrl('/user/bind');
+        $param = json_decode($r['param_json'],1);
+        $param['device_id'] = $device_id2;
+        $param['open_id'] = $open_id1;
+        $param['type'] = "wx";
+        $r['param_json'] = json_encode($param);
+        request_by_curl_bat($r);
+
+    }
 	
 	function socket_test(){
 		$r = socket_test("userloginv2");

@@ -63,9 +63,11 @@ class FormController extends CommonController {
     //生成所有表的form,control,model
     function generateAll(){
         $prefix = C("DB_PREFIX");
-    	$tableNameList = getTableNameList();
+        $tableNameList = I('tableName');
+        if(empty($tableNameList)){
+            $tableNameList = getTableNameList();
+        }
 		foreach($tableNameList as $k => $tableName){
-
 
             $this->generateView($tableName);
 
@@ -91,6 +93,7 @@ class FormController extends CommonController {
         $tplPath = T('tpl_controller');
         $tpl = file_get_contents($tplPath);
         $tpl = str_replace('{$className}',$className,$tpl);
+        $className = parse_name($className,1);
         $path = $this->savePath."/Controller";
         if (! file_exists ( $path ))  mkdir ( $path, 0777, true );
         file_put_contents("{$path}/{$className}Controller.class.php",$tpl);
@@ -104,6 +107,7 @@ class FormController extends CommonController {
         $tplPath = T('tpl_model');
         $tpl = file_get_contents($tplPath);
         $tpl = str_replace('{$className}',$className,$tpl);
+        $className = parse_name($className,1);
         $path = $this->savePath."/Model";
         if (! file_exists ( $path ))  mkdir ( "$path", 0777, true );
         file_put_contents("{$path}/{$className}Model.class.php",$tpl);
@@ -132,6 +136,7 @@ class FormController extends CommonController {
 
         $prefix = C("DB_PREFIX");
         $className = ucfirst(str_replace($prefix,'',$tableName));
+        $className = parse_name($className,1);
         $path = $this->savePath."/View/$className/";
         if (! file_exists ( $path ))  mkdir ( "$path", 0777, true );
         file_put_contents("$path/add.html",$str);
@@ -313,6 +318,9 @@ class FormController extends CommonController {
 	
 	public function loadField(){
 		$tableName = I('tableName');
+		if(is_array($tableName)){
+		    $tableName = $tableName[count($tableName)-1];
+        }
 		$tableInfoArray = getTableInfoArray($tableName);
 		$columnNameKey = strtoupper(getColumnNameKey());
 		$str = '';

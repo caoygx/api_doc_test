@@ -959,6 +959,73 @@ function saveSort() {
 		//$title && $title = $title."_"; 
 		//$this->pageTitle = $title.C('SITE_TITLE');
 	}
+
+	/**
+	 * 访问日志，记录用户请求的参数
+	 */
+	function requestLog(){
+
+
+		$data = array();
+		$data['url'] = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		if(IS_POST){
+			$params = $_POST;
+		}elseif(IS_GET){
+			$params = $_GET;
+		}
+		if(empty($params)) $params['input'] = file_get_contents("php://input");
+		$data['params'] = json_encode($params);
+		//$data['cookie'] = json_encode($_COOKIE);
+		//$data['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+		$data['ip'] = get_client_ip();
+		$detail = array();
+		$detail['request'] = $_REQUEST;
+		
+		$header = [];
+		$fields = ['HTTP_USER_ID','HTTP_DEVICE_VID','HTTP_DEVICE_ID','HTTP_PLATFORM','HTTP_VERSION']; //'HTTP_USER_AGENT',
+		foreach ($fields as $k => $v){
+			if(empty($_SERVER[$v])) continue;
+		    $header[$v] = $_SERVER[$v];
+		}
+		/*$this->version = I('server.HTTP_VERSION');
+		$this->device_id = I('device_id') ?:I('server.HTTP_DEVICE_ID');
+		$this->platform = I('server.HTTP_PLATFORM');
+		$user_id = I('user_id') ?: I('server.HTTP_USER_ID');
+		$detail['server'] = $_SERVER;*/
+        //$detail['header'] = $header;
+        //$data['detail'] = json_encode($detail);
+
+		$url = $_SERVER['REQUEST_METHOD']." ".$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\r\n";
+        $request = $url.getallheaders(true);
+
+        $raw_post = ''
+        if(IS_POST){
+            $raw_post = http_build_query($_POST);
+            if(empty($raw_post)){
+                $raw_post = file_get_contents("php://input");
+			}
+        }
+        $request .= "\r\n\r\n".$raw_post;
+
+        $data['detail'] = $request;
+
+		$data['create_time'] = date("Y-m-d H:i:s");
+		$data['method'] = $_SERVER['REQUEST_METHOD'];
+		$m = M('LogRequest');
+		//$m->create($data);
+		$this->logId = $m->add($data);
+		//echo $m->getLastSql();exit;
+	
+	}
+	
+	function responseLog($id,$response){
+	    $data = [];
+	    $data['id'] = $id;
+	    $data['response'] = $response;
+	    $m = M('LogRequest');
+	    $m->save($data);
+	    
+	}
 	
 	
 }

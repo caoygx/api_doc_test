@@ -207,6 +207,11 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 	$id = $api['id'];
 	$ret = curl_get_content($url, $parms, $api['get']);
 	$ret = json_decode($ret,true);
+    if(json_last_error() != JSON_ERROR_NONE){
+        $text = '返回的json 解析错误';
+        echo_color($text, "FAILURE", 1);
+        echo LF,LF;
+    }
 	$showDetails = false;
 	if($showDetails){
 		echo $api['title'], ":", $api['url'], LF;
@@ -431,7 +436,7 @@ function curl_get_content($url, $data = "", $method = "get", $timeout = 30, $CA 
 	// var_dump($ret);
 	// exit('x');
 	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	
+
 	if($httpCode != 200) {
 		$tmp = array();
 		$tmp['http_code'] = $httpCode;
@@ -1209,4 +1214,26 @@ function androidTablet($ua){ //Find out if it is a tablet
 function isMobile(){
 	$r = userAgent($_SERVER['HTTP_USER_AGENT']);
 	return ($r == "mobile");
+}
+
+
+
+
+if (!function_exists('getallheaders')){
+    function getallheaders($raw=false) {
+        $headers = '';
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        if($raw){
+            $str = "";
+            foreach ($headers as $k => $v){
+                $str .= "$k: $v\r\n";
+            }
+            return $str;
+        }
+        return $headers;
+    }
 }

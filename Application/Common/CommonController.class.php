@@ -998,7 +998,7 @@ function saveSort() {
 		$url = $_SERVER['REQUEST_METHOD']." ".$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\r\n";
         $request = $url.getallheaders(true);
 
-        $raw_post = ''
+        $raw_post = '';
         if(IS_POST){
             $raw_post = http_build_query($_POST);
             if(empty($raw_post)){

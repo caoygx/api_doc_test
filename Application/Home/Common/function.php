@@ -1,8 +1,8 @@
 <?php
 use Think\Model;
 
-define(SQLITE_COLUMN_NAME_KEY, 'name');	//sqlite列名键
-define(MYSQL_COLUMN_NAME_KEY, 'column_name');	//mysql列名键
+define('SQLITE_COLUMN_NAME_KEY', 'name');	//sqlite列名键
+define('MYSQL_COLUMN_NAME_KEY', 'column_name');	//mysql列名键
 
 function func1(){
 	echo 'this is func1';

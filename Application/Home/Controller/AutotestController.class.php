@@ -219,7 +219,10 @@ class AutotestController extends CommonController{
 		}
 	}
 	
-	
+	function test(){
+	    $url = I('url');
+        $data = request_by_curl_bat($url);
+    }
 	function bat_api() {
 		$st = gettimeofday(1);
         $id = I('id');

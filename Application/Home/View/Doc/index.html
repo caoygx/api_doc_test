@@ -128,7 +128,16 @@
 		<div class="col-md-10">
 			<h3>{$detail.title}</h3>
 <pre>
-{$detail.method}  {$Think.const.URL_API}{$detail.url}
+{$detail.method}  <?php
+
+if(substr($detail['url'],0,4) != 'http'){
+	echo URL_API.$detail['url'];
+}else{
+	echo $detail['url'];
+}
+
+?> 
+
 
 
 Params

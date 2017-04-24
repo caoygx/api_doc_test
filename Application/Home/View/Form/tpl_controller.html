@@ -1,20 +1,58 @@
 <?php
-namespace Home\Controller;
+namespace User\Controller;
 
 class {$className}Controller extends BaseController {
+
+	//排序字段
+	//protected $sortBy = "update_time";
 	 
-    function _replacePublic($vo){
-        //保密性
-        $opt_status = C('options.doc_status');
-        $this->status_selected = $vo['status'];
-        $this->opt_status = $opt_status;
-    }
-	
-	function _before_save(){
-		C('DEFAULT_FILTER',"");
-		$_POST['method'] = strtoupper($_POST['method']);
-		$_POST['update_time'] = time();
+	 
+	//列表特殊搜索查询条件处理
+	function _filter(&$map){
+		if($map['title']) $map['title'] =  array('like',"%{$map['title']}%");
 	}
+	
+	
+	//处理列表结果
+	function _join(&$voList){
+		foreach($voList as $k => &$v){
+		    //$v['create_time'] = date('Y-m-d',$v['create_time']);
+		}
+	}
+	
+
+	//公共模板替换，一般用于添加和编辑
+    function _replacePublic($vo){
+        //状态select html控件替换
+        /*$opt_status = C('options.doc_status');
+        $this->status_selected = $vo['status'];
+        $this->opt_status = $opt_status;*/
+    }
+
+	//添加前置操作
+	function _before_add(){
+		$this->isMobile = isMobile();
+	}
+
+	//编辑前置操作
+	function _before_edit(){
+		$this->isMobile = isMobile();
+	}
+	
+	//编辑后置操作
+	function _after_edit($data,$option){
+		
+	}
+
+	//保存前置操作
+	function _before_save(){
+		//C('DEFAULT_FILTER',"");
+		//$_POST['update_time'] = time();
+	}
+
+	
+
+
 }
 
 

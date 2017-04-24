@@ -142,11 +142,24 @@ class FormController extends CommonController {
         file_put_contents("$path/add.html",$str);
 
 
-        $tplPath = T('tpl_list');
-        $tpl = file_get_contents($tplPath);
-        file_put_contents("$path/index.html",$tpl);
+        //$tplPath = T('tpl_list');
+        //$tpl = file_get_contents($tplPath);
+        $fields = $this->createListFields($tableInfoArray);
+        $this->fields = $fields;
+        $this->control = '__CONTROLLER__';
+        $str = $this->fetch("tpl_list");
+        file_put_contents("$path/index.html",$str);
+    }
 
-
+    function createListFields($tableInfoArray){
+        $fields = [];
+        foreach($tableInfoArray as $columnInfo){
+            $commentInfo = $this->parserComment($columnInfo['COLUMN_COMMENT']);
+            $cnName = empty($commentInfo['name']) ? $columnInfo['COLUMN_NAME'] : $commentInfo['name'];
+            $name = $columnInfo['COLUMN_NAME'];
+            $fields[] = "$name:$cnName";
+        }
+        return implode(',',$fields);
     }
 
 	

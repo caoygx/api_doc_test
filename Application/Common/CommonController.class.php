@@ -1027,6 +1027,47 @@ function saveSort() {
 	    
 	}
 	
+
+	/*
+	 * control层参数验证，由于model里只能验证insert,update.所以select只能放在control里验证了。
+	 * control里公共要验证的字段放在$this->validateField数组里
+	 */
+	/* function validate($validateField = [], $param = ){
+	    $validateField = $validateField ?: $this->validateField;
+	    
+	    //if(empty($this->validateField) || is_array($this->validateField)) return;
+	    
+        foreach ($validateField as $k => $v){
+            $method = $v['method'];
+            if($method){
+                $data = I($method.".".$v);
+                
+            }else{
+                $data = I($v);
+            }
+            if(empty($data)){
+                $this->error($v."不能为空");
+            }
+        }
+	} */
+
+	/**
+	 * 简版验证，上面的验证想的太复杂了
+	 * @param array $param 数据源
+	 * @param array $field 验证的字段
+	 */
+	function validate($param,$field){
+	    $param = [];
+	    if(!is_array($field)){
+            $param[] = $field;
+        }else{
+	        $param = $field;
+        }
+	    foreach ($param as $v){
+	        empty($param[$v]) && $this->error($v."不能为空");
+	    }
+        exit('x');
+	}
 	
 }
 ?>

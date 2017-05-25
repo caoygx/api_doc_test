@@ -10,11 +10,26 @@ api文档管理工具，api接口自动测试工具，代码生成工具
 
 
 
-安装方法
+# 安装依赖
+依赖thinkphp框架  https://github.com/caoygx/ThinkPHP.git
+
+git clone https://github.com/caoygx/ThinkPHP.git 
+
+将thinkphp框架和当前项目放在同一级目录下如：
+/www/thinkphp
+/www/api_doc_text
+
+
+# 使用mysql数据库安装方法
 
 1.将api.sql导入到任意的数据库里，或新建一个数据库
 
 2.更改config里的数据库配置
+
+# 使用sqlite数据库直接下载后打开
+
+
+
 
 3.浏览器里打开 http://localhost/api_doc_test/index.php/Home/Doc/index
 

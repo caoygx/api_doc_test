@@ -1,0 +1,169 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<title>家谱网</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link
+	href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<body>
+
+<script>
+function autoSurname(){
+	$('#surname').val($('#ancestor').val().substring(0,1));
+}
+
+</script>
+<taglib name="html" />
+
+<div class="container-fluid" style="margin:10px;">
+
+	<div class="row" style="border-bottom:1px solid #ccc; margin-bottom:20px;">
+		<div class="col-xs-4 col-sm-4 vimeo">
+			<nav>
+				<ul class="pager">
+					<li class="previous"><a href="__U__">&larr; 返回</a></li>
+
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-xs-4 col-sm-4 " style="margin: 20px; font-size:18px; font-weight:bold; color:#f00; ">家谱管理</div>
+
+	</div>
+
+<div class="row">
+	<form class="form-horizontal" role="form" method="post"
+		action="__URL__/save/">
+
+
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="">家谱名</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="title" type="text" class="form-control" id="title"
+					value="{$vo.title}" placeholder="必填，命名方式可用地名+姓氏的方式,如：山东曹氏谱">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="ancestor">始祖</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="ancestor" type="text" class="form-control"
+					id="ancestor" value="{$vo.ancestor}" onblur="autoSurname();"
+					placeholder="必填，始祖姓名，可用姓氏+公的方式，如：曹公">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="surname">所属姓氏</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="surname" type="text" class="form-control" id="surname"
+					value="{$vo.surname}" placeholder="如：曹，张，李，王" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="level">字辈
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<textarea name="level" class="form-control" id="level"
+					placeholder="家谱的字辈，后裔行派，就是通俗说的辈分。如：道德实修力">{$vo.level}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="linkman">联系人
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="linkman" type="text" class="form-control" id="linkman"
+					value="{$vo.linkman}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="contact">联系方式
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<textarea name="contact" class="form-control" id="contact">{$vo.contact}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="status">保密性</label>
+			<div class="col-xs-8 col-sm-8">
+				<html:select options='opt_status' selected='status_selected'
+					name="status" />
+				<!--<span class="help-inline">公开后将会在首页显示简要信息</span>-->
+			</div>
+		</div>
+
+<script>
+function show_more_info(t){
+	$('.more_info').show();
+	$('#show_more').hide();
+}
+</script>
+<div style="display:inline-block; margin-left:180px; margin-bottom:10px;" id="show_more"><a href="javascript:show_more_info(this);">我要填写更详细信息>></a></div>
+<div class="more_info" style="display:none;">
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="place">居住地
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="place" type="text" class="form-control" id="place"
+					value="{$vo.place}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="migrate">迁入地
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="migrate" type="text" class="form-control" id="migrate"
+					value="{$vo.migrate}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="hall">堂号
+			</label>
+			<div class="col-xs-8 col-sm-8">
+				<input name="hall" type="text" class="form-control" id="hall"
+					value="{$vo.hall}" />
+			</div>
+		</div>
+        
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="description">介绍</label>
+			<div class="col-xs-8 col-sm-8">
+				<textarea name="description" id="description"
+					class="editor form-control">{$vo.description}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 col-sm-3 control-label" for="preface">谱序</label>
+			<div class="col-xs-8 col-sm-8">
+				<textarea name="preface" id="preface" class="editor form-control">{$vo.preface}</textarea>
+			</div>
+		</div>
+     </div>
+		
+         <div class="form-group">
+         	
+			<div class="col-xs-12 col-sm-12 text-center" style="">
+				<button type="submit" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+		<input type="hidden" value="{$vo.id}" name="id" id="id" />
+	</form>
+</div>
+</div>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-xs-4 col-sm-4">1</div>
+			<div class="col-xs-8 col-sm-8">2</div>
+
+		</div>
+	</div>

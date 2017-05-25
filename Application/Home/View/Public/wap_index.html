@@ -1,0 +1,100 @@
+{__NOLAYOUT__}<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta charset="utf-8">
+<title>{$pageTitle}<notempty name="pageTitle">_</notempty>{$Think.config.SITE_TITLE}{$titleSuffix}</title>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="__SKIN__/common.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="row" >
+<div class="col-xs-4 col-sm-4 vimeo">
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="__U__">&larr; 返回</a></li>
+ 
+  </ul>
+</nav>
+</div>
+
+<div class="col-xs-4 col-sm-4 " style=" margin:20px;">
+家谱管理
+</div>
+
+</div>
+ 
+        
+<div class="row">
+  <ul class="list-group">
+  <volist name="list" id="row">
+      <li class="list-group-item">
+      	<a href="__F__/FamilyMember/showchild/id/{$row.id}" target="_blank" title="查看家谱所有家族成员" ><h4>{$row.title|cn_substr_utf8=27}</h4></a>
+        <br />
+      <a class="btn btn-primary  btn-sm"  href="__U__/FamilyMember/addchild2/id/{$row.id}">添加子孙</a>
+        <a class="btn btn-primary  btn-sm" href="__U__/Family/edit/id/{$row.id}">编辑</a>
+        <a class="btn btn-danger  btn-sm" href="__U__/Family/edit/id/{$row.id}">禁用</a>
+        <a class="btn btn-success  btn-sm" href="__F__/FamilyMember/showchild2/id/{$row.id}">预览</a>
+        <a class="btn btn-success  btn-sm" href=" http://rrbrr-upload.oss-cn-shanghai.aliyuncs.com/showchild_print/{$row.id}.png">打印</a>
+      </li>
+  </volist>      
+  </ul>
+</div>        
+      
+
+
+<!--<ul class="list-group">
+  
+  <volist id="vo" name="list">
+    <li class="list-group-item">
+ 
+			  <div class="col-sm-4">
+			     <a href="__CONTROLLER__/edit/id/{$vo.id}">{$vo.title}-{$vo.creat_time}</a></div>
+			  
+			  <div class="col-sm-4">
+			     <a href="javascript:addChild({$vo.id});">添加子孙</a>
+			     <a href="javascript:del({$vo.id});">删除</a>
+			  </div>
+	 
+    </li>
+  </volist>
+</ul>-->
+{$page}
+<notempty name="self.fid">
+<a href="__CONTROLLER__/tree/id/{$self.fid}">返回上级</a>
+</notempty>
+<script>
+function addChild(id) {
+    var keyValue;
+    if (id)
+    {
+        keyValue = id;
+
+    } else {
+        keyValue = getSelectCheckboxValue();
+
+    }
+    if (!keyValue)
+    {
+        alert('请选择编辑项！');
+        return false;
+
+    }
+    domain = "rrbrr.com";
+    subdomain = "f.";
+    var url = '__U__/FamilyMember/addchild/id/' + keyValue;
+    window.open(url);
+    //window.location.href = url;
+    //window.open('__F__/FamilyMember/addchild/id/' + keyValue,'','width=860,height=600,top=0,left=0');
+    //location.href = "http://"+subdomain+domain + "/FamilyMember/addChild/id/" + keyValue;
+    //window.open('http://www.baidu.com','','width=600,height=600');
+
+}
+</script>
+</body>
+</html>

@@ -6,12 +6,12 @@ class DocController extends CommonController {
 	protected $nodeId = [];	
 	//protected $pre = "lez_";
 	public  function _initialize(){
-		C('DB_PREFIX',"lez_");
 	}
     function index($id=""){
     	$k = I('k');
-    	$map = $where = [];
-    	$mApi = M('doc','','api');
+    	$project_id = I("project_id");
+    	$map = $where = ['project_id' =>$project_id];
+    	$mApi = M('doc');
     	if($k){
     		$where['title']  = array('like', "%{$k}%");
     		$where['url'] =  array('like', "%{$k}%");
@@ -41,7 +41,7 @@ class DocController extends CommonController {
     	}
     	//$newList[0]
     	$this->list = $newList;
-    	$mApi = M('doc','','api');
+    	$mApi = M('doc');
     	$this->detail = $mApi->find($id);
         cookie( '_currentUrl_', __SELF__ );
 		$this->display();
@@ -59,10 +59,11 @@ class DocController extends CommonController {
 		C('DEFAULT_FILTER',"");
 		$_POST['method'] = strtoupper($_POST['method']);
 		$_POST['update_time'] = time();
+		if(empty(I('module'))) $this->error('业务类型必须填写');
 	}
 	
 	function show($id){
-		$mApi = M('doc','','api');
+		$mApi = M('doc');
 		$this->vo = $mApi->find($id);
 		$this->display();
 	}

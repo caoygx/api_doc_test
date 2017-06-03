@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{$detail.title|default=API接口列表}</title>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<script  src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/jquery.jsonview.css" />
+<script type="text/javascript" src="__PUBLIC__/jquery.jsonview.js"></script>
+<style type="text/css">
+.selList{ height:100px;}
+</style>
+</head>
+<body>
+
+<div class="text-center">
+<h1>项目列表</h1>
+</div>
+<div class="container" >
+  <table class="table table-hover">
+    <tr><th>编号</th><th>项目名称</th><th>接口地址</th></tr>
+    <volist id="vo" name="list">
+    <tr><td>{$vo.id}</td><td><a href="{:U('doc/index?project_id='.$vo['id'])}">{$vo.title}</a></td><td>{$vo.domain}</td></tr>
+    </volist>
+  </table>
+
+</div>
+<script type="text/javascript">
+function loadField(){
+	tableName = $('#tableName').val();
+	$.post("__CONTROLLER__/loadField",{'tableName': tableName},
+	function(data){
+		$('#tableFields').html(data);
+	});
+}
+
+function getFormHtml(){
+	
+	tableName = $('#tableName').val();
+	tableFields = $('#tableFields').val();
+	
+	$.post("__CONTROLLER__/generate",{'tableName': tableName,"tableFields":tableFields},function(data){
+			$('#form_text').val(data);
+			$(window.frames["tpl_preview"].document).find("#container").html(data);
+			//$('#tpl_preview').
+	});
+	//getFormHtml
+}
+
+function getallFormHtml(){
+	tableName = $('#tableName').val();
+	tableFields = $('#tableFields').val();
+	
+	$.post("__CONTROLLER__/generateAll",{'tableName': tableName,"tableFields":tableFields},function(data){
+		alert(data);
+	    //$('#form_text').val(data);
+	});
+}
+	
+$(function(){
+	loadField();
+});
+ 
+
+</script>
+</body>
+</html>

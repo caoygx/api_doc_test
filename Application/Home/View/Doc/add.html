@@ -6,48 +6,53 @@
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 <!-- <script src="http://libs.useso.com/js/ckeditor/4.4.2/ckeditor.min.js"></script> -->
-
+<style type="text/css">
+    .red{color: #f00;}
+</style>
 </head>
 <body>
 
 
 <div class="container" >
     <h1  class="text-center text-primary" style="margin-bottom:50px;">添加接口</h1>
-    <form method="post" action="__URL__/save" target="_self">
+<form method="post" action="__URL__/save" target="_self">
   <table>
+      <tr>
+          <td colspan="2" align="right"> <input class="btn btn-primary  btn-lg" type="submit" value="提 交"></td>
+      </tr>
     <tr>
       <td><div class="form-group">
-          <label for="exampleInputTYPE" >接口名称</label>
+          <label for="exampleInputTYPE" >接口名称 <span class="red"> (*) </span></label>
           <input type="text" class="form-control" id="title" name="title" placeholder="请输入接口名称" value="{$vo.title}">
         </div></td>
       <td><div class="form-group">
-          <label for="exampleInputTYPE">接口URL</label>
+          <label for="exampleInputTYPE">接口URL <span class="red"> (*) </span></label>
           <input type="text" class="form-control" id="title" name="url" placeholder="请输入接口URL" value="{$vo.url}">
         </div></td>
     </tr>
     <tr>
       <td><div class="form-group">
-          <label for="exampleInputTYPE">业务类型</label>
+          <label for="exampleInputTYPE">业务类型  <span class="red"> (*) </span></label>
           <input type="text" class="form-control" id="module" name="module" placeholder="业务类型" value="{$vo.module}">
         </div></td>
       <td><div class="form-group">
-          <label for="exampleInputTYPE">请求方式</label>
+          <label for="exampleInputTYPE">请求方式 <span class="red"> (*) </span> </label>
           <input type="text" class="form-control" id="method" name="method" placeholder="GET,POST" value="{$vo.method|default='GET'}">
         </div></td>
     </tr>
     <tr>
       <td><div class="form-group">
-          <label for="exampleInputTYPE">参数</label><a class="btn btn-primary btn-xs"  id="param_json_formater" >格式化</a>
+          <label for="exampleInputTYPE">参数 </label><a class="btn btn-primary btn-xs"  id="param_json_formater" >格式化</a>
           <textarea class="form-control" rows="8" name="param_json" id="param_json" cols="">{$vo.param_json}</textarea>
         </div></td>
       <td><div class="form-group">
-          <label for="exampleInputTYPE">参数说明</label>
+          <label for="exampleInputTYPE">参数说明  <span class="red"> (*) </span> </label>
           <textarea class="form-control" rows="8" name="param" id="param" cols="">{$vo.param}</textarea>
         </div></td>
     </tr>
     <tr>
       <td><div class="form-group ">
-          <label for="exampleInputTYPE">返回值</label> <a class="btn btn-primary btn-xs"  id="return_json_formater" >格式化</a>
+          <label for="exampleInputTYPE">返回值 <span class="red"> (*) </span> </label> <a class="btn btn-primary btn-xs"  id="return_json_formater" >格式化</a>
           <textarea class="form-control" rows="15" name="return_json" id="return_json" cols="100">{$vo.return_json|default='<literal>{"code":"1","msg":"sucess","data":{}}</literal>'}</textarea>
           
         </div></td>
@@ -64,8 +69,7 @@
 
           </div></td>
           <td><div class="form-group ">
-              <label for="exampleInputTYPE">返回值说明</label>
-              xxx
+              <label for="exampleInputTYPE"></label>
           </div></td>
       </tr>
 
@@ -74,6 +78,7 @@
     </tr>
   </table>
   <input type="hidden" id="id" name="id" value="{$vo.id}" />
+        <input type="hidden" id="project_id" name="project_id" value="{$Think.get.project_id}" />
   <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}" />
 </form>
  

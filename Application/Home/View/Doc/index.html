@@ -88,7 +88,7 @@
 		<notempty name="Think.get.k">
 			<ul class="list-group">
 			  <volist id="vo" name="list">
-			  <li class="list-group-item"><a href="__CONTROLLER__/index/id/{$vo.id}/num/{$vo.module}" target="_blank">{$vo.title}
+			  <li class="list-group-item"><a href=" __CONTROLLER__/index/id/{$vo.id}/num/{$vo.module}/project_id/{$vo.project_id}" target="_blank">{$vo.title}
 			     <br /> {$vo.url}</a>
 			  </li>
 			  </volist>
@@ -111,7 +111,7 @@
 				        <ul class="list-group">
 				                 <volist name="vo" id="sub">
 				                 <a class="list-group-item <eq name="Think.get.id" value="$sub.id"> active</eq>"
-				                    href="__CONTROLLER__/index/id/{$sub.id}/num/{$sub.module}">{$sub.title}</a> 
+				                    href="__CONTROLLER__/index/id/{$sub.id}/num/{$sub.module}/project_id/{$sub.project_id}">{$sub.title}</a>
 				                </volist>
 				            </ul>
 				       
@@ -131,7 +131,8 @@
 {$detail.method}  <?php
 
 if(substr($detail['url'],0,4) != 'http'){
-	echo URL_API.$detail['url'];
+	$domain = M('project')->find($detail['project_id'])['domain'];
+	echo $domain.$detail['url'];
 }else{
 	echo $detail['url'];
 }
@@ -151,9 +152,9 @@ Params
 			<button  class="btn btn-success" href="__CONTROLLER__/generatePhp/id/{$detail.id}" target="_blank"  data-toggle="popover" >生成php</button>
 			<a  class="btn btn-info" href="__CONTROLLER__/generateJava/id/{$detail.id}" target="_blank" >生成java</a>
 			<a  class="btn btn-danger" href="__CONTROLLER__/generateIos/id/{$detail.id}" target="_blank"  >生成ios</a>
-			<a  class="btn btn-success" href="__CONTROLLER__/add" target="_blank">添加</a>
-			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}" >编辑</a>
-            <a  class="btn btn-info" href="__MODULE__/Test/test/id/{$detail.id}" target="_blank">测试</a>
+			<a  class="btn btn-success" href="__CONTROLLER__/add/project_id/{$Think.get.project_id}" target="_blank">添加</a>
+			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}/project_id/{$Think.get.project_id}" >编辑</a>
+            <a  class="btn btn-info" href="__MODULE__/Test/test/id/{$detail.id}/project_id/{$Think.get.project_id}" target="_blank">测试</a>
             
 			<div id="json"></div>
 

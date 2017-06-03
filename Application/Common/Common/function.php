@@ -1237,3 +1237,8 @@ if (!function_exists('getallheaders')){
         return $headers;
     }
 }
+
+function debug($data){
+    //var_dump($data);
+}
+function getBrowser(){}

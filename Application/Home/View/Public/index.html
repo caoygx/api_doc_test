@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>添加接口</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://libs.useso.com/js/ckeditor/4.4.2/ckeditor.min.js"></script> -->
+    <script>
+        var URL = '__URL__';
+    </script>
+    <script src="__PUBLIC__/common.js"></script>
+
+</head>
+<body>
+
+
+<div class="container" >
+<!--<h2><i class="icon-edit"></i> 添加</h2>--> 
+
+
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="__URL__/add" class="">添加</a> 
+        </div>
+        <div class="box-content">
+            <form method='post' action="__URL__"  class="form-search">
+		      <input name="id" type="text" class="input-medium search-query"  placeholder="信息id">
+		      <input name="title" type="text" class="input-medium search-query"  placeholder="信息名">
+		      <button type="submit" class="btn btn-primary">搜索</button>
+		    </form>
+
+       <htmlme:list id="checkList" name="user" style="table table-striped table-bordered bootstrap-datatable datatable" checkbox="true" action="true" datasource="list" show="$f_list" actionlist="$f_action" />
+       {$page} 
+            
+        </div>
+    </div>
+    <!--/span--> 
+    
+</div>
+<!--/row-->
+</div>
+
+</body>
+</html>

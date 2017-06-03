@@ -5,7 +5,8 @@ use Common\CommonController;
 class FormController extends CommonController {
 	protected $nodeId = [];	
 	protected $autoInstantiateModel = false;
-	protected $options = [];
+	protected $options = []; //存储数组序列化后的字符串格式
+    protected $arrOptions = []; //存储数组格式
 	//protected $pre = "lez_";
  
 	
@@ -24,18 +25,19 @@ class FormController extends CommonController {
     
     function generate(){
     	$tableName = I('tableName');
-    	$columnNameKey = strtoupper(getColumnNameKey());
+    	$columnNameKey = getColumnNameKey();
     	$str = '';
     	$selectedFields = I('tableFields');
     	if(empty($tableName)){
     		$this->generateAll();
     		return;
     	}else{
+    	    if(is_array($tableName)) $tableName = $tableName[0];
     		$allFields = getTableInfoArray($tableName);
     	}
     	$str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
     	foreach($allFields as $columnInfo){
-    		if(!empty($selectedFields) && !in_array($columnInfo['COLUMN_NAME'], $selectedFields)) continue;
+    		if(!empty($selectedFields) && !in_array($columnInfo['column_name'], $selectedFields)) continue;
     		if(!I('hasId') && $columnInfo['COLUMN_KEY'] == "PRI") continue;
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
@@ -43,6 +45,11 @@ class FormController extends CommonController {
     	
     	$this->allRows = $str;
     	$r = $this->fetch("tpl_form");
+    	foreach ($this->arrOptions as $k => $v){
+    	       $this->assign('opt_'.$k,$v);
+        }
+
+    	$r = $this->fetch("",$r);
     	
     	echo $r;
     	/* $str .= '<div class="form-group">
@@ -154,9 +161,9 @@ class FormController extends CommonController {
     function createListFields($tableInfoArray){
         $fields = [];
         foreach($tableInfoArray as $columnInfo){
-            $commentInfo = $this->parserComment($columnInfo['COLUMN_COMMENT']);
-            $cnName = empty($commentInfo['name']) ? $columnInfo['COLUMN_NAME'] : $commentInfo['name'];
-            $name = $columnInfo['COLUMN_NAME'];
+            $commentInfo = $this->parserComment($columnInfo['column_comment']);
+            $cnName = empty($commentInfo['name']) ? $columnInfo['column_name'] : $commentInfo['name'];
+            $name = $columnInfo['column_name'];
             $fields[] = "$name:$cnName";
         }
         return implode(',',$fields);
@@ -249,22 +256,23 @@ class FormController extends CommonController {
 		}
 		
 		
-		$commentInfo = $this->parserComment($columnInfo['COLUMN_COMMENT']);
+		$commentInfo = $this->parserComment($columnInfo['column_comment']);
 		if(!empty($commentInfo['options'])){
 			$inputAttribute['type'] = "text";
 		}
 		
 		
-		$cnName = empty($commentInfo['name']) ? $columnInfo['COLUMN_NAME'] : $commentInfo['name'];
-		$name = $columnInfo['COLUMN_NAME'];
+		$cnName = empty($commentInfo['name']) ? $columnInfo['column_name'] : $commentInfo['name'];
+		$name = $columnInfo['column_name'];
 		$inputStr = "";
 		$confStr = "";
 		
 		if(!empty($commentInfo['type'])){
 			if($commentInfo['options']){
-				$this->options[$columnInfo['COLUMN_NAME']] = var_export($commentInfo['options'],1);
+				$this->options[$columnInfo['column_name']] = var_export($commentInfo['options'],1);
+				$this->arrOptions[$columnInfo['column_name']] = $commentInfo['options'];
 				if($commentInfo['type'] == "select"){
-					$inputStr .= "<html:select options='opt_status' selected='status_selected' name=\"{$columnInfo['COLUMN_NAME']}\" />";
+					$inputStr .= "<html:select options='opt_status' selected='status_selected' name=\"{$columnInfo['column_name']}\" />";
 					/*$inputStr .= " <select name=\"select\" id=\"select\">";
 					foreach($commentInfo['options'] as $value => $text){
 						$inputStr.="<option value=\"{$value}\">$text</option>";
@@ -335,7 +343,7 @@ class FormController extends CommonController {
 		    $tableName = $tableName[count($tableName)-1];
         }
 		$tableInfoArray = getTableInfoArray($tableName);
-		$columnNameKey = strtoupper(getColumnNameKey());
+		$columnNameKey = getColumnNameKey();
 		$str = '';
 		foreach($tableInfoArray as $tableInfo){
 			$str .= '<option value="'.$tableInfo[$columnNameKey].'" >'.$tableInfo[$columnNameKey]."</option>\r\n";

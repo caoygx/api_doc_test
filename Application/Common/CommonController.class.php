@@ -4,6 +4,7 @@ use Think\Controller;
 use Org\Util\Rbac;
 use Org\Util\Cookie;
 use Common\XPage;
+use Org\Util\TableInfo;
 class CommonController extends Controller {
     /**
      * @var \Model|null|\Think\Model
@@ -24,8 +25,11 @@ class CommonController extends Controller {
                 //检测表存在，则实例化
                 $model = M();
                 $tablename = strtolower(C('DB_PREFIX').parse_name(CONTROLLER_NAME));
-                $sqlCheckTable = "select * from sqlite_master where name='$tablename'";
-                //$sqlCheckTable = "SELECT * FROM information_schema.tables WHERE table_name = '$tablename'"; //mysql
+                if(DB_TYPE == 'mysql'){
+                    $sqlCheckTable = "SELECT * FROM information_schema.tables WHERE table_name = '$tablename'"; //mysql
+                }else{
+                    $sqlCheckTable = "select * from sqlite_master where name='$tablename'";
+                }
                 $tableExist = $model->query($sqlCheckTable);
                 debug($tableExist);
                 if($this->autoInstantiateModel && !empty($tableExist)){
@@ -783,9 +787,13 @@ class CommonController extends Controller {
         if (method_exists ( $this, '_replacePublic' )) {
             $this->_replacePublic ( $vo );
         }
+        layout(false);
+        $tableInfo = new TableInfo('add');
 
+        $tableNmae = $this->m->getTableName();
+        $form = $tableInfo->generateForm($tableNmae);
 
-        //自动获取通用模板时 获取表字段
+        /*//自动获取通用模板时 获取表字段
         $fields = $this->m->getDbFields();
         $pk = $this->m->getPk();
         $tableInfo = [];
@@ -796,8 +804,9 @@ class CommonController extends Controller {
             }
             $tableInfo[] = ["column_name" => $v,"cn_name" => $v];
         }
-        $this->assign('f_add',$tableInfo);
-        $this->assign('action','add');
+        $this->assign('f_add',$tableInfo);*/
+        //$this->assign('action','add');
+        $this->form = $form;
         $this->toview();
     }
 

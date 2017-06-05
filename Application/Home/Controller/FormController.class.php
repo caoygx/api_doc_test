@@ -272,7 +272,7 @@ class FormController extends CommonController {
 				$this->options[$columnInfo['column_name']] = var_export($commentInfo['options'],1);
 				$this->arrOptions[$columnInfo['column_name']] = $commentInfo['options'];
 				if($commentInfo['type'] == "select"){
-					$inputStr .= "<html:select options='opt_status' selected='status_selected' name=\"{$columnInfo['column_name']}\" />";
+                    $inputStr .= "<html:select options='opt_{$columnInfo['COLUMN_NAME']}' selected='{$columnInfo['COLUMN_NAME']}_selected' name=\"{$columnInfo['COLUMN_NAME']}\" />";
 					/*$inputStr .= " <select name=\"select\" id=\"select\">";
 					foreach($commentInfo['options'] as $value => $text){
 						$inputStr.="<option value=\"{$value}\">$text</option>";

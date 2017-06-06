@@ -4,19 +4,33 @@ if(IS_CLI){
 }else{
 	define('LF',"<br />");
 }
+define('DB_TYPE','mysql');
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
 
-
-return array(
+if(DB_TYPE == 'mysql'){
+    $custom = [
+        'DB_TYPE' => "mysql",
+        'DB_NAME' => 'api',
+        'DB_HOST' => "localhost",
+        'DB_USER' => "root",
+        'DB_PWD'  => "",
+        'DB_PREFIX' => '',
+        'DB_PARAMS'    =>    array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
+    ];
+}else{
+    $custom = [
+        'DB_TYPE'    => 'sqlite',
+        'DB_NAME'    => ROOT.'/doc.db',
+        'DB_PREFIX' => '',
+    ];
+}
+$pub =  array(
     'SHOW_PAGE_TRACE' => true,
-    'TAGLIB_PRE_LOAD' => 'htmlme', //,OT\\TagLib\\Think
+    'TAGLIB_PRE_LOAD' => 'html', //,OT\\TagLib\\Think
     'URL_MODEL'=>2, //默认1;URL模式：0 普通模式 1 PATHINFO 2 REWRITE 3 兼容模式
 	//'LOG_RECORD'=>true, 
-    'DB_PREFIX' => 'vpn_',
-    'DB_TYPE'    => 'sqlite',
-    'DB_NAME'    => ROOT.'/doc.db',
-    'DB_PREFIX' => '',
+
 	'service_type' =>  array( '全局' , '通用' , '助手' ),
 
     'options' => array(
@@ -24,6 +38,8 @@ return array(
         "doc_status"=>array ( 1 => '是',0 => '否' ),
 	),
 
+    //默认操作
+    "f_action" => 'status|showStatus=$user[\'id\'],edit:编辑:id,foreverdel:永久删除:id',
     'tpl_fields' => [
         "project" => [
             "f_list" => "id:编号|8%,title:信息名:edit,create_time|toDate='y-m-d':创建时间,status|getStatus2:状态",
@@ -35,6 +51,7 @@ return array(
 	
 );
 
+return array_merge($pub,$custom);
 
 
 

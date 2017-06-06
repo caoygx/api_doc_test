@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>工具包</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <base target="_blank" />
+</head>
+
+<body>
+<div class="row">
+<div class="col-md-4"></div>
+  <div class="col-md-4"><h1>功能列表</h1></div>
+  <div class="col-md-4"></div>
+</div>
+
+<form action="" id="gu">
+原成本价 <input type="text" name="originalCostPrice" id="originalCostPrice"/>
+原购买数量 <input type="text" name="originalPurchaseQuantity" id="originalPurchaseQuantity"/>
+现价 <input type="text" name="nowPrice" id="nowPrice"/>
+期望成本价 <input type="text" name="expectCostPrice" id="expectCostPrice"/>
+</form>
+
+<div id="result" style="display: none;">您需要购买数量为：<span id="needPurchaseQuantity"></span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<input type="button" id="calculate" name="calculate" value="计算"/>
+
+<script >
+    $('#calculate').click(function () {
+        var param = $('#gu').serialize();
+        $.get('__URL__/calculate',param,function (data) {
+            $('#needPurchaseQuantity').html(data);
+            $('#result').show();
+        });
+    });
+
+</script>
+
+
+
+
+</body>
+</html>

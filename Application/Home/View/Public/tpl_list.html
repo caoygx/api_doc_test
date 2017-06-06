@@ -1,0 +1,21 @@
+
+
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="{$control}/add" class="">添加</a></div>
+        <div class="box-content">
+            <form method='get' action="{$control}"  class="form-inline">
+                {$htmlSearch}
+		      <button type="submit" class="btn btn-primary">搜索</button>
+		    </form>
+
+           <!-- show="id:编号|8%,title:名称:edit,create_time|toDate='y-m-d':创建时间,status|getStatus2:状态,{$fields}"-->
+
+            <html:list id="checkList" name="user" style="table table-striped table-bordered bootstrap-datatable datatable" checkbox="true" action="true"  datasource="list" show="$f_list" actionlist="$f_action"/>
+            {$page} 
+ 
+        </div>
+    </div>
+
+</div>

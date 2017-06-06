@@ -220,6 +220,7 @@ class CommonController extends Controller {
     }
 
     public function lists() {
+
         //列表过滤器，生成查询Map对象
         $map = $this->_search ();
         if (method_exists ( $this, '_filter' )) {
@@ -229,6 +230,24 @@ class CommonController extends Controller {
         if (! empty ( $this->m )) {
             $this->_list ( $this->m, $map );
         }
+
+
+        //自动获取列表模板
+        layout(false);
+        $tableInfo = new TableInfo('list');
+        $tableName = $this->m->getTableName();
+        $htmlList = $tableInfo->generateLists($tableName);
+
+//        $tableInfo->page = 'search';
+//        $htmlSearch = $tableInfo->generateSearch($tableName);
+//        var_dump($htmlSearch);exit;
+
+
+//        <input name="id" type="text" class="input-medium search-query" <literal>value="{$Think.get.id}"</literal> placeholder="id">
+//		      <input name="title" type="text" class="input-medium search-query" <literal>value="{$Think.get.title}"</literal>   placeholder="名称">
+
+        $this->htmlList = $htmlList;
+
         $this->display ();
         //return;
     }
@@ -787,11 +806,12 @@ class CommonController extends Controller {
         if (method_exists ( $this, '_replacePublic' )) {
             $this->_replacePublic ( $vo );
         }
+
+        //自动获取添加模板
         layout(false);
         $tableInfo = new TableInfo('add');
-
-        $tableNmae = $this->m->getTableName();
-        $form = $tableInfo->generateForm($tableNmae);
+        $tableName = $this->m->getTableName();
+        $form = $tableInfo->generateForm($tableName);
 
         /*//自动获取通用模板时 获取表字段
         $fields = $this->m->getDbFields();
@@ -1079,6 +1099,7 @@ class CommonController extends Controller {
 
     //==================自己加的==================//
 
+
     //保存添加和编辑
     function save() {
         //var_dump($this->isAjax());exit;
@@ -1086,10 +1107,15 @@ class CommonController extends Controller {
         $id = I('id');
         //$vo = $this->m->getById ( $id );
 
+
+        //自动验证
+        $tableInfo = new TableInfo();
+        $rules = $tableInfo->getValidateRules($this->m->getTableName());
+
         if(empty($id)){
             unset($_POST['id']);
             $_POST['uid'] = $this->uid; //添加时默认加上用户id
-            if (false === $this->m->create ()) {
+            if (false === $this->m->validate($rules)->create ()) {
                 $this->error ( $this->m->getError () );
             }
             $r=$this->m->add ();

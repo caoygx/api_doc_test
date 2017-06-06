@@ -1,0 +1,17 @@
+<?php
+namespace Common\Model;
+class {$className}Model extends CommonModel {
+
+	//自动完成赋值
+	public $_auto		=	array(
+		array('create_time','datetime',self::MODEL_INSERT,'function'),
+		
+	);
+
+	//自动验证
+	public $_validate	=	array(
+		//array('title','require','名称不能为空'),
+	);
+}
+
+?>

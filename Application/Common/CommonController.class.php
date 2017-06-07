@@ -384,7 +384,7 @@ class CommonController extends Controller {
             //分页显示
             $page = $p->show ();
             //列表排序显示
-            $sortImg = $sort; //排序图标
+            $sortImg = $sort == 'desc' ? 'glyphicon-arrow-down' : "glyphicon-arrow-up";
             $sortAlt = $sort == 'desc' ? '升序排列' : '倒序排列'; //排序提示
             $sort = $sort == 'desc' ? 1 : 0; //排序方式
             //模板赋值显示
@@ -835,10 +835,7 @@ class CommonController extends Controller {
     }
 
     function edit() {
-        //exit('s');
-        //$name=CONTROLLER_NAME;
-        //$model = M ( $name );
-        //var_dump($this->m);exit;
+
         $id = $_REQUEST [$this->m->getPk ()];
         $vo = $this->m->getById ( $id );
         if (method_exists ( $this, '_replacePublic' )) {
@@ -847,9 +844,15 @@ class CommonController extends Controller {
         //cookie( '_currentUrl_', __SELF__ );
         $this->vo = $vo;
         $this -> assign('action','edit');
-            $this->toview("","add");
-        //$this->assign ( 'vo', $vo );
-        //$this->display ('add');
+
+        //自动获取添加模板
+        layout(false);
+        $tableInfo = new TableInfo('edit');
+        $tableName = $this->m->getTableName();
+        $form = $tableInfo->generateForm($tableName);
+        $this->form = $form;
+
+        $this->toview("","add");
     }
 
     function edit2() {

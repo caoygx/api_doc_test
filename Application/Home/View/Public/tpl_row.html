@@ -1,6 +1,8 @@
   <div class="form-group" <?php if($hidden){ ?> style="display: none"<?php } ?>>
     <label for="{$name}" class="col-sm-2 control-label"><?php if(!empty($required)){ ?><span class="text-danger">*</span><?php } ?> {$cnName}</label>
-    <div class="col-sm-8">
-       {$inputStr} <span class="help-inline">{$tips}</span>
+    <div class="col-sm-6">
+       {$inputStr}
     </div>
+  <div class="col-sm-2 control-label">{$tips}</div>
+
   </div>

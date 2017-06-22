@@ -10,6 +10,13 @@
     <script src="http://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/js/bootstrap-datepicker.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     <!-- <script src="http://libs.useso.com/js/ckeditor/4.4.2/ckeditor.min.js"></script> -->
+
+    <link href="__PUBLIC__/validform/validform.css" rel="stylesheet">
+
+    <script src="http://apps.bdimg.com/libs/validform/5.3.2/validform.min.js"></script>
+
+
+
     <script>
         var URL = '__URL__';
     </script>
@@ -26,7 +33,7 @@
 
 <div class="row-fluid sortable">
     <div class="box span12">
-        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="__URL__/add" class="">添加</a> 
+        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="__URL__/add" class="">添加</a>
         </div>
         {$form}
     </div>
@@ -34,6 +41,14 @@
 </div>
 
 </div>
+<script>
+    $(function () {
+        $("form").Validform({
+            tiptype:2
+        });
+    });
+
+</script>
 
 </body>
 </html>

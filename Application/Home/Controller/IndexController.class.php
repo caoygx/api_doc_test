@@ -60,6 +60,22 @@ class IndexController extends Controller {
     }
 
 
+    public function getTrue(){
+        return true;
+    }
+
+    public function getFalse(){
+        return false;
+    }
+
+    public function getEmptyArray(){
+        return array();
+    }
+
+    public function getUnEmptyArray(){
+        return array(1,2);
+    }
+
 	
 
 }

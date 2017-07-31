@@ -186,8 +186,8 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 	}else{
 		$url = $api['url'];
 	}
-	if(! isset($api['get'])) {
-		$api['get'] = 1;
+	if(! isset($api['method'])) {
+		$api['method'] = 'get';
 	}
 	if(!is_array($api['param_json'])){
 		$api['param_json'] = json_decode($api['param_json'],true);
@@ -202,7 +202,7 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 
 
 	$id = $api['id'];
-	$ret = curl_get_content($url, $parms, $api['get']);
+	$ret = curl_get_content($url, $parms, $api['method']);
 	$ret = json_decode($ret,true);
     if(json_last_error() != JSON_ERROR_NONE){
         $text = '返回的json 解析错误';

@@ -56,11 +56,11 @@ class AutotestController extends CommonController{
 	public function __isset($name) {
 		return isset($this->param[$name]);
 	}
-	protected function success($msg){
+    public function success($msg){
 		echo "<span style=\"color:#360;\">$msg</span>";
 	}
-	
-	protected function error($msg){
+
+    public function error($msg){
 		echo "<span style=\"color:#f00;\">$msg</span>";
 	}
 	
@@ -86,7 +86,7 @@ class AutotestController extends CommonController{
 	function switchLogin(){
 	    
 	    //设备A登录，并绑定微信号
-	    $m = M("doc",'lez_',"api");
+	    $m = M("doc");
 	    $r = $m->getByUrl('/user/deviceLogin');
 	    $param = json_decode($r['param_json'],1);
 	    $device_id1 = mt_rand(10000,99999);
@@ -105,7 +105,7 @@ class AutotestController extends CommonController{
 	    
 	    
 	    //设备b登录，并用上一个微信号登录
-	    $m = M("doc",'lez_',"api");
+	    $m = M("doc");
 	    $r = $m->getByUrl('/user/deviceLogin');
 	    $param = json_decode($r['param_json'],1);
 	    $device_id2 = mt_rand(10000,99999);
@@ -130,7 +130,7 @@ class AutotestController extends CommonController{
     function orderPay(){
 
         //设备A登录，并绑定微信号
-        $m = M("doc",'lez_',"api");
+        $m = M("doc");
         $r = $m->getByUrl('/order/payh5/');
 
         $result = request_by_curl_bat($r);
@@ -148,7 +148,7 @@ class AutotestController extends CommonController{
 
 
         //设备b登录，并用上一个微信号登录
-        $m = M("doc",'lez_',"api");
+        $m = M("doc");
         $r = $m->getByUrl('/user/deviceLogin');
         $param = json_decode($r['param_json'],1);
         $device_id2 = mt_rand(10000,99999);
@@ -227,9 +227,9 @@ class AutotestController extends CommonController{
 		$st = gettimeofday(1);
         $id = I('id');
         $type = I('type');
-		$m = M("doc",'lez_',"api");
+		$m = M("doc");
         $where = array();
-        $where["project"] = "api";
+        $where["project_id"] = "1";
         $where["status"] = 1;
         !empty($id) && $where["id"] = $id;
         !empty($type) && $where["type"] = $type;

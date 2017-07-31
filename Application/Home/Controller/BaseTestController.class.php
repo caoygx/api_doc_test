@@ -46,4 +46,3 @@ class BaseTestController extends CommonController{
 	}
 
 }
-?>

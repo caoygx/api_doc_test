@@ -4,6 +4,8 @@ if(IS_CLI){
 }else{
 	define('LF',"<br />");
 }
+
+define('URL_API','https://api.'.DOMAIN);
 define('DB_TYPE','mysql');
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');

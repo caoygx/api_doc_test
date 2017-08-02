@@ -26,4 +26,5 @@ define('APP_DEBUG',true);
 define('APP_NAME', 'Home');
 define('APP_PATH',ROOT.'/Application/');
 define('RUNTIME_PATH',ROOT.'/Runtime/'); //runtime目录
+require '../ThinkPHP/vendor/autoload.php';
 require '../ThinkPHP/ThinkPHP.php';

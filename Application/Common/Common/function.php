@@ -1071,6 +1071,4 @@ if (!function_exists('getallheaders')){
     }
 }
 
-function debug($data){
-    //var_dump($data);
-}
+ 

@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use GuzzleHttp\Client;
 
 class IndexController extends Controller {
     function index(){
@@ -74,6 +75,16 @@ class IndexController extends Controller {
 
     public function getUnEmptyArray(){
         return array(1,2);
+    }
+
+    function test(){
+        $client = new Client();
+        $res = $client->request('GET', 'http://www.cnblogs.com/xp796/p/6444106.html');
+        echo $res->getStatusCode(); // "200"
+        echo $res->getHeader('content-type'); // 'application/json; charset=utf8'
+        echo $res->getBody(); // {"type":"User"...' // 发送一个异步请求 $request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org'); $promise = $client->sendAsync($request)->then(function ($response) { echo 'I completed! ' . $response->getBody(); }); $promise->wait();
+
+
     }
 
 	

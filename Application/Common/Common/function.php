@@ -339,18 +339,24 @@ function check_ecursive($return_json, $ret, $prve_key = ''){
 }
 
 function check_ecursive_cli($return_json, $ret, $prve_key = ''){
-	global $errors;
+	global $errors,$warning;
 	foreach($return_json as $k => $v) {
 		if(is_array($v)) {
 			check_ecursive_cli($v, $ret[$k], $prve_key . "." . $k);
 		} else {
-			if(empty($ret[$k]) && $ret[$k] === null) {
+			if(!array_key_exists($k,$ret)  ) {
 				echo_color("    $prve_key.{$k} : ", "BROWN");
 				echo_color( var_export($ret[$k],1), "RED");
 				echo LF;
 				if($v === "not null") {
 					echo "$k 不能为空";
 				}
+				echo 'error';
+                $errors = true;
+			}elseif(empty($ret[$k])){
+				echo 'waring';
+                $warning = true;
+				echo_color("    $prve_key.{$k} : ", "BROWN");
 			}
 		}
 	}

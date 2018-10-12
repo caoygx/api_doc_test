@@ -33,9 +33,9 @@ class CommonController extends Controller {
                 $tableExist = $model->query($sqlCheckTable);
                 debug($tableExist);
                 if($this->autoInstantiateModel && !empty($tableExist)){
-                    //if(class_exists(CONTROLLER_NAME.'Model',true)){
+                    if(class_exists(CONTROLLER_NAME.'Model',true)){
                     $this->m = D(CONTROLLER_NAME); //实例化model
-                    //}
+                    }
                     if(empty($this->m)){
                         $this->m = M(CONTROLLER_NAME);
                     }

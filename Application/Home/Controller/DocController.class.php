@@ -7,11 +7,14 @@ class DocController extends CommonController {
 	//protected $pre = "lez_";
 	public  function _initialize(){
 	}
+
     function index($id=""){
     	$k = I('k');
     	$project_id = I("project_id");
-    	$map = $where = ['project_id' =>$project_id];
-    	$mApi = M('doc');
+
+    	$map = ['project_id' =>$project_id];
+        $where = [];
+        $mApi = M('doc');
     	if($k){
     		$where['title']  = array('like', "%{$k}%");
     		$where['url'] =  array('like', "%{$k}%");
@@ -47,6 +50,24 @@ class DocController extends CommonController {
 		$this->display();
 	}
 
+    function import(){
+        /*$
+        */
+
+        if(IS_GET){
+            $this->display();
+        }else{
+            $raw = I('raw');
+            $r = fiddlerPackageToDoc2($raw);
+            //var_dump($r);exit;
+            if(empty($r)) return;
+            $r['project_id']=1;
+            $m = M('Doc');
+
+                $m->add($r);
+
+        }
+    }
 
     function _replacePublic($vo){
         //保密性

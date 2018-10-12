@@ -5,8 +5,38 @@ use GuzzleHttp\Client;
 
 class IndexController extends Controller {
     function index(){
+
+
+
 		$this->display();
 	}
+
+	function fiddlerPacketToDoc(){
+        $str = file_get_contents("full.txt");
+
+        $arr = explode('------------------------------------------------------------------',$str);
+
+        foreach ($arr as $k => $v){
+
+            $r = fiddlerPackageToDoc($v);
+            if(empty($r)) continue;
+            $r['project_id']=1;
+            //var_dump($r);
+            $m = M('Doc');
+            try{
+                $m->add($r);
+            }catch (\Exception $e){
+
+            }
+
+        }
+        //var_dump($r);
+        exit;
+
+
+    }
+
+
 
 	function num(){
        $this->display();

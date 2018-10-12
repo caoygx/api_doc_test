@@ -16,7 +16,7 @@ if(DB_TYPE == 'mysql'){
         'DB_NAME' => 'doc',
         'DB_HOST' => "localhost",
         'DB_USER' => "root",
-        'DB_PWD'  => "",
+        'DB_PWD'  => "123456",
         'DB_PREFIX' => '',
         'DB_PARAMS'    =>    array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
     ];

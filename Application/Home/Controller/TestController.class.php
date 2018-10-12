@@ -14,8 +14,9 @@ use Common\Cookie;
 class TestController extends CommonController{
 		function _initialize(){
 			parent::_initialize();
-			C('DB_PREFIX',"lez_");
-			$this->m = M('doc', '', 'api');
+			//C('DB_PREFIX',"lez_");
+			//$this->m = M('doc', '', 'api');
+			$this->m = M('doc');
 		}
 		
 		function _before_index(){

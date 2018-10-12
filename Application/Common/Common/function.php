@@ -1077,4 +1077,81 @@ if (!function_exists('getallheaders')){
     }
 }
 
- 
+
+function fiddlerPackageToDoc($data){
+    $data = trim($data);
+    $ret = [];
+    $arrData = explode("\n",$data);
+
+    $get = $arrData[0];
+
+    $arrGet = explode(' ',$get);
+    $url =  urldecode($arrGet['1']);
+    $arrUrl = parse_url($url);
+    $path = $arrUrl['path'];
+    if(strpos($path,'index.php') === false) return $ret;
+    $ret['url'] = str_replace('/index.php','',$path);
+    $ret['title'] = $ret['url'];
+
+    $query = $arrUrl['query'];
+    $param = str_replace("&","\n",$query);
+
+    parse_str($query,$arrQuery);
+    $param_json = json_encode($arrQuery);
+
+
+    $ret['param'] = $param;
+    $ret['param_json'] = $param_json;
+
+
+
+    $count = count($arrData);
+    $response = $arrData[$count-1];
+    //var_dump($data);exit;
+    preg_match('/[\w\d]+\((\{.*\})\)/',$response,$out);
+    $response = $out[1];
+    $ret['return_json'] = $response;
+
+    return $ret;
+
+
+}
+
+function fiddlerPackageToDoc2($data){
+    $data = trim($data);
+    $ret = [];
+    $arrData = explode("\n",$data);
+
+    $get = $arrData[0];
+
+    $arrGet = explode(' ',$get);
+    $url =  urldecode($arrGet['1']);
+    $arrUrl = parse_url($url);
+    $path = $arrUrl['path'];
+    if(strpos($path,'index.php') === false) return $ret;
+    $ret['url'] = str_replace('/index.php','',$path);
+    $ret['title'] = $ret['url'];
+
+    $query = $arrUrl['query'];
+    $param = str_replace("&","\n",$query);
+
+    parse_str($query,$arrQuery);
+    $param_json = json_encode($arrQuery);
+
+
+    $ret['param'] = $param;
+    $ret['param_json'] = $param_json;
+
+
+
+    $count = count($arrData);
+    $response = $arrData[$count-1];
+    //var_dump($response);//exit;
+    preg_match('/(\{.*\})/',$response,$out);
+    $response = $out[1];
+    $ret['return_json'] = $response;
+
+    return $ret;
+
+
+}

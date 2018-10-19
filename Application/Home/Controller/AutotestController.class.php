@@ -129,40 +129,79 @@ class AutotestController extends CommonController{
      */
     function orderPay(){
 
-        //设备A登录，并绑定微信号
+        //登录
         $m = M("doc");
-        $r = $m->getByUrl('/order/payh5/');
+        $r = $m->getByUrl('/index/Member/Login');
+        $response = guzz_get_content($r,true);
+        $resultLogin = jsonp_to_json($response->getBody());
+        $resultLogin= json_decode($resultLogin,1);
+        if(empty($resultLogin['openid'])){
+            echo 'error login';
+        }
+        //echo $response->getBody();exit;
+        //var_dump($response->cookie);
+        //$result = request_by_curl_bat($r);
+        $open_id = $resultLogin['openid'];
 
-        $result = request_by_curl_bat($r);
-        var_dump($result);exit;
-        exit;
-
-        $r = $m->getByUrl('/user/bind');
+        //$r = $m->getByUrl('/user/bind');
+        $r = $m->find(32);
         $param = json_decode($r['param_json'],1);
-        $param['device_id'] = $device_id1;
-        $open_id1 = mt_rand(1000000,9999999);
-        $param['open_id'] = $open_id1;
-        $param['type'] = "wx";
+        $param['openid'] = $open_id;
         $r['param_json'] = json_encode($param);
-        request_by_curl_bat($r);
+        $r['cookie'] = $response->cookie;
+        $r = guzz_get_content($r);
+
+        $paycode = jsonp_to_json($r);
+
+        $paycode= json_decode($paycode,1);
+        if(empty($paycode['json_dt'])){
+            echo "error";
+        }
+        $pingPayCode = json_decode($paycode['json_dt'],1);
+        if(empty($pingPayCode['id'])){
+            echo 'error pingPay';
+        }
 
 
-        //设备b登录，并用上一个微信号登录
-        $m = M("doc");
-        $r = $m->getByUrl('/user/deviceLogin');
+
+
+        //app 微信
+        $r = $m->find(39);
         $param = json_decode($r['param_json'],1);
-        $device_id2 = mt_rand(10000,99999);
-        $param['device_id'] = $device_id2;
+        $param['openid'] = $open_id;
         $r['param_json'] = json_encode($param);
-        request_by_curl_bat($r);
+        $r['cookie'] = $response->cookie;
+        $r = guzz_get_content($r);
 
-        $r = $m->getByUrl('/user/bind');
+        $paycode = jsonp_to_json($r);
+
+        $paycode= json_decode($paycode,1);
+        if(empty($paycode['paycode'])){
+            echo "error app wxpay";
+        }
+
+
+        //h5 微信
+        $r = $m->find(39);
         $param = json_decode($r['param_json'],1);
-        $param['device_id'] = $device_id2;
-        $param['open_id'] = $open_id1;
-        $param['type'] = "wx";
+        $param['openid'] = $open_id;
+        $param['IsH5']=1;
         $r['param_json'] = json_encode($param);
-        request_by_curl_bat($r);
+        $r['cookie'] = $response->cookie;
+        $r = guzz_get_content($r);
+
+        $paycode = jsonp_to_json($r);
+
+        $paycode= json_decode($paycode,1);
+        if(empty($paycode['datas']['mweb_url'])){
+            echo "error h5 wxpay";
+        }
+
+
+        //pay_type=haonuo&show_data_type=json&channel=wx&openid=sj_3a4e40956caa8aa474db2128
+        //&amount=50&payflg=2&goods_name=%E5%85%85%E5%80%BC&backurl=&devicetype=AND&diffAppScheme=&
+        //IsH5=1&_=1539930315966
+
 
     }
 	

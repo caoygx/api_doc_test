@@ -174,6 +174,129 @@ class DocController extends CommonController {
 	    $r = $this->fetch("tpl_ios");
 	    echo $r;exit;
 	}
+
+	function getSqlStreamFromLog(){
+	    $content = file_get_contents('sql.log');
+	    $arrAllRequest = explode("---------------------------------------------------------------
+",$content);
+        foreach ($arrAllRequest as $k=>$v){
+            var_dump($v);
+        }
+    }
+	
+	function showSqlFlow(){
+		$id = I('id');
+		$r = M('doc')->find($id);
+		if(!empty($r['sql'])){
+			$this->createSqlFlow($r['sql']);
+		}
+	}
+	
+	function createSqlFlow($sql){
+		
+$sql = explode("\n",$sql);
+$sql = array_filter($sql);
+
+//var_dump($sql);
+
+$shapeConfig=[
+    'select'=>'[shape=box,  fillcolor="#99CC66", style=filled ,label="{lable}" ,fontsize="16"]',
+    'insert'=>'[shape=invtriangle,  fillcolor="#6666CC", style=filled ,label="{lable}",fontsize="16"]',
+    'update'=>'[shape=polygon,sides=4,distortion=.7,  fillcolor="#FFCC00", style=filled ,label="{lable}",fontsize="16"]',
+    'delete'=>'[shape=triangle,  fillcolor="#CC0033", style=filled ,label="{lable}",fontsize="16"]',
+];
+
+$sqlFlow = [];
+foreach ($sql as $k => $v) {
+    $operate = "";
+    if(preg_match('/.*\s+join\s+(.*)/i',$v,$out)){
+        $operate = "join";
+		 if(preg_match('/select.+from\s+`?(\w+)`?join\s+(\w+)\s+/i',$v,$out)){
+            $operate = "select";
+			$tableName = $out[1].$out[2];
+        }
+		
+    }else{
+        if(preg_match('/select.+from\s+`?(\w+)`?/i',$v,$out)){
+            $operate = "select";
+        }elseif (preg_match('/INSERT INTO\s+`?(\w+)`?\s+/i',$v,$out)){
+            $operate = "insert";
+        }elseif(preg_match('/UPDATE\s+`?(\w+)`?\s+/i',$v,$out)){
+            $operate = "update";
+        }elseif(preg_match('/DELETE FROM\s+(\w+)\s+/i',$v,$out)){
+            $operate = "delete";
+        }
+		$tableName = $out[1];
+    }
+
+    
+    $nodeUniqueName = $tableName."_".$k;
+    //$tableName .= "_".$k;
+    $temp = [];
+    $temp['objectName'] = $nodeUniqueName;
+    $temp['property'] = $nodeUniqueName.' '.str_replace('{lable}',$operate."\n".$tableName,$shapeConfig[$operate]);
+    $sqlFlow[] = $temp;
+
+}
+
+$dotConfig="";
+$objectFlow = array_column($sqlFlow,'objectName');
+$objectFlow = implode('->',$objectFlow);
+$objectFlow .= ';';
+
+$property = array_column($sqlFlow,'property');
+$property = implode(";\n",$property);
+
+
+/*$property="";
+foreach ($sqlFlow as $k=>$v){
+    $property .= $v['objectName'].' '.$v['property']."\n";
+}*/
+
+header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
+header ("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+header ("Pragma: no-cache"); // HTTP/1.0
+header ("Content-type: image/gif");
+$somecontent='digraph example3 {
+'.$objectFlow.'
+ 
+'.$property.'
+}';
+
+//var_dump($somecontent);exit;
+/*if (!$handle = fopen($filename, 'w')) {
+    echo "cannot open $filename";
+    exit;
+}
+if (fwrite($handle, $somecontent) === FALSE) {
+    echo "cannot write to $filename";
+    exit;
+}
+fclose($handle);*/
+
+
+
+
+/*$somecontent = '
+digraph example3 {
+    Server1 -> Server2
+Server2 -> Server3
+Server3 -> Server1
+ 
+Server1 [shape=box, label="Server1\nWeb Server", fillcolor="#ABACBA", style=filled]
+Server2 [shape=triangle, label="Server2\nApp Server", fillcolor="#DDBCBC", style=filled]
+Server3 [shape=circle, label="Server3\nDatabase Server", fillcolor="#FFAA22",style=filled]
+}';*/
+
+$filename="/tmp/digraph";
+file_put_contents($filename,$somecontent);
+
+//echo($somecontent);exit;
+
+	passthru("dot -Tpng $filename");
+//passthru("dot -Tpng $filename >dot.png");
+	}
 	 
 
 }

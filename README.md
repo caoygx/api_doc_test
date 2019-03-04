@@ -42,6 +42,38 @@ git clone https://github.com/caoygx/ThinkPHP.git
 3.指定的精确值验证
 4.包含指定值验证
 
+{
+    "isNew": "f:type:bool|f:value:true",
+    "totalEarn": 0,
+    "bindPhone": "",
+    "isBind": false,
+    "state": "f:reqire",
+    "data": {
+        "openid": "sj_fa6af9713bc02a6107785463",
+        "nickName": "138****6111",
+        "head": "f:reg:/url/", //,http://pm.yz314.com/front/static/img/usercenter/photo.png
+        "phone": "f:reg:/mobile/",
+        "address": "",
+        "cname": "",
+        "area": "四川省 雅安",
+        "balance": 0,
+        "memberno": "9856523940",
+        "channel_id": "Ios2",
+        "isNew": true,
+        "totalEarn": 0,
+        "bindPhone": "",
+        "isBind": false,
+        "shareCode": ""
+    },
+    "msg": "",
+    "openid": "sj_fa6af9713bc02a6107785463"
+}
+
+f:开头表示格式验证
+  type 验证类型,bool,int,string,array
+  value 验证值
+  value_fuzzy 模糊验证值
+
 
 
 # 脚本批量测试

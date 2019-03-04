@@ -203,6 +203,7 @@ function request_by_curl_bat($api, $host = "",$show_form = true){
 
 	$id = $api['id'];
 	$ret = curl_get_content($url, $parms, $api['method']);
+    $ret = jsonp_to_json($ret);
 	$ret = json_decode($ret,true);
     if(json_last_error() != JSON_ERROR_NONE){
         $text = '返回的json 解析错误';
@@ -300,7 +301,7 @@ global $errors;
 $errors = array();
 function check_ecursive($return_json, $ret, $prve_key = ''){
 	global $errors;
-	
+
 	foreach($return_json as $k => $v) {
 		if(is_array($v)) {
 			// var_dump($v);
@@ -324,7 +325,9 @@ function check_ecursive($return_json, $ret, $prve_key = ''){
 					// echo $v;
 					echo "$k 不能为空";
 				}
-				echo LF;
+				//echo LF;
+                echo "<br />";
+				//var_dump(LF);exit;
 			}
 			/*
 			 * if(!$v){ $errors[$k] = $ret[$k]; }
@@ -1153,5 +1156,14 @@ function fiddlerPackageToDoc2($data){
 
     return $ret;
 
+
+}
+
+function jsonp_to_json($jsonp){
+    $jsonp = preg_replace('/.+?\(\{/','{',$jsonp);
+    $json = str_replace('})','}',$jsonp);
+    return $json;
+}
+function alarm($content){
 
 }

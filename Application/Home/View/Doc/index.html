@@ -30,6 +30,11 @@
    <link rel="stylesheet" href="__PUBLIC__/jquery.jsonview.css" />
   
   <script type="text/javascript" src="__PUBLIC__/jquery.jsonview.js"></script>
+  
+  <script type="text/javascript" src="__PUBLIC__/prism.js"></script>
+   <link rel="stylesheet" href="__PUBLIC__/prism.css" />
+  
+  
   <script type="text/javascript">
     var json = {$detail.return_json};
     $(function() {
@@ -156,6 +161,7 @@ Params
 			<a  class="btn btn-success" href="__CONTROLLER__/add/project_id/{$Think.get.project_id}" target="_blank">添加</a>
 			<a  class="btn btn-danger" href="__CONTROLLER__/edit/id/{$detail.id}/project_id/{$Think.get.project_id}" >编辑</a>
             <a  class="btn btn-info" href="__MODULE__/Test/test/id/{$detail.id}/project_id/{$Think.get.project_id}" target="_blank">测试</a>
+            <a  class="btn btn-info" href="__MODULE__/Test/verifyJsonResult/id/{$detail.id}/project_id/{$Think.get.project_id}" target="_blank">验证结果</a>
             
 			<div id="json"></div>
 
@@ -165,6 +171,14 @@ Params
 <pre>
 {$detail.return}
 </pre>
+
+<h4>sql流程   <a href="__CONTROLLER__/showSqlFlow/id/{$detail.id}" target="_blank">查看流程图 </a> </h4>		
+<pre><code class="language-sql">
+{$detail.sql}
+</code>
+</pre>
+
+
 		</div>
 	</div>
 

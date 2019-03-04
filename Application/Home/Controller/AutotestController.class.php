@@ -136,7 +136,7 @@ class AutotestController extends CommonController{
         $resultLogin = jsonp_to_json($response->getBody());
         $resultLogin= json_decode($resultLogin,1);
         if(empty($resultLogin['openid'])){
-            echo 'error login';
+            $this->alarm( 'error login');
         }
         //echo $response->getBody();exit;
         //var_dump($response->cookie);
@@ -155,11 +155,11 @@ class AutotestController extends CommonController{
 
         $paycode= json_decode($paycode,1);
         if(empty($paycode['json_dt'])){
-            echo "error";
+            $this->alarm( "error pingpay");
         }
         $pingPayCode = json_decode($paycode['json_dt'],1);
         if(empty($pingPayCode['id'])){
-            echo 'error pingPay';
+            $this->alarm(  'error pingPay');
         }
 
 
@@ -177,7 +177,7 @@ class AutotestController extends CommonController{
 
         $paycode= json_decode($paycode,1);
         if(empty($paycode['paycode'])){
-            echo "error app wxpay";
+            $this->alarm( "error app wxpay");
         }
 
 
@@ -194,7 +194,7 @@ class AutotestController extends CommonController{
 
         $paycode= json_decode($paycode,1);
         if(empty($paycode['datas']['mweb_url'])){
-            echo "error h5 wxpay";
+            $this->alarm( "error h5 wxpay");
         }
 
 
@@ -203,6 +203,12 @@ class AutotestController extends CommonController{
         //IsH5=1&_=1539930315966
 
 
+    }
+    function alarm($content){
+        echo $content;
+        $content = urlencode($content);
+        $url = "http://pm.yz314.com//index.php/index/test/sendAlarm?text={$content}";
+        file_get_contents($url);
     }
 	
 	function socket_test(){

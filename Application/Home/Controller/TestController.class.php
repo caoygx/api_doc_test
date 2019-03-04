@@ -168,6 +168,25 @@ class TestController extends CommonController{
 				file_put_contents ('/etc/hosts', $file );
 			}
 		}
+
+		function verifyJsonResult(){
+            if(IS_GET){
+                $this->toview();
+            }else{
+
+                $result = $_POST['result'];
+                echo $result,"<hr />";
+                $id = I('id');
+                $r = M('doc')->find($id);
+                $return_json = $r['return_json'];
+
+                check_ecursive(json_decode($return_json,1), json_decode($result,1));
+
+
+            }
+
+
+        }
 	
 	
         

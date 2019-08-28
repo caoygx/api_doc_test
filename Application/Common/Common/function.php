@@ -1,4 +1,67 @@
 <?php
+function ihttp_build_httpbody($url, $post, $extra) {
+	$urlset = ihttp_parse_url($url, true);
+	if (is_error($urlset)) {
+		return $urlset;
+	}
+
+	if (!empty($urlset['ip'])) {
+		$extra['ip'] = $urlset['ip'];
+	}
+
+	$body = '';
+	if (!empty($post) && is_array($post)) {
+		$filepost = false;
+		$boundary = random(40);
+		foreach ($post as $name => &$value) {
+			if ((is_string($value) && substr($value, 0, 1) == '@') && file_exists(ltrim($value, '@'))) {
+				$filepost = true;
+				$file = ltrim($value, '@');
+
+				$body .= "--$boundary\r\n";
+				$body .= 'Content-Disposition: form-data; name="'.$name.'"; filename="'.basename($file).'"; Content-Type: application/octet-stream'."\r\n\r\n";
+				$body .= file_get_contents($file)."\r\n";
+			} else {
+				$body .= "--$boundary\r\n";
+				$body .= 'Content-Disposition: form-data; name="'.$name.'"'."\r\n\r\n";
+				$body .= $value."\r\n";
+			}
+		}
+		if (!$filepost) {
+			$body = http_build_query($post, '', '&');
+		} else {
+			$body .= "--$boundary\r\n";
+		}
+	}
+
+	$method = empty($post) ? 'GET' : 'POST';
+	$fdata = "{$method} {$urlset['path']}{$urlset['query']} HTTP/1.1\r\n";
+	$fdata .= "Accept: */*\r\n";
+	$fdata .= "Accept-Language: zh-cn\r\n";
+	if ($method == 'POST') {
+		$fdata .= empty($filepost) ? "Content-Type: application/x-www-form-urlencoded\r\n" : "Content-Type: multipart/form-data; boundary=$boundary\r\n";
+	}
+	$fdata .= "Host: {$urlset['host']}\r\n";
+	$fdata .= "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0.1) Gecko/20100101 Firefox/9.0.1\r\n";
+	if (function_exists('gzdecode')) {
+		$fdata .= "Accept-Encoding: gzip, deflate\r\n";
+	}
+	$fdata .= "Connection: close\r\n";
+	if (!empty($extra) && is_array($extra)) {
+		foreach ($extra as $opt => $value) {
+			if (!strexists($opt, 'CURLOPT_')) {
+				$fdata .= "{$opt}: {$value}\r\n";
+			}
+		}
+	}
+	if ($body) {
+		$fdata .= 'Content-Length: ' . strlen($body) . "\r\n\r\n{$body}";
+	} else {
+		$fdata .= "\r\n";
+	}
+	return $fdata;
+}
+
 function findTestConfByUrl($url){
 	$testConf = C("test");
 	$ret = array();

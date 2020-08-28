@@ -20,6 +20,8 @@ git clone https://github.com/caoygx/ThinkPHP.git
 /www/api_doc_text
 
 
+
+
 # 使用mysql数据库安装方法
 
 1.将api.sql导入到任意的数据库里，或新建一个数据库
@@ -28,10 +30,12 @@ git clone https://github.com/caoygx/ThinkPHP.git
 
 # 使用sqlite数据库直接下载后打开
 
+3.启动go服务，用于获取表字段
 
 
 
-3.浏览器里打开 http://localhost/api_doc_test/index.php/Home/Doc/index
+
+4.浏览器里打开 http://localhost/api_doc_test/index.php/Home/Doc/index
 
 ![](https://github.com/caoygx/api_doc_test/blob/master/screenshot1.jpg)
 
@@ -98,6 +102,9 @@ php /www/daoxila/tools/appcli/index.php /home/autotest/bat_api
 #功能3.
 代码生成功能
 ![](https://github.com/caoygx/api_doc_test/blob/master/code_generate.jpg)
+
+
+
 
 
  

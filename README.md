@@ -28,9 +28,9 @@ git clone https://github.com/caoygx/ThinkPHP.git
 
 2.更改config里的数据库配置
 
-3.启动go服务 
-  3.1 go run api.go  用于获取表字段  
-  3.2 main.go中用于自动生成接口文档 具体步骤见main.go中的注释  
+3.启动go服务   
+   3.1 go run api.go  用于获取表字段  
+   3.2 main.go中用于自动生成接口文档 具体步骤见main.go中的注释  
 
 
 

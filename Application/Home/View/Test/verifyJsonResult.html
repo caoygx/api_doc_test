@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加接口</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+
+<div class="container">
+    <h1 class="text-center text-primary" style="margin-bottom:50px;">验证结果</h1>
+    <form method="post" action="" target="_self">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="result">结果</label>
+                    <textarea class="form-control" rows="20" name="result" id="result" cols="">{$vo.data}</textarea>
+                    <input class="btn btn-primary" type="button" value="格式化" id="data_formater">
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" id="id" name="id" value="{$Think.get.id}"/>
+        <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}"/>
+        <input class="btn btn-primary" type="submit" value="提交" style="">
+    </form>
+</div>
+<script>
+
+
+    function format(txt, compress) {
+        /* 格式化JSON源码(对象转换为JSON文本) */
+        var indentChar = '    ';
+        if (/^\s*$/.test(txt)) {
+            alert('数据为空,无法格式化! ');
+            return;
+        }
+        try {
+            var data = eval('(' + txt + ')');
+        } catch (e) {
+            alert('数据源语法错误,格式化失败! 错误信息: ' + e.description, 'err');
+            return;
+        }
+        ;
+        var draw = [],
+            last = false,
+            This = this,
+            line = compress ? '' : '\n',
+            nodeCount = 0,
+            maxDepth = 0;
+
+        var notify = function (name, value, isLast, indent, formObj) {
+            nodeCount++;
+            /*节点计数*/
+            for (var i = 0, tab = ''; i < indent; i++) tab += indentChar;
+            /* 缩进HTML */
+            tab = compress ? '' : tab;
+            /*压缩模式忽略缩进*/
+            maxDepth = ++indent;
+            /*缩进递增并记录*/
+            if (value && value.constructor == Array) {
+                /*处理数组*/
+                draw.push(tab + (formObj ? ('"' + name + '":') : '') + '[' + line);
+                /*缩进'[' 然后换行*/
+                for (var i = 0; i < value.length; i++) notify(i, value[i], i == value.length - 1, indent, false);
+                draw.push(tab + ']' + (isLast ? line : (',' + line)));
+                /*缩进']'换行,若非尾元素则添加逗号*/
+            } else if (value && typeof value == 'object') {
+                /*处理对象*/
+                draw.push(tab + (formObj ? ('"' + name + '":') : '') + '{' + line);
+                /*缩进'{' 然后换行*/
+                var len = 0,
+                    i = 0;
+                for (var key in value) len++;
+                for (var key in value) notify(key, value[key], ++i == len, indent, true);
+                draw.push(tab + '}' + (isLast ? line : (',' + line)));
+                /*缩进'}'换行,若非尾元素则添加逗号*/
+            } else {
+                if (typeof value == 'string') value = '"' + value + '"';
+                draw.push(tab + (formObj ? ('"' + name + '":') : '') + value + (isLast ? '' : ',') + line);
+            }
+            ;
+        };
+        var isLast = true,
+            indent = 0;
+        notify('', data, isLast, indent, false);
+        return draw.join('');
+    }
+
+    $('#data_formater').click(function () {
+        $('#result').val(format($('#result').val(), 0));
+    })
+
+
+</script>
+</body>
+</html>

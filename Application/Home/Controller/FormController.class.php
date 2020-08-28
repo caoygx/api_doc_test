@@ -1,6 +1,8 @@
 <?php
 namespace Home\Controller;
 use Common\CommonController;
+use Common\TableInfo;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class FormController extends CommonController {
 	protected $nodeId = [];	
@@ -11,7 +13,8 @@ class FormController extends CommonController {
  
 	
 	 public function index(){
-	 	$tableNameList = getTableNameList();
+	    $tableInfo=new TableInfo();
+	 	$tableNameList = $tableInfo->getTableNameList();
 	 	//$this->tabText = $tableNameList;
 	 	//$this->tabText = $tableNameList;
 	 	$this->tabText = array_combine($tableNameList, $tableNameList);
@@ -33,16 +36,29 @@ class FormController extends CommonController {
     		return;
     	}else{
     	    if(is_array($tableName)) $tableName = $tableName[0];
-    		$allFields = getTableInfoArray($tableName);
+            $tableInfo = new TableInfo();
+    		$allFields = $tableInfo->getTableInfoArray($tableName);
     	}
-    	$str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
+
+        $tableInfo = new TableInfo('add');
+    	$tableInfo->moduleName = 'user';
+        $form = $tableInfo->generateForm($tableName,true);
+        //var_dump($tableInfo->arrOptions);
+        //exit;
+        echo $form;
+        //var_dump($form);exit;
+
+    	/*$str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
     	foreach($allFields as $columnInfo){
     		if(!empty($selectedFields) && !in_array($columnInfo['column_name'], $selectedFields)) continue;
     		if(!I('hasId') && $columnInfo['COLUMN_KEY'] == "PRI") continue;
+
+
+
     		$str .= $this->createFormRow($columnInfo);
     		//$str .= '<option value="'.$columnInfo[$columnNameKey].'" >'.$columnInfo[$columnNameKey]."</option>\r\n";
     	}
-    	
+
     	$this->allRows = $str;
     	$r = $this->fetch("tpl_form");
     	foreach ($this->arrOptions as $k => $v){
@@ -50,8 +66,8 @@ class FormController extends CommonController {
         }
 
     	$r = $this->fetch("",$r);
-    	
-    	echo $r;
+
+    	echo $r;*/
     	/* $str .= '<div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">保存</button>
@@ -59,34 +75,38 @@ class FormController extends CommonController {
   </div>'; */
     	//$str .='</form>';
     	//echo $str;
-    	
+
     	echo "\n\n\n\n";
     	foreach ($this->options as $k => $v){
     		echo '"'.$tableName.'_'.$k.'"',"=>",$v,"\n\n";
     	}
-    	
+
     }
-    
+
     //生成所有表的form,control,model
     function generateAll(){
         $prefix = C("DB_PREFIX");
         $tableNameList = I('tableName');
+        $tableInfo = new TableInfo();
         if(empty($tableNameList)){
-            $tableNameList = getTableNameList();
+            $tableNameList = $tableInfo->getTableNameList();
+
         }
-		foreach($tableNameList as $k => $tableName){
 
-            $this->generateView($tableName);
+		foreach($tableNameList as $k => $tableInfo){
 
-            $className = ucfirst(str_replace($prefix,'',$tableName));
+
+            $this->generateView($tableInfo);
+
+            /*$className = ucfirst(str_replace($prefix,'',$tableName));
             $this->generateController($className);
-            $this->generateModel($className);
+            $this->generateModel($className);*/
 		}
 
 		echo "文件已经生成到: {$this->savePath}";
-		
 
- 
+
+
     }
 
 
@@ -121,16 +141,21 @@ class FormController extends CommonController {
     }
 
     /**
-     * 生成view,添加表单，和列表
+     * 生成view,添加表单，和列表文件,保存到data下
      * @param $tableName
      */
     function generateView($tableName){
 
-        $tableInfoArray = getTableInfoArray($tableName);
-        $columnNameKey = strtoupper(getColumnNameKey());
+        $tableInfo = new TableInfo('add');
+        $tableInfoArray = $tableInfo->getTableInfoArray($tableName);
+        $columnNameKey = strtoupper(TableInfo::getColumnNameKey());
         $str = '';
 
-        //生成添加表单
+
+        $tableInfo->moduleName = 'user';
+        $str = $tableInfo->generateForm($tableName,true);
+
+        /*//生成添加表单
         $str .='<form class="form-horizontal" role="form"  method="post" action="__URL__/save/">';
         foreach($tableInfoArray as $columnInfo){
             //var_dump($columnInfo);exit;
@@ -139,7 +164,7 @@ class FormController extends CommonController {
         }
 
         $this->allRows = $str;
-        $str = $this->fetch("tpl_form");
+        $str = $this->fetch("tpl_form");*/
 
         $prefix = C("DB_PREFIX");
         $className = ucfirst(str_replace($prefix,'',$tableName));
@@ -151,8 +176,9 @@ class FormController extends CommonController {
 
         //$tplPath = T('tpl_list');
         //$tpl = file_get_contents($tplPath);
-        $fields = $this->createListFields($tableInfoArray);
-        $this->fields = $fields;
+        $tableInfo->page = 'list';
+        $str = $tableInfo->generateLists($tableName);
+        //$this->fields = $fields;
         $this->control = '__CONTROLLER__';
         $str = $this->fetch("tpl_list");
         file_put_contents("$path/index.html",$str);
@@ -169,160 +195,31 @@ class FormController extends CommonController {
         return implode(',',$fields);
     }
 
-	
+
 	//获取字段类型及长度
 	function getColumnType($type){
 		//$type = "text";
 		$typeInfo = [];
 		if(strpos($type,"(") !== false){
 			if(preg_match("/(\w+)\((\d+)\)/",$type,$matches)){
-				
+
 				$typeInfo["type"] = $matches[1];
 				$typeInfo['size'] = $matches[2];
-				
+
 				//return $matches[0];
 			}elseif(preg_match("/(\w+)\((.+)\)/",$type,$matches)){
 				$typeInfo["type"] = $matches[1];
 				$typeInfo['size'] = $matches[2];
 			}
-			
+
 		}else{ //text
 			$typeInfo["type"] = $type;
 			$typeInfo['size'] = 65535;
 		}
 		return $typeInfo;
-		
+
 	}
-	
-	//解析注释获取name和选项
-	function parserComment($comment){
-		//$id=$name='status';
-		$ret = [];
-		//$comment = '状态|0:禁用,1:正常,2:待审核';
-		$arr = explode("|",$comment);
-		
-		$name = explode("-",$arr[0]);
-		$ret['name'] = $name[0];
-		if(!empty($name[1])){ //有name后指定类型如 status-checkbox则用后面的类型，否则用select
-			$ret["type"] = $name[1];
-		}
-		
-		if(!empty($name[2])){
-		    $ret['tips'] = $name[2]; 
-		}
- 		
-		if(!empty($arr[1])){
-		
-			$ret["type"] = "select";
-		
-			$items = explode(",",$arr[1]);
-			$options = [];
-			foreach($items as $item){
-				list($value, $text) = explode(':',$item);
-				
-				$options[$value] = "$text";
-			}
-			$ret["options"] = $options;
-		}
-		return $ret;
-		//$select = "<select id=\"$id\" name=\"$name\">$options</select>";
-		//$form_row = $label.$select;
-		//echo $form_row;
-	}
-	
-	//根据一个字段信息创建一个表单项
-	function createFormRow($columnInfo){
-		$inputAttribute = [];
-		$typeInfo = $this->getColumnType($columnInfo['COLUMN_TYPE']);
-		$type = strtoupper($columnInfo['type']);
-		if(in_array($type,["TINYINT","SMALLINT","MEDIUMINT","INT","BIGINT","FLOAT","DOUBLE","DECIMAL"])){ //数字类型
-			$inputAttribute['type'] = "text";
-			$inputAttribute['size'] = 10;
-		}elseif(in_array($type,["DATE","TIME","YEAR","DATETIME","TIMESTAMP"])){ //日期类型
-			$inputAttribute['type'] = "date";
-		}elseif(in_array($type,["CHAR","VARCHAR","TINYBLOB","TINYTEXT"])){ //小文本
-			$inputAttribute['type'] = "text";
-			$inputAttribute['size'] = 30;
-			if( $type == "varchar" && $columnInfo['size'] >255 ){ //大文本域
-				$inputAttribute['type'] = "textare";
-				$inputAttribute['row'] = 10;
-			}
-	 	}elseif(in_array($type,["BLOB","TEXT","MEDIUMBLOB","MEDIUMTEXT","LONGBLOB","LONGTEXT"])){
-			$inputAttribute['type'] = "textare";
-			$inputAttribute['row'] = 10;
-		}else{
-			$inputAttribute['type'] = "text";
-			$inputAttribute['size'] = 30;
-		}
-		
-		
-		$commentInfo = $this->parserComment($columnInfo['column_comment']);
-		if(!empty($commentInfo['options'])){
-			$inputAttribute['type'] = "text";
-		}
-		
-		
-		$cnName = empty($commentInfo['name']) ? $columnInfo['column_name'] : $commentInfo['name'];
-		$name = $columnInfo['column_name'];
-		$inputStr = "";
-		$confStr = "";
-		
-		if(!empty($commentInfo['type'])){
-			if($commentInfo['options']){
-				$this->options[$columnInfo['column_name']] = var_export($commentInfo['options'],1);
-				$this->arrOptions[$columnInfo['column_name']] = $commentInfo['options'];
-				if($commentInfo['type'] == "select"){
-                    $inputStr .= "<html:select options='opt_{$columnInfo['COLUMN_NAME']}' selected='{$columnInfo['COLUMN_NAME']}_selected' name=\"{$columnInfo['COLUMN_NAME']}\" />";
-					/*$inputStr .= " <select name=\"select\" id=\"select\">";
-					foreach($commentInfo['options'] as $value => $text){
-						$inputStr.="<option value=\"{$value}\">$text</option>";
-					}
-					$inputStr .= "</select>";*/
-					
-				}elseif($commentInfo['type'] == "radio"){
-					
-					foreach($commentInfo['options'] as $value => $text){
-						$inputStr .= "<input name=\"select\" id=\"select\" type=\"radio\"  value=\"$value\">{$text} |";
-					}
-					
-				}elseif($commentInfo['type'] == "checkbox"){
-					foreach($commentInfo['options'] as $value => $text){
-						$inputStr .="  <input name=\"select\" id=\"select\"  type=\"checkbox\" value=\"$value\">{$text} |";
-					}
-					
-					//$inputStr = "<input name=\"$name\" type=\"text\" id=\"$name\" size=\"{$inputAttribute['size']}\" />";
-				}
-			}
-			
-			
-		}else{
-			if($inputAttribute['type'] == "text"){
-				//<textarea name="textarea" cols="30" rows="10" id="textarea"></textarea>
-				$inputStr .= "<input name=\"$name\" type=\"text\" id=\"$name\" size=\"{$inputAttribute['size']}\" value=".'"{$vo.'.$name.'}"'." />";
-			}elseif($inputAttribute['type'] == "textare"){
-				$inputStr .= "<textarea name=\"$name\" cols=\"30\" rows=\"10\" id=\"$name\"></textarea>";
-			}	
-		}
-		
-		$tips = $commentInfo['tips'];
-		$this->name = $name;
-		$this->cnName = $cnName;
-		$this->inputStr = $inputStr;
-		$this->tips = $tips;
-		
-		return $this->fetch("tpl_row");
-		/* var_dump($r);exit;
-		 return '<div class="form-group">
-    <label for="'.$name.'" class="col-sm-2 control-label">'.$cnName.'</label>
-    <div class="col-sm-10">
-       '.$inputStr.'
-    </div>
-  </div>'; */
-		 
-		
-		 
-	}
-	
+
 	public function generateCreatFormCode(){
 		$templateFilePath = MODULE_PATH. "Template/View/formCode.html";
 		$formMethod = I('formMethod');
@@ -332,26 +229,28 @@ class FormController extends CommonController {
 		$resultCode = $this->fetch($templateFilePath);
 		return $resultCode;
 	}
-	
+
 	public function creatForm(){
-		echo $this->generateCreatFormCode(); 
+		echo $this->generateCreatFormCode();
 	}
-	
+
 	public function loadField(){
+        $tableInfo = new TableInfo();
 		$tableName = I('tableName');
 		if(is_array($tableName)){
 		    $tableName = $tableName[count($tableName)-1];
         }
-		$tableInfoArray = getTableInfoArray($tableName);
-		$columnNameKey = getColumnNameKey();
+		$tableInfoArray = $tableInfo->getTableInfoArray($tableName);
+		$columnNameKey = $tableInfo->getColumnNameKey();
+//var_dump($tableInfoArray);exit;
 		$str = '';
 		foreach($tableInfoArray as $tableInfo){
 			$str .= '<option value="'.$tableInfo[$columnNameKey].'" >'.$tableInfo[$columnNameKey]."</option>\r\n";
 		}
 		echo $str;
 	}
-	
-	
+
+
     function index2($id=""){
     	$k = I('k');
     	$map = $where = [];
@@ -366,7 +265,7 @@ class FormController extends CommonController {
     		$this->display();
     		return ;
     	}
-    	
+
     	$list = $mApi->where($map)->order("update_time desc")->select();
     	$newList = [];
     	foreach ($list as $k => $v) {
@@ -374,37 +273,81 @@ class FormController extends CommonController {
     	}
     	$num = I('num');
     	if($num != null){
-    		
+
     		$a = [];
     		$a[$num] = $newList[$num];
     		unset($newList[$num]);
     		//array_unshift($newList,$current);
-    		
+
     		$newList = array_merge($a, $newList);
-    		
+
     	}
-    	
+
     	//$newList[0]
     	$this->list = $newList;
     	$mApi = M('lez_doc','','api');
     	$this->detail = $mApi->find($id);
-    	
-    	
+
+
 		$this->display();
 	}
-	
+
 	function _before_save(){
 		C('DEFAULT_FILTER',"");
 		$_POST['method'] = strtoupper($_POST['method']);
 		$_POST['update_time'] = time();
 	}
-	
+
 	function show($id){
 		$mApi = M('lez_doc','','api');
 		$this->vo = $mApi->find($id);
 		$this->display();
 	}
-	
+
+    /**
+     * 生成doc的模型字段注释
+     * @param $tableName
+     */
+	function generateDoc($tableName){
+
+        $tableInfo = new TableInfo('add',C('project_db_config'));
+        $allFields = $tableInfo->getTableInfoArray($tableName);
+        $allRows = [];
+        foreach ($allFields as $columnInfo){
+
+            $docInfo = [];
+            $docInfo['type'] = $columnInfo['COLUMN_TYPE'];
+            $docInfo['en_name'] = $columnInfo['COLUMN_NAME'];
+            $commentInfo = $tableInfo->parseComment($columnInfo['COLUMN_COMMENT']);
+            //$commentInfo = $tableInfo->parseComment("状态-select-禁用则不显示|1111|require|0:禁用,1:正常,2:审核中");
+            $docInfo = array_merge($docInfo,$commentInfo);
+            //var_dump($commentInfo);
+            //var_dump($docInfo);
+            //exit;
+            $row = [];
+            $row['en_name'] = $docInfo['en_name'];
+            $row['name'] = $docInfo['name'];
+            $row['checkType'] = $docInfo['checkType'];
+            $row['htmlType'] = $docInfo['tips'];
+            $row['tips'] = $docInfo['tips'];
+            $row['type'] = $docInfo['type'];
+
+            $strRules = "";
+            foreach ($docInfo['arrRules']  as $k => $v){
+                $strRules .= "{$v['type']} : {$v['msg']} : {$v['reg']} ".LF;
+            }
+            $row['arrRules'] = $strRules;
+
+            $strOptions = "";
+            foreach ($docInfo['options']  as $k => $v){
+                $strOptions .= "{$k} : {$v} ".LF;
+            }
+            $row['options'] = $strOptions;
+            $allRows[] = $row;
+        }
+        $this->list = $allRows;
+        $this->display();
+    }
 	 
 	 
 

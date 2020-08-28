@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>添加接口</title>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://libs.useso.com/js/ckeditor/4.4.2/ckeditor.min.js"></script> -->
+    <style type="text/css">
+        .red {
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <h1 class="text-center text-primary" style="margin-bottom:50px;">添加接口</h1>
+    <form method="post" action="__URL__/import" target="_self">
+        <table>
+            <tr>
+                <td colspan="2" align="right"><input class="btn btn-primary  btn-lg" type="submit" value="提 交"></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="form-group ">
+
+                        <textarea class="form-control" rows="15" name="raw" id="raw" cols="100"></textarea>
+
+                    </div>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td colspan="2" align="center"><input class="btn btn-primary  btn-lg" type="submit" value="提 交"></td>
+            </tr>
+        </table>
+        <input type="hidden" id="id" name="id" value="{$vo.id}"/>
+        <input type="hidden" id="project_id" name="project_id" value="{$Think.get.project_id}"/>
+        <input type="hidden" id="environment" name="environment" value="{$Think.get.environment|default='test'}"/>
+    </form>
+
+</div>
+
+</body>
+</html>

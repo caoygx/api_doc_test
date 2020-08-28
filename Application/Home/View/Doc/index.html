@@ -171,8 +171,19 @@ Params
 <pre>
 {$detail.return}
 </pre>
+			<script>
+                                var url = '/Home/Form/generateDoc';
+                                var param = {}
+                                param['tableName']='{$detail.table}';
+                                param['ret_format']='html';
+                                $.get(url,param,function (data) {
+                                        $('#table_info').html(data);
+                })
+                        </script>
+			<div id="table_info" class="container" style="width: 98%">      </div>
 
-<h4>sql流程   <a href="__CONTROLLER__/showSqlFlow/id/{$detail.id}" target="_blank">查看流程图 </a> </h4>		
+
+			<h4>sql流程   <a href="__CONTROLLER__/showSqlFlow/id/{$detail.id}" target="_blank">查看流程图 </a> </h4>
 <pre><code class="language-sql">
 {$detail.sql}
 </code>

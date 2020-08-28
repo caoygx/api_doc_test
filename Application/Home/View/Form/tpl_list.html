@@ -1,18 +1,23 @@
 
+
 <div class="row-fluid sortable">
     <div class="box span12">
         <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="{$control}/add" class="">添加</a></div>
         <div class="box-content">
-            <form method='get' action="{$control}"  class="form-search">
-		      <input name="id" type="text" class="input-medium search-query" <literal>value="{$Think.get.id}"</literal> placeholder="id">
-		      <input name="title" type="text" class="input-medium search-query" <literal>value="{$Think.get.title}"</literal>   placeholder="名称">
+            <form method='get' action="__SELF__"  class="form-inline">
+                {$htmlSearch}
 		      <button type="submit" class="btn btn-primary">搜索</button>
 		    </form>
+            <br />
 
-            <htmlme:list id="checkList" name="user" style="table table-striped table-bordered bootstrap-datatable datatable" checkbox="true" action="true" datasource="list" show="id:编号|8%,title:名称:edit,create_time|toDate='y-m-d':创建时间,status|getStatus2:状态,{$fields}" actionlist="status|showStatus=$user['id'],edit:编辑:id,foreverdel:永久删除:id" />
-            {$page} 
+
+            <literal><html</literal>:list id="checkList" name="user" style="table table-striped table-bordered bootstrap-datatable datatable" checkbox="true" action="true"   datasource="list" show="{$f_list}" actionlist="{$f_action}"/>
+
+           <div class="container text-center"> <literal>{$page}</literal> </div>
  
         </div>
     </div>
 
 </div>
+
+<script src="__PUBLIC__/common/{$tableName}.js"></script>

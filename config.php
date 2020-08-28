@@ -5,7 +5,7 @@ if(IS_CLI){
 	define('LF',"<br />");
 }
 
-define('URL_API','https://api.'.DOMAIN);
+define('URL_API','http://pm.'.DOMAIN.'/index.php');
 define('DB_TYPE','mysql');
 $parentDir = dirname(ROOT);
 //var_dump( getenv('ENV_PATH'));exit('x');
@@ -19,6 +19,17 @@ if(DB_TYPE == 'mysql'){
         'DB_PWD'  => "123456",
         'DB_PREFIX' => '',
         'DB_PARAMS'    =>    array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
+
+        //项目数据库连接
+        'project_db_config' =>[
+            'DB_TYPE' => "mysql",
+            'DB_NAME' => 'tesuo',
+            'DB_HOST' => "localhost",
+            'DB_USER' => "root",
+            'DB_PWD'  => "123456",
+            'DB_PREFIX' => 'cgf_',
+            'DB_PARAMS'    =>    array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
+        ]
     ];
 }else{
     $custom = [
@@ -28,6 +39,7 @@ if(DB_TYPE == 'mysql'){
     ];
 }
 $pub =  array(
+    'test_proxy'=>"192.168.16.16:8888",
     'SHOW_PAGE_TRACE' => true,
     'TAGLIB_PRE_LOAD' => 'html', //,OT\\TagLib\\Think
     'URL_MODEL'=>2, //默认1;URL模式：0 普通模式 1 PATHINFO 2 REWRITE 3 兼容模式

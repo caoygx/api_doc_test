@@ -1,0 +1,1311 @@
+PHPUnit 6.2.3 by Sebastian Bergmann and contributors.
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>控制台-云课堂后台管理系统</title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- basic styles -->
+
+	<!--	<link href="http://apps.bdimg.com/libs/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="http://apps.bdimg.com/libs/bootstrap/3.0.3/js/bootstrap.min.js" rel="stylesheet" type="text/css" />-->
+
+		<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js" rel="stylesheet" type="text/css" />
+
+		<!--<link href="http://public.21mmm.com/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="http://public.21mmm.com/Admin/assets/css/font-awesome.min.css" />-->
+		<!--<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+		<link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+		<!--[if IE 7]>
+		<link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" rel="stylesheet">
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+	
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="http://public.21mmm.com/Admin/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="http://public.21mmm.com/Admin/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="http://public.21mmm.com/Admin/assets/css/ace-skins.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="http://public.21mmm.com/Admin/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src="http://public.21mmm.com/Admin/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="http://public.21mmm.com/Admin/assets/js/html5shiv.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+							<i class="icon-leaf"></i>
+							云课堂-后台管理系统
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-tasks"></i>
+								<span class="badge badge-grey">4</span>
+							</a>
+
+							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="icon-ok"></i>
+									还有4个任务完成
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">软件更新</span>
+											<span class="pull-right">65%</span>
+										</div>
+
+										<div class="progress progress-mini ">
+											<div style="width:65%" class="progress-bar "></div>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">硬件更新</span>
+											<span class="pull-right">35%</span>
+										</div>
+
+										<div class="progress progress-mini ">
+											<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">单元测试</span>
+											<span class="pull-right">15%</span>
+										</div>
+
+										<div class="progress progress-mini ">
+											<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">错误修复</span>
+											<span class="pull-right">90%</span>
+										</div>
+
+										<div class="progress progress-mini progress-striped active">
+											<div style="width:90%" class="progress-bar progress-bar-success"></div>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										查看任务详情
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-bell-alt icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+							<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="icon-warning-sign"></i>
+									8条通知
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-pink icon-comment"></i>
+												新闻评论
+											</span>
+											<span class="pull-right badge badge-info">+12</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="btn btn-xs btn-primary icon-user"></i>
+										切换为编辑登录..
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
+												新订单
+											</span>
+											<span class="pull-right badge badge-success">+8</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-info icon-twitter"></i>
+												粉丝
+											</span>
+											<span class="pull-right badge badge-info">+11</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										查看所有通知
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-envelope icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="icon-envelope-alt"></i>
+									5条消息
+								</li>
+
+								<li>
+									<a href="#">
+										<img src="http://public.21mmm.com/Admin/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+										<span class="msg-body">
+											<span class="msg-title">
+												<span class="blue">Alex:</span>
+												不知道写啥 ...
+											</span>
+
+											<span class="msg-time">
+												<i class="icon-time"></i>
+												<span>1分钟以前</span>
+											</span>
+										</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<img src="http://public.21mmm.com/Admin/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+										<span class="msg-body">
+											<span class="msg-title">
+												<span class="blue">Susan:</span>
+												不知道翻译...
+											</span>
+
+											<span class="msg-time">
+												<i class="icon-time"></i>
+												<span>20分钟以前</span>
+											</span>
+										</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<img src="http://public.21mmm.com/Admin/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+										<span class="msg-body">
+											<span class="msg-title">
+												<span class="blue">Bob:</span>
+												到底是不是英文 ...
+											</span>
+
+											<span class="msg-time">
+												<i class="icon-time"></i>
+												<span>下午3:15</span>
+											</span>
+										</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="inbox.html">
+										查看所有消息
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="2016-10-08/57f9128f80bef.jpg" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>欢迎光临,</small>
+									admin								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="icon-cog"></i>
+										设置
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-user"></i>
+										个人资料
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="/index.php?s=/Login/loginOut">
+										<i class="icon-off"></i>
+										退出
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+							<button class="btn btn-success">
+								<i class="icon-signal"></i>
+							</button>
+
+							<button class="btn btn-info">
+								<i class="icon-pencil"></i>
+							</button>
+
+							<button class="btn btn-warning">
+								<i class="icon-group"></i>
+							</button>
+
+							<button class="btn btn-danger">
+								<i class="icon-cogs"></i>
+							</button>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+
+					<ul class="nav nav-list">
+							
+						<li>
+							<a href="/index.php?s=" class="dropdown-toggle">
+								<i class="icon-home"></i>
+								<span class="menu-text"> 后台首页 </span>
+							</a>
+						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-lock"></i>
+								<span class="menu-text"> 权限管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Admin/index.html">
+										<i class="icon-double-angle-right"></i>
+										管理员列表
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Admin/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加管理员
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Group/index.html">
+										<i class="icon-double-angle-right"></i>
+										管理组列表
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Group/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加管理组
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Auth/ruleIndex.html">
+										<i class="icon-double-angle-right"></i>
+										权限列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/Auth/addRule.html">
+										<i class="icon-double-angle-right"></i>
+										添加权限
+									</a>
+								</li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-group"></i>
+								<span class="menu-text"> 用户管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/User/index.html">
+										<i class="icon-double-angle-right"></i>
+										用户列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/User/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加用户
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-list"></i>
+								<span class="menu-text"> 类型管理</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Type/index.html">
+										<i class="icon-double-angle-right"></i>
+										类型列表
+									</a>
+								</li>
+										
+								<li>
+									<a href="/index.php?s=/Type/add_parent">
+										<i class="icon-double-angle-right"></i>
+										添加分区
+									</a>
+								</li>
+										
+								</ul>
+						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-music"></i>
+								<span class="menu-text"> 视频管理</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/video/index.html">
+										<i class="icon-double-angle-right"></i>
+										视频列表
+									</a>
+								</li>
+										
+								<li>
+									<a href="/index.php?s=/Type/add_video.html">
+										<i class="icon-double-angle-right"></i>
+										添加
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit"></i>
+								<span class="menu-text"> 合作机构管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Organ/index.html">
+										<i class="icon-double-angle-right"></i>
+										机构列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/Organ/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加机构
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-user"></i>
+								<span class="menu-text"> 讲师管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Teacher/index.html">
+										<i class="icon-double-angle-right"></i>
+										讲师列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/Teacher/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加讲师
+									</a>
+								</li>
+							</ul>
+						</li>
+							
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-list-alt"></i>
+								<span class="menu-text"> 目录管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Video/index.html">
+										<i class="icon-double-angle-right"></i>
+										目录列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/Video/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加目录
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-file"></i>
+								<span class="menu-text"> 新闻管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/News/index.html">
+										<i class="icon-double-angle-right"></i>
+										新闻列表
+									</a>
+								</li>
+
+								<li>
+									<a href="/index.php?s=/News/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加新闻
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-bullhorn"></i>
+								<span class="menu-text"> 广告管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Adv/index.html">
+										<i class="icon-double-angle-right"></i>
+										广告列表
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Adv/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加广告
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-cogs"></i>
+								<span class="menu-text"> 网站配置 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Config/index.html">
+										<i class="icon-double-angle-right"></i>
+										配置信息
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-folder-open-alt"></i>
+								<span class="menu-text"> 用户反馈 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Advice/index.html">
+										<i class="icon-double-angle-right"></i>
+										反馈列表
+									</a>
+								</li>
+							</ul>
+						</li>
+	
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-download-alt"></i>
+								<span class="menu-text"> 下载管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Download/index">
+										<i class="icon-double-angle-right"></i>
+										下载列表
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+						
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-credit-card"></i>
+								<span class="menu-text"> 公告管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="/index.php?s=/Info/index.html">
+										<i class="icon-double-angle-right"></i>
+										公告列表
+									</a>
+								</li>
+								<li>
+									<a href="/index.php?s=/Info/add.html">
+										<i class="icon-double-angle-right"></i>
+										添加公告
+									</a>
+								</li>
+							</ul>
+						</li>
+
+			
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				
+<div class="main-content">
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home home-icon"></i>
+			<a href="#">首页</a>
+		</li>
+		<li class="active">控制台</li>
+	</ul><!-- .breadcrumb -->
+
+	<!-- <div class="nav-search" id="nav-search">
+		<form class="form-search">
+			<span class="input-icon">
+				<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+				<i class="icon-search nav-search-icon"></i>
+			</span>
+		</form>
+	</div> -->
+</div>
+
+<div class="page-content">
+	<div class="page-header">
+		<h1>
+			控制台
+			<small>
+				<i class="icon-double-angle-right"></i>
+				 查看
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="icon-remove"></i>
+				</button>
+
+				<i class="icon-ok red" style="font-size:30px">欢迎 admin</i>
+			
+				&nbsp;
+				<strong class="green">
+					进入云课堂后台管理系统
+					<small>(v1.2)</small>
+				</strong>
+				,轻量级好用的后台管理系统.	
+			</div>
+
+			<div class="row">
+				<div class="space-6"></div>
+
+				<div class="col-sm-7 infobox-container" style="margin-left:200px">
+					<div class="infobox infobox-green  ">
+						<div class="infobox-icon">
+							<i class="icon-comments"></i>
+						</div>
+
+						<div class="infobox-data">
+							<span class="infobox-content"style="font-size:12px">视频观看次数</span>
+							<div class="infobox-content" style="font-size:25px;color:green"></div>
+						</div>
+						</div>
+						<div class="stat stat-success" style="font-size:30px">
+					</div>
+
+					<div class="infobox infobox-pin" style="background:white">
+						<div class="col-sm-7 infobox-container">
+					<div class="infobox infobox-white infobox-small infobox-dark" style="width:220px;margin-right:110px">
+						<div class="infobox-icon">
+							<i class="icon-download-alt" style="background:green"></i>
+						</div>
+
+						<div class="infobox-data" style="margin-left:5px;">
+							<div class="infobox-content" style="color:#000">下载次数</div>
+							<div class="infobox-content" style="color:green;font-size:30px">12</div>
+						</div>
+					</div>
+				</div>
+
+					</div>
+
+					<div class="infobox infobox-pink">
+						<div class="infobox-icon">
+							<i class="icon-facetime-video"></i>
+						</div>
+
+						<div class="infobox-data">
+							<span class="infobox-content"style="font-size:12px">视频总数</span>
+							<div class="infobox-content" style="font-size:25px;color:green">56</div>
+						</div>
+						
+					</div>
+
+					
+					<div class="space-6"></div>
+
+					
+					</div>
+
+				</div>
+
+				<div class="vspace-sm"></div>
+
+				</div><!-- /row -->
+
+			<div class="hr hr32 hr-dotted"></div>
+
+			<div class="row">
+				<div class="col-sm-5"  style="width:99%;">
+					<div class="widget-box transparent">
+						<div class="widget-header widget-header-flat">
+							<h4 class="lighter">
+								<i class="icon-star orange"></i>
+								热门云课堂视频
+							</h4>
+
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="icon-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="widget-body">
+							<div class="widget-main no-padding">
+								<table class="table table-bordered table-striped">
+									<thead class="thin-border-bottom">
+										<tr>
+											<th>
+												<i class="icon-caret-right blue"></i>
+												编号
+											</th>
+											<th>
+												<i class="icon-caret-right blue"></i>
+												名称
+											</th>
+
+											<th>
+												<i class="icon-caret-right blue"></i>
+												价格
+											</th>
+
+											<th class="hidden-480">
+												<i class="icon-caret-right blue"></i>
+												观看次数
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+																		<tr>
+											<td>1</td>
+											<td> 	30分钟轻松制作</td>
+
+											<td>
+												<b class="green">2.00</b>
+											</td>
+
+											<td class="hidden-480">
+												<span class="label label-info arrowed-right arrowed-in">9</span>
+											</td>
+										</tr><tr>
+											<td>2</td>
+											<td>30分钟学会制作H5</td>
+
+											<td>
+												<b class="green">0.01</b>
+											</td>
+
+											<td class="hidden-480">
+												<span class="label label-info arrowed-right arrowed-in">5</span>
+											</td>
+										</tr><tr>
+											<td>3</td>
+											<td>PHP零基础教学</td>
+
+											<td>
+												<b class="green">0.00</b>
+											</td>
+
+											<td class="hidden-480">
+												<span class="label label-info arrowed-right arrowed-in">3</span>
+											</td>
+										</tr><tr>
+											<td>4</td>
+											<td>11</td>
+
+											<td>
+												<b class="green">0.01</b>
+											</td>
+
+											<td class="hidden-480">
+												<span class="label label-info arrowed-right arrowed-in">2</span>
+											</td>
+										</tr><tr>
+											<td>5</td>
+											<td>30分钟轻松制作</td>
+
+											<td>
+												<b class="green">0.01</b>
+											</td>
+
+											<td class="hidden-480">
+												<span class="label label-info arrowed-right arrowed-in">1</span>
+											</td>
+										</tr>									</tbody>
+								</table>
+							</div><!-- /widget-main -->
+						</div><!-- /widget-body -->
+					</div><!-- /widget-box -->
+				</div>
+
+				</div>
+
+			<div class="hr hr32 hr-dotted"></div>
+
+			
+			<!-- PAGE CONTENT ENDS -->
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+					<div class="ace-settings-box" id="ace-settings-box">
+						<div>
+							<div class="pull-left">
+								<select id="skin-colorpicker" class="hide">
+									<option data-skin="default" value="#438EB9">#438EB9</option>
+									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+								</select>
+							</div>
+							<span>&nbsp; 选择皮肤</span>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+							<label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+							<label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+							<label class="lbl" for="ace-settings-breadcrumbs">固定面包屑</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+							<label class="lbl" for="ace-settings-rtl">切换到左边</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+							<label class="lbl" for="ace-settings-add-container">
+								切换窄屏
+								<b></b>
+							</label>
+						</div>
+					</div>
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<!--<script src="http://public.21mmm.com/Admin/assets/js/jquery-2.0.3.min.js"></script>-->
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery-2.0.3.min.js"></script>
+		
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script src="http://public.21mmm.com/Admin/assets/js/jquery-1.10.2.min.js"></script>
+<![endif]-->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='http://public.21mmm.com/Admin/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='http://public.21mmm.com/Admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='http://public.21mmm.com/Admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+		</script>
+		<script src="http://public.21mmm.com/Admin/assets/js/bootstrap.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="http://public.21mmm.com/Admin/assets/js/excanvas.min.js"></script>
+		<![endif]-->
+
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery.slimscroll.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery.easy-pie-chart.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/jquery.sparkline.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/flot/jquery.flot.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/flot/jquery.flot.pie.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/flot/jquery.flot.resize.min.js"></script>
+
+		<!-- ace scripts -->
+
+		<script src="http://public.21mmm.com/Admin/assets/js/ace-elements.min.js"></script>
+		<script src="http://public.21mmm.com/Admin/assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			jQuery(function($) {
+				$('.easy-pie-chart.percentage').each(function(){
+					var $box = $(this).closest('.infobox');
+					var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+					var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+					var size = parseInt($(this).data('size')) || 50;
+					$(this).easyPieChart({
+						barColor: barColor,
+						trackColor: trackColor,
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: parseInt(size/10),
+						animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+						size: size
+					});
+				})
+			
+				$('.sparkline').each(function(){
+					var $box = $(this).closest('.infobox');
+					var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
+					$(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
+				});
+			
+			
+			
+			
+			  var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
+			  var data = [
+				{ label: "social networks",  data: 38.7, color: "#68BC31"},
+				{ label: "search engines",  data: 24.5, color: "#2091CF"},
+				{ label: "ad campaigns",  data: 8.2, color: "#AF4E96"},
+				{ label: "direct traffic",  data: 18.6, color: "#DA5430"},
+				{ label: "other",  data: 10, color: "#FEE074"}
+			  ]
+			  function drawPieChart(placeholder, data, position) {
+			 	  $.plot(placeholder, data, {
+					series: {
+						pie: {
+							show: true,
+							tilt:0.8,
+							highlight: {
+								opacity: 0.25
+							},
+							stroke: {
+								color: '#fff',
+								width: 2
+							},
+							startAngle: 2
+						}
+					},
+					legend: {
+						show: true,
+						position: position || "ne", 
+						labelBoxBorderColor: null,
+						margin:[-30,15]
+					}
+					,
+					grid: {
+						hoverable: true,
+						clickable: true
+					}
+				 })
+			 }
+			 drawPieChart(placeholder, data);
+			
+			 /**
+			 we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
+			 so that's not needed actually.
+			 */
+			 placeholder.data('chart', data);
+			 placeholder.data('draw', drawPieChart);
+			
+			
+			
+			  var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
+			  var previousPoint = null;
+			
+			  placeholder.on('plothover', function (event, pos, item) {
+				if(item) {
+					if (previousPoint != item.seriesIndex) {
+						previousPoint = item.seriesIndex;
+						var tip = item.series['label'] + " : " + item.series['percent']+'%';
+						$tooltip.show().children(0).text(tip);
+					}
+					$tooltip.css({top:pos.pageY + 10, left:pos.pageX + 10});
+				} else {
+					$tooltip.hide();
+					previousPoint = null;
+				}
+				
+			 });
+			
+			
+			
+			
+			
+			
+				var d1 = [];
+				for (var i = 0; i < Math.PI * 2; i += 0.5) {
+					d1.push([i, Math.sin(i)]);
+				}
+			
+				var d2 = [];
+				for (var i = 0; i < Math.PI * 2; i += 0.5) {
+					d2.push([i, Math.cos(i)]);
+				}
+			
+				var d3 = [];
+				for (var i = 0; i < Math.PI * 2; i += 0.2) {
+					d3.push([i, Math.tan(i)]);
+				}
+				
+			
+				var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
+				$.plot("#sales-charts", [
+					{ label: "Domains", data: d1 },
+					{ label: "Hosting", data: d2 },
+					{ label: "Services", data: d3 }
+				], {
+					hoverable: true,
+					shadowSize: 0,
+					series: {
+						lines: { show: true },
+						points: { show: true }
+					},
+					xaxis: {
+						tickLength: 0
+					},
+					yaxis: {
+						ticks: 10,
+						min: -2,
+						max: 2,
+						tickDecimals: 3
+					},
+					grid: {
+						backgroundColor: { colors: [ "#fff", "#fff" ] },
+						borderWidth: 1,
+						borderColor:'#555'
+					}
+				});
+			
+			
+				$('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				function tooltip_placement(context, source) {
+					var $source = $(source);
+					var $parent = $source.closest('.tab-content')
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $source.offset();
+					var w2 = $source.width();
+			
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+					return 'left';
+				}
+			
+			
+				$('.dialogs,.comments').slimScroll({
+					height: '300px'
+			    });
+				
+				
+				//Android's default browser somehow is confused when tapping on label which will lead to dragging the task
+				//so disable dragging when clicking on label
+				var agent = navigator.userAgent.toLowerCase();
+				if("ontouchstart" in document && /applewebkit/.test(agent) && /android/.test(agent))
+				  $('#tasks').on('touchstart', function(e){
+					var li = $(e.target).closest('#tasks li');
+					if(li.length == 0)return;
+					var label = li.find('label.inline').get(0);
+					if(label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation() ;
+				});
+			
+				$('#tasks').sortable({
+					opacity:0.8,
+					revert:true,
+					forceHelperSize:true,
+					placeholder: 'draggable-placeholder',
+					forcePlaceholderSize:true,
+					tolerance:'pointer',
+					stop: function( event, ui ) 
+					}
+				);
+				$('#tasks').disableSelection();
+				$('#tasks input:checkbox').removeAttr('checked').on('click', function(){
+					if(this.checked) $(this).closest('li').addClass('selected');
+					else $(this).closest('li').removeClass('selected');
+				});
+				
+			
+			})
+		</script>
+	</body>
+</html><div id="think_page_trace" style="position: fixed;bottom:0;right:0;font-size:14px;width:100%;z-index: 999999;color: #000;text-align:left;font-family:'微软雅黑';">
+<div id="think_page_trace_tab" style="display: none;background:white;margin:0;height: 250px;">
+<div id="think_page_trace_tab_tit" style="height:30px;padding: 6px 12px 0;border-bottom:1px solid #ececec;border-top:1px solid #ececec;font-size:16px">
+	    <span style="color:#000;padding-right:12px;height:30px;line-height: 30px;display:inline-block;margin-right:3px;cursor: pointer;font-weight:700">SQL</span>
+        <span style="color:#000;padding-right:12px;height:30px;line-height: 30px;display:inline-block;margin-right:3px;cursor: pointer;font-weight:700">文件</span>
+        <span style="color:#000;padding-right:12px;height:30px;line-height: 30px;display:inline-block;margin-right:3px;cursor: pointer;font-weight:700">错误</span>
+    </div>
+<div id="think_page_trace_tab_cont" style="overflow:auto;height:212px;padding: 0; line-height: 24px">
+		    <div style="display:none;">
+    <ol style="padding: 0; margin:0">
+	<li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SHOW COLUMNS FROM `app` [ RunTime:0.0463s ]</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SHOW COLUMNS FROM `course` [ RunTime:0.0442s ]</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SELECT `number`,`title`,`price` FROM `course` ORDER BY `number` desc LIMIT 0,5   [ RunTime:0.0438s ]</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SELECT sum(number) num FROM `course`  [ RunTime:0.0433s ]</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SELECT COUNT(*) AS tp_count FROM `course` LIMIT 1   [ RunTime:0.0436s ]</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">SELECT COUNT(*) AS tp_count FROM `app` LIMIT 1   [ RunTime:0.0443s ]</li>    </ol>
+    </div>
+        <div style="display:none;">
+    <ol style="padding: 0; margin:0">
+	<li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/index.php ( 0.64 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/ThinkPHP.php ( 4.56 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Think.class.php ( 14.43 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Storage.class.php ( 1.40 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Storage/Driver/File.class.php ( 3.65 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Mode/common.php ( 2.84 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Common/functions.php ( 119.19 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Application/Common/Common/function.php ( 29.24 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Hook.class.php ( 4.13 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/App.class.php ( 13.56 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Dispatcher.class.php ( 16.36 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Route.class.php ( 20.85 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Controller.class.php ( 11.52 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/View.class.php ( 9.35 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/BuildLiteBehavior.class.php ( 3.78 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/ParseTemplateBehavior.class.php ( 4.00 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/ContentReplaceBehavior.class.php ( 1.94 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Conf/convention.php ( 10.91 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Application/Common/Conf/config.php ( 0.04 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/config.php ( 8.69 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/dev.php ( 0.34 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Log.class.php ( 4.02 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Lang/zh-cn.php ( 2.57 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Conf/debug.php ( 1.45 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Application/Admin/Conf/config.php ( 0.06 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/ReadHtmlCacheBehavior.class.php ( 5.88 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Application/Admin/Controller/IndexController.class.php ( 0.72 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Application/Admin/Controller/PublicController.class.php ( 0.55 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Model.class.php ( 72.91 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Db.class.php ( 5.66 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php ( 9.26 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Db/Driver.class.php ( 44.50 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Vendor/BrowserLog/ChromePhp.php ( 10.70 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Template.class.php ( 29.54 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Template/TagLib/Html.class.php ( 27.40 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Template/TagLib.class.php ( 9.66 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/OT/TagLib/Think.class.php ( 9.80 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Think/Template/TagLib/Cx.class.php ( 23.41 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/xuexi/Runtime/Cache/Admin/4d4f0d56cd6c8fec8c1bbc24384695d9.php ( 34.79 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/WriteHtmlCacheBehavior.class.php ( 1.44 KB )</li><li style="border-bottom:1px solid #EEE;font-size:14px;padding:0 12px">/www/web/ThinkPHP/Library/Behavior/ShowPageTraceBehavior.class.php ( 5.37 KB )</li>    </ol>
+    </div>
+        <div style="display:none;">
+    <ol style="padding: 0; margin:0">
+	    </ol>
+    </div>
+    </div>
+</div>
+<div id="think_page_trace_close" style="display:none;text-align:right;height:15px;position:absolute;top:10px;right:12px;cursor: pointer;"><img style="vertical-align:top;" src="data:image/gif;base64,R0lGODlhDwAPAJEAAAAAAAMDA////wAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MUQxMjc1MUJCQUJDMTFFMTk0OUVGRjc3QzU4RURFNkEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MUQxMjc1MUNCQUJDMTFFMTk0OUVGRjc3QzU4RURFNkEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxRDEyNzUxOUJBQkMxMUUxOTQ5RUZGNzdDNThFREU2QSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRDEyNzUxQUJBQkMxMUUxOTQ5RUZGNzdDNThFREU2QSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAAAPAA8AAAIdjI6JZqotoJPR1fnsgRR3C2jZl3Ai9aWZZooV+RQAOw==" /></div>
+</div>
+<div id="think_page_trace_open" style="height:30px;float:right;text-align: right;overflow:hidden;position:fixed;bottom:0;right:0;color:#000;line-height:30px;cursor:pointer;"><div style="background:#232323;color:#FFF;padding:0 6px;float:right;line-height:30px;font-size:14px">0.5357s </div><img width="30" style="" title="ShowPageTrace" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjVERDVENkZGQjkyNDExRTE5REY3RDQ5RTQ2RTRDQUJCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjVERDVENzAwQjkyNDExRTE5REY3RDQ5RTQ2RTRDQUJCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NURENUQ2RkRCOTI0MTFFMTlERjdENDlFNDZFNENBQkIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NURENUQ2RkVCOTI0MTFFMTlERjdENDlFNDZFNENBQkIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5fx6IRAAAMCElEQVR42sxae3BU1Rk/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"></div>
+<script type="text/javascript">
+(function(){
+var tab_tit  = document.getElementById('think_page_trace_tab_tit').getElementsByTagName('span');
+var tab_cont = document.getElementById('think_page_trace_tab_cont').getElementsByTagName('div');
+var open     = document.getElementById('think_page_trace_open');
+var close    = document.getElementById('think_page_trace_close').childNodes[0];
+var trace    = document.getElementById('think_page_trace_tab');
+var cookie   = document.cookie.match(/thinkphp_show_page_trace=(\d\|\d)/);
+var history  = (cookie && typeof cookie[1] != 'undefined' && cookie[1].split('|')) || [0,0];
+open.onclick = function(){
+	trace.style.display = 'block';
+	this.style.display = 'none';
+	close.parentNode.style.display = 'block';
+	history[0] = 1;
+	document.cookie = 'thinkphp_show_page_trace='+history.join('|')
+}
+close.onclick = function(){
+	trace.style.display = 'none';
+this.parentNode.style.display = 'none';
+	open.style.display = 'block';
+	history[0] = 0;
+	document.cookie = 'thinkphp_show_page_trace='+history.join('|')
+}
+for(var i = 0; i < tab_tit.length; i++){
+	tab_tit[i].onclick = (function(i){
+		return function(){
+			for(var j = 0; j < tab_cont.length; j++){
+				tab_cont[j].style.display = 'none';
+				tab_tit[j].style.color = '#999';
+			}
+			tab_cont[i].style.display = 'block';
+			tab_tit[i].style.color = '#000';
+			history[1] = i;
+			document.cookie = 'thinkphp_show_page_trace='+history.join('|')
+		}
+	})(i)
+}
+parseInt(history[0]) && open.click();
+(tab_tit[history[1]] || tab_tit[0]).click();
+})();
+</script>

@@ -10,7 +10,7 @@ if(isset($_SERVER['HTTP_HOST'])){
             $domain = $arr[$c-2].'.'.$arr[$c-1];
         }
 }else{
-    $domain = '51cihai.com';
+    $domain = 'yz314.com';
 }
 
 define('DOMAIN',$domain);
@@ -26,5 +26,5 @@ define('APP_DEBUG',true);
 define('APP_NAME', 'Home');
 define('APP_PATH',ROOT.'/Application/');
 define('RUNTIME_PATH',ROOT.'/Runtime/'); //runtime目录
-require '../ThinkPHP/vendor/autoload.php';
-require '../ThinkPHP/ThinkPHP.php';
+require ROOT.'/../ThinkPHP/vendor/autoload.php';
+require ROOT.'/../ThinkPHP/ThinkPHP.php';

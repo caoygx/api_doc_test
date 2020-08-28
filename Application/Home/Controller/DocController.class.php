@@ -297,6 +297,10 @@ file_put_contents($filename,$somecontent);
 	passthru("dot -Tpng $filename");
 //passthru("dot -Tpng $filename >dot.png");
 	}
+
+	function getTableName(){
+
+    }
 	 
 
 }

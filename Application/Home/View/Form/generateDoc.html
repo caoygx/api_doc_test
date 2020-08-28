@@ -1,0 +1,25 @@
+
+
+    <table class="table table-bordered">
+      <tr>
+          <th>字段</th>
+          <th>中文</th>
+          <th>类型</th>
+          <th>控件类型</th>
+          <th>提示信息</th>
+          <th>验证规则</th>
+          <th>选项</th>
+      </tr>
+<volist id="vo" name="list">
+    <tr>
+      <td>{$vo.en_name}</td>
+      <td>{$vo.name}</td>
+      <td>{$vo.type}</td>
+      <td>{$vo.htmlType}</td>
+      <td>{$vo.tips}</td>
+      <td>{$vo.arrRules}</td>
+      <td>{$vo.options}</td>
+    </tr>
+</volist>
+
+  </table>

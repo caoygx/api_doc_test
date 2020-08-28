@@ -1,0 +1,15 @@
+PHPUnit 6.2.3 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 647 ms, Memory: 8.00MB
+
+There was 1 failure:
+
+1) AdminController::testLogin
+Failed asserting that 302 matches expected 200.
+
+/www/web/api_doc_test/test/AdminController.class.php:54
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

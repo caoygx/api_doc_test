@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$configs.title}</title>
+<meta name="keywords" content="{$configs.keywords}">
+<meta name="description" content="{$configs.description}">
+<script type="text/javascript" src="__PUBLIC__/Home/js/center/jquery.js"></script>
+<link href="__PUBLIC__/Home/css/center/center_core.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/Home/css/center/center_user.css" type="text/css" rel="stylesheet">
+</head>
+<body class="auto-1449497480730-parent" style="padding-top: 60px;">
+
+<block name="main-content">
+	
+</block>
+
+</body>
+<script type="text/javascript" charset="utf-8">
+	var p;
+	$("input[name = 'username']").blur(function()
+	{
+		var val = this.value;
+		//alert(val);
+		if(!val){
+			$("#sp1").html("你好像忘了点什么");
+			p = false;
+		}else{
+			p = true;
+		}
+	});
+
+	$("form").submit(function(){
+		$("input[name = 'username']").blur();
+		if(p){
+			return true;
+		}
+		return false;
+	});
+</script>
+</html>

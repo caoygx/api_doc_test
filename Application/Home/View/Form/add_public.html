@@ -1,0 +1,74 @@
+<script>
+var CONTROLLER="__URL__";
+</script>
+<script src="__PUBLIC__/common.js"></script>
+
+<script>
+
+<empty name="isMobile">
+$(function(){
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="preface"]', {
+            allowFileManager : true
+        });
+        
+        description = K.create('textarea[name="description"]', {
+            allowFileManager : true
+        });
+        
+        
+    });
+});
+<else /> 
+$(function(){
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="preface"]', {
+            allowFileManager : true,
+            items : [
+                     'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                     'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                     'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+        
+        description = K.create('textarea[name="description"]', {
+            allowFileManager : true,
+            items : [
+                     'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                     'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                     'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+        
+        
+    });
+});
+</empty> 
+
+
+</script>
+
+
+        <div class="box-content">
+            <form class="form-horizontal" method="post" action="__URL__/save/">
+
+                <volist id="vo" name="f_add">
+                <div class="control-group">
+                    <label class="control-label" for="typeahead">{$vo.cn_name}</label>
+                    <div class="controls">
+                        <input name="{$vo.column_name}" id="{$vo.column_name}"  type="text" class="form-control" value="{$vo.title}"  placeholder="" >
+                    </div>
+                </div>
+                </volist>
+                
+                <div class="form-actions">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="reset" class="btn">取消</button>
+                    </div>
+                </div>
+                <input type="hidden" value="{$vo.id}" name="id" id="id" />
+            </form>
+        </div>
+
+

@@ -1,0 +1,71 @@
+<script>
+var CONTROLLER="__URL__";
+
+</script>
+<script src="__PUBLIC__/common.js"></script>
+
+<script>
+
+<empty name="isMobile">
+$(function(){
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="preface"]', {
+            allowFileManager : true
+        });
+        
+        description = K.create('textarea[name="description"]', {
+            allowFileManager : true
+        });
+        
+        
+    });
+});
+<else /> 
+$(function(){
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="preface"]', {
+            allowFileManager : true,
+            items : [
+                     'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                     'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                     'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+        
+        description = K.create('textarea[name="description"]', {
+            allowFileManager : true,
+            items : [
+                     'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                     'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                     'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+        
+        
+    });
+});
+</empty> 
+
+
+
+</script>
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div data-original-title="" class="box-header well"> <i class="icon-user"></i> <a href="__URL__/add" class="">添加</a> 
+        </div>
+        <include file="add_public" />
+    </div>
+    <!--/span--> 
+    
+</div>
+<!--/row--> 
+
+<!-- content ends --> 
+
+<script>
+function autoSurname(){
+	$('#surname').val($('#ancestor').val().substring(0,1));
+}
+
+</script> 

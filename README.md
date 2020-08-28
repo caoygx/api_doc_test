@@ -30,7 +30,9 @@ git clone https://github.com/caoygx/ThinkPHP.git
 
 # 使用sqlite数据库直接下载后打开
 
-3.启动go服务，用于获取表字段
+3.启动go服务，
+  3.1 go run api.go  用于获取表字段
+  3.2 main.go中用于自动生成接口文档 具体步骤见main.go中的注释
 
 
 

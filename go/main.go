@@ -8,14 +8,15 @@ import (
 
 func main() {
 
-	//util.Download("a.jpg")
+	//生成文档3步
 
-	//fmt.Println(model.DB)
-
-	//apiGetTable()
-
+	//1.获取所有路由，将其加入到文档中。
 	//service.GenerateAllDoc()
-	docID := 63
+
+	//2.手动添加每个接口的参数
+
+	//3.自动根据配置好的参数来生成文档结果
+	docID := 63 //id为0则表示生成所有接口的请求值
 	service.SetAllDocResponse(docID)
-	//testjson()
+
 }
